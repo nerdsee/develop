@@ -1,0 +1,105 @@
+<html xmlns="http://www.w3c.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{brainSession.currentLocale}">
+	<h:head>
+		<title>Edit Item</title>
+		<ui:include src="/snippets/inc_head.xhtml" />
+	</h:head>
+	<h:body>
+		<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
+		<ui:include src="/snippets/headline.xhtml" />
+		<div id="main">
+			<p:layout>
+				<p:layoutUnit id="sidebar" position="east" size="260">
+					<h:form>
+						<h1 style="margin-top: 40px;">
+							<h:outputText value="#{bundle.confirm_changes}" />
+						</h1>
+						<p:commandButton action="#{lessonLoader.confirmNewItems}" value="#{bundle.btn_accept}" class="btn_blue" />
+						<h:panelGrid columns="2">
+							<h:selectBooleanCheckbox value="#{lessonLoader.deleteRemovedItems}" />
+							<h:outputText class="font3" value="#{bundle.lesson_confirm}" escape="false" />
+						</h:panelGrid>
+						<h1 style="margin-top: 40px;">
+							<h:outputText value="#{bundle.discard_changes}" />
+						</h1>
+						<p:commandButton action="#{lessonLoader.discardItems}" value="#{bundle.btn_discard}" class="btn_red" />
+					</h:form>
+				</p:layoutUnit>
+				<p:layoutUnit id="content" position="center">
+					<h1>
+						<h:outputText value="#{bundle.validate}" />
+					</h1>
+					<h:panelGrid columns="2" class="tstd">
+						<h:outputText value="Uploaded Words:" class="font2" />
+						<h:outputText value="#{lessonLoader.numberUploadedItems}" class="font2 bold" />
+					</h:panelGrid>
+					<!-- ### -->
+					<p:tabView>
+						<p:tab title="#{bundle.new_entries} [#{lessonLoader.numberNewItems}]">
+							<p:dataTable id="newitemlist" class="tcheckword" value="#{lessonLoader.newItems}" var="item" columnClasses="" rendered="#{lessonLoader.newItems.rowCount>0}">
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Question" class="font2" />
+									</f:facet>
+									<h:outputText value="#{item.text}" class="font2 bold" />
+									<h:outputText value="&lt;sup>[#{item.extId}]&lt;/sup>" rendered="#{item.extId>0}" class="c2" escape="false" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Answer(s)" class="font2 bold" />
+									</f:facet>
+									<p:dataList var="answer" value="#{item.answers}" layout="unorderedList">
+										<h:outputText value="#{answer.text}" />
+									</p:dataList>
+								</p:column>
+							</p:dataTable>
+							<h:outputText value="#{bundle.none_entries}" class="font2 bold" rendered="#{lessonLoader.newItems.rowCount==0}" />
+						</p:tab>
+						<p:tab title="#{bundle.mod_entries} [#{lessonLoader.numberChangedItems}]">
+							<p:dataTable headerClass="bordered" class="tcheckword" id="moditemlist" value="#{lessonLoader.modifiedItems}" var="item" columnClasses="w200 atop font1 bordered,w200 atop font1 bordered" rendered="#{lessonLoader.modifiedItems.rowCount>0}">
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Question" class="font2 bold" />
+									</f:facet>
+									<h:outputText value="#{item.text}" class="font2 bold" />
+									<h:outputText value="&lt;sup>[#{item.extId}]&lt;/sup>" rendered="#{item.extId>0}" class="c2" escape="false" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Answer(s)" class="font2 bold" />
+									</f:facet>
+									<p:dataList var="answer" value="#{item.answers}" layout="unorderedList">
+										<h:outputText value="#{answer.text}" />
+									</p:dataList>
+								</h:column>
+							</p:dataTable>
+							<h:outputText value="#{bundle.none_entries}" class="font2 bold" rendered="#{lessonLoader.modifiedItems.rowCount==0}" />
+						</p:tab>
+						<p:tab title="#{bundle.rem_entries} [#{lessonLoader.numberRemovedItems}]">
+							<p:dataTable headerClass="bordered" class="tcheckword" id="remitemlist" value="#{lessonLoader.removedItems}" var="item" columnClasses="w200 atop font1 bordered,w200 atop font1 bordered" rendered="#{lessonLoader.removedItems.rowCount>0}">
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Question" class="font2 bold" />
+									</f:facet>
+									<h:outputText value="#{item.text}" class="font2 bold" />
+									<h:outputText value="&lt;sup>[#{item.extId}]&lt;/sup>" rendered="#{item.extId>0}" class="c2" escape="false" />
+								</h:column>
+								<h:column>
+									<f:facet name="header">
+										<h:outputText value="Answer(s)" class="font2 bold" />
+									</f:facet>
+									<p:dataList var="answer" value="#{item.answers}" layout="unorderedList">
+										<h:outputText value="#{answer.text}" />
+									</p:dataList>
+								</h:column>
+							</p:dataTable>
+							<h:outputText value="#{bundle.none_entries}" class="font2 bold" rendered="#{lessonLoader.removedItems.rowCount==0}" />
+						</p:tab>
+					</p:tabView>
+				</p:layoutUnit>
+			</p:layout>
+		</div>
+		<ui:include src="/snippets/footer.xhtml" />
+	</h:body>
+</f:view>
+</html>

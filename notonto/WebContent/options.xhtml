@@ -1,0 +1,72 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/mobile-card.xhtml">
+	<ui:define name="head">
+		<title>Notonto - Optionen</title>
+	</ui:define>
+	<ui:define name="content">
+		<!-- ### CONTENT-START ### -->
+		<h1>
+			<h:outputText value="#{bundle.account}" />
+		</h1>
+		<p:messages showDetail="true" autoUpdate="true"></p:messages>
+		<p:accordionPanel>
+			<p:tab title="#{bundle.passchange}">
+				<p:outputPanel rendered="#{auth.isLoggedIn}">
+					<p:outputPanel class="pad">
+						<h:outputText value="#{bundle.passchange_text}" class="font1" />
+					</p:outputPanel>
+					<pm:field>
+						<p:outputLabel for="pw1" value="#{bundle.password}" />
+						<p:password secret="true" id="pw1" value="#{auth.passnew}">
+							<p:ajax />
+						</p:password>
+					</pm:field>
+					<pm:field>
+						<p:outputLabel for="pw2" value="#{bundle.passconfirm}" />
+						<p:password secret="true" id="pw2" value="#{auth.passconfirm}">
+							<p:ajax />
+						</p:password>
+					</pm:field>
+					<pm:field>
+						<p:outputLabel for="cb1" />
+						<p:commandButton class="btn_blue" id="cb1" action="#{auth.alterPassword}" value="#{bundle.btn_confirm}" />
+					</pm:field>
+				</p:outputPanel>
+			</p:tab>
+			<p:tab title="#{bundle.nickname}: #{brainSession.currentUser.nick}">
+				<p:outputPanel>
+					<p:outputPanel class="pad">
+						<h:outputText id="nick" escape="false" value="#{bundle.nickname_text}" class="font1" />
+					</p:outputPanel>
+					<pm:field>
+						<p:outputLabel for="nick1" value="#{bundle.nickname}" />
+						<p:inputText id="nick1" value="#{auth.nicknew}" maximumLength="15" />
+					</pm:field>
+					<pm:field>
+						<p:outputLabel for="nick1" />
+						<p:commandButton id="nickb1" update="nick" class="btn btn_blue" action="#{auth.alterNickname}" partialSubmit="true" value="OK" />
+					</pm:field>
+				</p:outputPanel>
+			</p:tab>
+			<p:tab title="#{bundle.delete_account}">
+				<p:outputPanel rendered="#{auth.isLoggedIn}">
+					<h:form id="delf1" partialTriggers="delcb1">
+						<p:outputPanel class="pad">
+							<h:outputText escape="false" value="#{bundle.delete_text}" class="font1" />
+						</p:outputPanel>
+						<h:panelGrid columns="2">
+							<h:outputText value="#{bundle.password}" class="font1" />
+							<h:inputText secret="false" id="delpw" value="#{auth.passdelete}" />
+							<h:outputText value="" />
+							<h:outputText value="#{BrainMessage.pwErrorText}" class="errortext" />
+							<h:outputText value="" />
+							<p:commandButton id="delcb1" class="btn btn_blue" action="#{auth.deleteAccount}" partialSubmit="true" value="#{bundle.btn_delete}"></p:commandButton>
+						</h:panelGrid>
+					</h:form>
+				</p:outputPanel>
+			</p:tab>
+		</p:accordionPanel>
+		<!-- ### CONTENT-END ### -->
+	</ui:define>
+	<ui:define name="sidebar">
+	</ui:define>
+</ui:composition>

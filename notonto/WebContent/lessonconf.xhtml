@@ -1,0 +1,88 @@
+<html xmlns="http://www.w3c.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{brainSession.currentLocale}">
+	<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
+	<h:head>
+		<title>Notonto - Optionen</title>
+		<ui:include src="/snippets/inc_head.xhtml" />
+	</h:head>
+	<h:body initialFocusId="ff1:it1">
+		<ui:include src="/snippets/headline.xhtml" />
+		<!-- LAYOUT-BLOCK 2-1 START -->
+		<div id="main">
+			<p:layout>				<p:layoutUnit id="sidebar" position="east" size="260"></div>
+			</p:layoutUnit>				<p:layoutUnit id="content" position="center">
+				<h1>
+					<h:outputText value="#{bundle.lessonconf}" />
+				</h1>
+				<h2>
+					<h:outputText value="Lernintervalle festlegen" />
+				</h2>
+				<h:outputText class="infotext" value="#{bundle.co_tgd_info}" escape="false" style="display: block;margin-bottom:5px;"></h:outputText>
+				<h:form>
+					<p:selectOneRadio value="#{brainSession.currentUserLesson.intervallType}" forceId="true" id="radios" layout="custom">
+						<f:selectItem itemValue="0" itemLabel="Option 0"></f:selectItem>
+						<f:selectItem itemValue="1" itemLabel="Option 1"></f:selectItem>
+					</p:selectOneRadio>
+					<h:panelGrid columns="2" class="tstd" columnClasses="w30,">
+						<p:radioButton id="opt1" itemIndex="0" for="radios"/>
+						<h:panelGroup>
+							<h:outputText value="#{bundle.co_std}" class="bold" style="display: block;margin:0px;"></h:outputText>
+							<h:outputText value="#{bundle.co_std_text}"></h:outputText>
+						</h:panelGroup>
+						<p:radioButton id="opt2" itemIndex="1" for="radios"/>
+						<h:panelGroup>
+							<h:outputText value="#{bundle.co_tgd}" class="bold" style="display: block"></h:outputText>
+							<h:outputText class="font1" value="#{bundle.co_tgd_text}" style="display: block;margin-bottom:5px;" escape="false"></h:outputText>
+							<p:inputText value="#{brainSession.currentUserLesson.targetDate}" autocomplete="off" onclick="$('inpup:radio[id=radios:1]').attr('checked', true)" forceId="true" id="datepicker"></p:inputText>
+							<h:outputText value="#{BrainMessage.intervallsDateError}" class="errortext" />
+						</h:panelGroup>
+						<h:outputText />
+						<h:panelGroup>
+							<h:commandLink value="OK" action="#{brainSession.currentUserLesson.saveIntervalls}" class="btn btn_blue" />
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:form>
+				<!-- ### LERNINTERVALL-END ### -->
+				<!-- ### CHINESE-START ### -->
+				<h2 rendered="#{brainSession.currentUserLesson.lesson.qlang=='ch'}">
+					<h:outputText value="#{bundle.chinese}" />
+				</h2>
+				<h:form id="ff1" rendered="#{brainSession.currentUserLesson.lesson.qlang=='ch'}">
+					<h:panelGrid columns="2" columnClasses="w30,">
+						<h:selectBooleanCheckbox value="#{brainSession.currentUserLesson.config.showPinyin}" />
+						<h:panelGroup>
+							<h:outputText value="#{bundle.pinyin_conf_head}&lt;br>" escape="false" class="font1 bold" />
+							<h:outputText value="#{bundle.pinyin_conf_text}" escape="false" class="font1" />
+						</h:panelGroup>
+						<h:outputText value="" />
+						<h:commandLink class="btn btn_blue" action="user" value="#{bundle.btn_ok}" />
+					</h:panelGrid>
+				</h:form>
+				<!-- ### CHINESE-END ### -->
+				<!-- ### RESET-START ### -->
+				<h2 style="margin-top: 20px;">
+					<h:outputText value="Reset" />
+				</h2>
+				<h:form>
+					<p:panelGrid id="resetgrid" forceId="true" columns="2" columnClasses="w30,">
+						<h:outputText></h:outputText>
+						<h:outputText value="#{bundle.co_reset_text}" />
+						<h:outputText></h:outputText>
+						<h:commandLink class="btn btn_red" onclick="sure_reset(); return false;" action="user" value="Reset" />
+					</p:panelGrid>
+					<p:panelGrid id="resetyesno" forceId="true" columns="2" columnClasses="w30,">
+						<h:outputText></h:outputText>
+						<h:outputText value="#{bundle.co_reset_sure}" />
+						<h:outputText></h:outputText>
+						<h:panelGroup>
+							<h:commandLink class="btn btn_red" action="#{brainSession.currentUserLesson.reset}" value="#{bundle.btn_yes}" />
+							<h:commandLink class="btn btn_blue" onclick="sure_reset(); return false;" action="user" value="#{bundle.btn_no}" />
+						</h:panelGroup>
+					</p:panelGrid>
+				</h:form>
+				<!-- ### RESET-END ### -->
+			</div>
+		</div>
+	</h:body>
+</f:view>
+</html>

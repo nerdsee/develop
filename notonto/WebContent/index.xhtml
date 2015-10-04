@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/mobile-offline.xhtml">
+	<ui:define name="head">
+		<title>Notonto - Vokabeln lernen und behalten</title>
+	</ui:define>
+	<ui:define name="content">
+		<h1>
+			<h:outputText value="#{bundle.welcome1}" />
+		</h1>
+		<h:outputText value="#{bundle.welcome2}" />
+		<h:panelGroup class="font1">
+			<h:outputText value="#{bundle.intro1}" escape="false" />
+			<p />
+			<h:outputText value="#{bundle.intro2}" escape="false" />
+		</h:panelGroup>
+		<!-- ### CONTENT-START ### -->
+		<h1>
+			<h:outputText value="#{bundle.menu_info_bg}" class="flowtext1" />
+		</h1>
+		<h:panelGroup class="font1">
+			<p>
+				Eine klassische Methode der Lerntechnik ist die <a class="font1" href="http://de.wikipedia.org/wiki/Lernkartei" target="_new">Lernkartei</a>. Dabei werden Lernkarten in einem Karteikasten mit 5 (oder mehr) Fächern aufbewahrt. Die Lernkarten sind so gestaltet, dass sie auf der einen Seite die
+				Frage und auf der anderen die Antwort stehen haben. Zum Lernen von Vokabeln bedeutet dies, dass z.B. auf der einen Seite das deutsche Wort und auf der anderen Seite die Übersetzung in der Sprache steht, die gelernt werden soll. Das Lernen mit der Kartei funktioniert jetzt so, dass eine Karte
+				z.B. aus dem Fach 2 genommen wird. Wenn man das Wort auf der Karte richtig übersetzen kann, legt man die Karte danach in Fach 3. Wenn man die Karte nicht weiss, kommt sie zurück in Fach 1. Die Besonderheit ist hier, dass eine gewusste Karte immer nur ein Fach weit wandert, hingegen eine Karte
+				die man nicht wusste immer zurück in das erste Fach geht.
+			</p>
+			<p>Der Lernerfolg entsteht dadurch, dass man die Lernkarten in den einzelnen Fächer in einer unterschiedlichen Häufigkeit lernt. Lernkarten im ersten Fach lernt man täglich, Lernkarten im 2. Fach wiederholt man nach einer Woche, Lernkarten im 3. Fach nach einem Monat, ... bei den Lernkarteien
+				die man kaufen (oder basteln kann) wird diese unterscheidliche Wiederholungszeit erreicht, indem man die einzelnen Fächer unterschiedlich groß gestaltet, z.B. Fach 1 ist 1cm breit, Fach ist 2 cm, Fach 3 4cm usw. Man fängt jetzt erst an die Lernkarten eines Faches zu lernen, wenn dieses annähernd
+				voll ist. Dieser Mechanismus wurde bei notonto dahingehend perfektioniert, da hier jede einzelne Lernkarte exakt verfolgt wird. Bei jeder Lernkarte wird genau gespeichert, wann diese das letzte mal bearbeitet wurde und wann diese entsprechend des Lernabstandes des Faches wieder gelernt werden
+				sollte. Auch die Reihenfolge der Lernkarten innerhalb eines Faches wird durch das System variiert, sodass auch sonst übliche Lernphänomene ("Nach der Lernkarte Hund kommt immer die Lernkarte Telefon ...") ausgeschlossen werden.</p>
+			<p>Der gesamte Lernmechanismus der Lernkartei baut darauf auf, dass zwischen der Bearbeitung einer Lernkarte eine gewisse Zeit verstreichen muss, um zu prüfen, ob der Lerninhalt wirklich im Gedächtnis geblieben ist. Nur dadurch wird der Weg in Langzeitgedächtnis geebnet.</p>
+			<p>Andere Programmen mit ähnlichem Ziel müssen meist umständlich auf dem Rechner installiert werden, auf dem gelernt werden soll. Ferner müssen hier die Lektionen mühselig selber eingegeben werden. notonto ist vollständig webbasiert. Dass heisst Sie können Ihre Vokabeln jederzeit und überall
+				lernen. Internetzugang genügt.</p>
+		</h:panelGroup>
+		<!-- ### CONTENT-END ### -->
+	</ui:define>
+	<ui:define name="sidebar">
+		<ui:include src="/snippets/top5.xhtml" />
+		<ui:include src="/snippets/tools.xhtml" />
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,41 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<div class="sidebar">
+	<!-- ### CONTENT-START ### -->
+	<h:panelGroup>
+		<h1>
+			<h:outputText value="notonto" class="c4" />
+			<h:outputText value="Top10" class="c3" />
+		</h1>
+	</h:panelGroup>
+	<h:panelGrid columns="2" columnClasses="w100p">
+		<h:panelGroup>
+			<h:panelGroup class="font1">
+				<p:dataTable var="user" value="#{brainSystem.top5}" class="naked" columnClasses="ta_right font1, font1">
+					<p:column>
+						<h:outputText value="#{user.score}" class="font1" />
+					</p:column>
+					<p:column>
+						<h:outputText value="&#160;" escape="false" class="font1" />
+						<h:outputText value="#{user.nick}" class="font1 bold c3" />
+					</p:column>
+				</p:dataTable>
+			</h:panelGroup>
+			<div class="w100p ta_right">
+				<h:outputText value="Stand" class="font3" />
+				<h:outputText value="&#160;" escape="false" class="font3" />
+				<h:outputText value="#{brainSystem.lastTop5}" class="font3">
+					<f:convertDateTime pattern="HH:mm" />
+				</h:outputText>
+				<h:outputText value="&#160;" escape="false" class="font3" />
+				<h:outputText value="Uhr" class="font3" />
+			</div>
+		</h:panelGroup>
+	</h:panelGrid>
+	<!-- ### CONTENT-END ### -->
+</div>
+</ui:composition>

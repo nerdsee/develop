@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+	<div id="headline">
+		<h:panelGrid columns="2" columnClasses="ta_left,ta_right" class="w100p">
+			<h:panelGroup>
+				<h:form>
+					<ul class="minimenu">
+						<li><h:commandButton action="#{brainSession.localeDE}" class="flag" image="/images/de.gif" /></li>
+						<li><h:commandButton action="#{brainSession.localeEN}" class="flag" image="/images/en.gif" /></li>
+						<li><h:outputLink value="/impressum.jsf" class="link">
+								<h:outputText value="#{bundle.imprint}" />
+							</h:outputLink></li>
+						<li><h:outputLink value="/disclaimer.jsf" class="link">
+								<h:outputText value="#{bundle.disclaimer}" />
+							</h:outputLink></li>
+					</ul>
+				</h:form>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{auth.isLoggedIn}">
+				<h:form>
+					<h:outputText value="#{user.name}" class="headtext font3 c1" />
+					<h:commandLink value="#{bundle.menu_account}" action="#{auth.prepareOptions}" class="headtext font3 c4 bold" />
+					<h:outputLink value="/kontakt.jsf" class="headtext font3 c4 bold">
+						<h:outputText value="#{bundle.contact}" />
+					</h:outputLink>
+					<h:commandLink value="#{bundle.menu_logout}" action="#{auth.logout}" class="headtext font3 c4 bold" rendered="#{auth.isLoggedIn}"/>
+				</h:form>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{!auth.isLoggedIn}">
+				<h:form>
+					<h:commandLink value="#{bundle.forgotpw}" action="forgotpw" class="headtext font3 c1 bold" />
+					<h:outputLink value="/auth/register.xhtml" class="headtext font3 c1 bold">
+						<h:outputText value="#{bundle.registerlink}" />
+					</h:outputLink>
+				</h:form>
+			</h:panelGroup>
+			<h:panelGroup>
+				<h:outputText styleClass="logo1 c1" value="no" />
+				<h:outputText styleClass="logo1 c3" value="tonto" />
+			</h:panelGroup>
+		</h:panelGrid>
+		<!-- MENU -->
+		<h:form>
+			<p:menubar>
+				<p:menuitem value="#{bundle.menu_home}" icon="ui-icon-home" outcome="index" />
+				<p:menuitem value="#{bundle.menu_library}" icon="ui-icon-note" outcome="library" />
+				<p:menuitem value="#{bundle.menu_learn}" outcome="user" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}" />
+				<p:menuitem value="#{bundle.menu_teacher}" outcome="/editlesson.jsf" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
+				<p:menuitem value="#{bundle.menu_admin}" url="/admin/user.jsf" icon="ui-icon-gear" rendered="#{auth.isLoggedIn and user.isAdmin}" />
+				<p:submenu label="Infos" icon="ui-icon-info">
+					<p:menuitem value="#{bundle.menu_info_bg}" outcome="info_bg" />
+					<p:menuitem value="#{bundle.menu_info_ls}" outcome="info_co" />
+				</p:submenu>
+				<f:facet name="options">
+					<p:inputText forceId="true" id="loginname" value="#{auth.username}" required="true" placeholder="#{bundle.username}" rendered="#{!auth.isLoggedIn}" />
+					<p:password forceId="true" id="loginpass" value="#{auth.password}" required="true" placeholder="#{bundle.password}" onkeydown="return firelogin(event,1);" rendered="#{!auth.isLoggedIn}" />
+					<p:commandButton forceId="true" id="firelogin" onclick="return userandpass();" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
+				</f:facet>
+			</p:menubar>
+		</h:form>
+		<!-- MENU -->
+	</div>
+</ui:composition>

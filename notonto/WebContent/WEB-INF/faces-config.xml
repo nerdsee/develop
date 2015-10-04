@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd" version="2.2">
+
+
+	<navigation-rule>
+		<from-view-id>lesson.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>options</from-outcome>
+			<to-view-id>intervals.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>method.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>options</from-outcome>
+			<to-view-id>intervals.jsf</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>lesson_enter.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>options</from-outcome>
+			<to-view-id>intervals.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>intervals.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>method.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>options.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>

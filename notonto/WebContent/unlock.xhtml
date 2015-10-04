@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/mobile.xhtml">
+	<ui:define name="head">
+		<title>Notonto - Vokabeln lernen und behalten</title>
+	</ui:define>
+	<ui:define name="content">
+		<!-- LAYOUT-BLOCK 2-1 START -->
+		<div id="shade" forceId="true" class="outer">
+			<div class="block">
+				<div class="content_w">
+					<!-- ### CONTENT-START ### -->
+					<h1>
+						<h:outputText value="#{bundle.contact}" />
+					</h1>
+					<h3>
+						<h:outputText value="#{bundle.unlock_text}" />
+					</h3>
+					<!-- ### CONTENT-END ### -->
+				</div>
+			</div>
+		</div>
+		<!-- LAYOUT-BLOCK 2-1 END -->
+	</ui:define>
+</ui:composition>

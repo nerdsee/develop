@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
+<h:head>
+	<link rel="stylesheet" type="text/css" href="/css/style2.css" />
+	<link rel="stylesheet" type="text/css" href="/css/demo.css" />
+	<script src="/js/code2.js" />
+	<ui:insert name="head" />
+</h:head>
+<h:body>
+	<pm:page id="p1" styleClass="jqm-demos">
+		<h:form>
+			<pm:header styleClass="jqm-header">
+				<p:panelGrid layout="grid" columns="2">
+					<h:outputText class="c1 font4" value="#{brainSession.currentUserLesson.lesson.description}" />
+					<p:button styleClass="ui-btn-inline ui-btn-orange" outcome="exit" ajax="false" value="Fertig" />
+				</p:panelGrid>
+			</pm:header>
+			<pm:content styleClass="jqm-content">
+				<p:commandButton id="btn-basic1" value="Basic" type="button" class="ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" />
+				<ui:insert name="content" />
+				<p:overlayPanel for="btn-basic1" widgetVar="pnl-basic" at="left" showEffect="overlay">
+					<p:menu styleClass="ui-corner-all ui-group-theme-c">
+						<p:menuitem value="Lektion löschen" action="#{brainSession.unsubscribeLesson()}" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}" />
+						<p:menuitem value="Optionen" outcome="options" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
+					</p:menu>
+				</p:overlayPanel>
+			</pm:content>
+		</h:form>
+	</pm:page>
+	<pm:page id="p2" styleClass="jqm-demos">
+		<h:form>
+			<pm:header styleClass="jqm-header">
+				<p:panelGrid layout="grid" columns="2">
+					<h:outputText class="c1 font4" value="#{brainSession.currentUserLesson.lesson.description}" />
+					<p:button styleClass="ui-btn-inline ui-btn-orange" outcome="user" ajax="false" value="Fertig" />
+				</p:panelGrid>
+				<a id="jqm-navmenu-link" class="jqm-navmenu-link ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" href="#menu" data-role="button" role="button">Menu</a>
+			</pm:header>
+			<pm:content styleClass="jqm-content">
+				<p:commandButton id="btn-basic2" value="Basic" type="button" class="ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" />
+				<ui:insert name="content2" />
+			</pm:content>
+			<p:overlayPanel for="btn-basic2" widgetVar="pnl-basic2" at="left" showEffect="overlay">
+				<p:menu styleClass="ui-corner-all ui-group-theme-c">
+					<p:menuitem value="Lektion löschen" action="#{brainSession.unsubscribeLesson()}" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}" />
+					<p:menuitem value="Optionen" outcome="options" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
+				</p:menu>
+			</p:overlayPanel>
+		</h:form>
+	</pm:page>
+</h:body>
+</html>

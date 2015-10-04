@@ -1,0 +1,46 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{brainSession.currentLocale}">
+	<html>
+	<h:head>
+	<title>User</title>
+	<f:subview id="s_inc_head">
+		<ui:include src="/snippets/inc_head.jsp" />
+	</f:subview>
+	</h:head>
+	<h:body onLoad="document.getElementById('loginfrm:loginname').focus()">
+	<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
+	<f:subview id="s_headline">
+		<ui:include src="/snippets/headline.jsp" />
+	</f:subview>
+	<!-- LAYOUT-BLOCK 2-1 START -->
+	<div id="shade" forceId="true" class="outer">
+		<div class="block">
+			<div class="content_w">
+				<!-- ### CONTENT-START ### -->
+				<h1><h:outputText value="#{bundle.forgotpw}" /></h1>
+				<h:outputText value="#{bundle.reminder1}" class="font1" />
+				<h:form id="reminderform">
+					<h:panelGrid class="tstd" columnClasses="left" columns="2" style="margin-top: 20px;">
+						<h:outputText value="#{bundle.email}" class="font1 bold" />
+						<h:panelGroup>
+							<t:inputText style="display:block" id="emailinput" value="#{auth.email}" required="true" />
+							<h:message for="emailinput" class="font2 c2" />
+						</h:panelGroup>
+						<h:outputText value="" />
+						<h:commandLink class="btn btn_blue" action="#{auth.remind}" value="#{bundle.btn_remind}" />
+					</h:panelGrid>
+				</h:form>
+				<!-- ### CONTENT-END ### -->
+			</div>
+		</div>
+	</div>
+	<!-- LAYOUT-BLOCK 2-1 END -->
+	</h:body>
+	</html>
+</f:view>
+</ui:composition>

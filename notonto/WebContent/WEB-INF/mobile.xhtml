@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<f:view renderKitId="PRIMEFACES_MOBILE" />
+<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
+<h:head>
+	<link rel="stylesheet" type="text/css" href="/css/style2.css" />
+	<link rel="stylesheet" type="text/css" href="/css/demo.css" />
+	<script src="/js/code2.js" />
+	<ui:insert name="head" />
+</h:head>
+<h:body>
+	<h:form>
+		<pm:page id="p0" styleClass="jqm-demos">
+			<pm:header styleClass="jqm-header">
+				<p:panelGrid columns="2" styleClass="ui-responsive">
+					<h2>
+						<p:commandLink action="user.jsf">
+							<span class="c1 font4">no</span>
+							<span class="c2 font4">tonto</span>
+						</p:commandLink>
+					</h2>
+					<p:outputPanel>
+						<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="login" ajax="false" value="Login" rendered="#{!auth.isLoggedIn}" />
+						<p:commandButton styleClass="ui-btn-inline ui-btn-green" action="register" value="Register" rendered="#{!auth.isLoggedIn}" />
+					</p:outputPanel>
+					<p:outputPanel />
+				</p:panelGrid>
+			</pm:header>
+			<p:panelGrid rendered="#{not user.unlocked}">
+				<div class="ui-messages ui-widget" aria-live="polite">
+					<div class="ui-messages-warn ui-corner-all">
+						<span class="ui-messages-warn-icon"></span>
+						<ul>
+							<li><span class="ui-messages-info-summary">Bitte schalten Sie ihren Account frei.</span></li>
+						</ul>
+					</div>
+				</div>
+			</p:panelGrid>
+			<center>
+				<pm:content styleClass="jqm-content" style="max-width: 800px;">
+					<p:commandButton id="btn-basic" value="Basic" type="button" class="ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" />
+					<ui:insert name="content" />
+				</pm:content>
+			</center>
+			<p:overlayPanel for="btn-basic" widgetVar="pnl-basic" at="left" showEffect="overlay">
+				<p:menu styleClass="ui-corner-all ui-group-theme-c">
+					<p:menuitem value="#{bundle.menu_home}" icon="ui-icon-home" outcome="user" />
+					<p:menuitem value="Blog" icon="ui-icon-note" outcome="blog" />
+					<p:menuitem styleClass="m_lib" value="#{bundle.menu_library}" icon="ui-icon-note" outcome="library" />
+					<p:menuitem value="#{bundle.menu_learn}" outcome="user" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}" />
+					<p:menuitem value="#{bundle.menu_teacher}" outcome="/editlesson.jsf" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
+					<p:menuitem value="Optionen" outcome="/options.jsf" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
+					<p:menuitem value="#{bundle.menu_logout}" action="#{auth.logout}" rendered="#{auth.isLoggedIn}" ajax="false" />
+					<p:menuitem value="#{bundle.menu_admin}" url="/admin/user.jsf" icon="ui-icon-gear" rendered="#{auth.isLoggedIn and user.isAdmin}" />
+				</p:menu>
+			</p:overlayPanel>
+		</pm:page>
+	</h:form>
+</h:body>
+</html>

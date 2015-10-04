@@ -1,0 +1,14 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">fix="t"%>
+
+	
+	<div class="content_err" rendered="#{BrainMessage.errorText != null}">
+			<!-- ### CONTENT-START ### -->
+				<h:outputText value="#{BrainMessage.errorText}" class="font2"></h:outputText>
+			<!-- ### CONTENT-END ### -->
+	</div>
+	</ui:composition>

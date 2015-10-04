@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/mobile-offline.xhtml">
+	<ui:define name="head">
+		<title>Notonto - Vokabeln lernen und behalten</title>
+	</ui:define>
+	<ui:define name="content">
+			<h1>
+				<h:outputText value="Login" />
+			</h1>
+			<h:form>
+				<p:outputPanel>
+					<h:inputText forceId="true" id="loginname" value="#{auth.username}" required="true" placeholder="#{bundle.username}" rendered="#{!auth.isLoggedIn}" />
+					<h:inputSecret forceId="true" id="loginpass" value="#{auth.password}" required="true" placeholder="#{bundle.password}" onkeydown="return firelogin(event,1);" rendered="#{!auth.isLoggedIn}" />
+					<p:commandButton forceId="true" id="firelogin" onclick="return userandpass();" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
+				</p:outputPanel>
+			</h:form>
+			<!-- ### CONTENT-END ### -->
+	</ui:define>
+	<ui:define name="sidebar">
+		<ui:include src="/snippets/top5.xhtml" />
+		<ui:include src="/snippets/tools.xhtml" />
+	</ui:define>
+</ui:composition>

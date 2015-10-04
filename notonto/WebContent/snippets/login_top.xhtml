@@ -1,0 +1,21 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+<div style="float:right; text-align: right; margin-top: 20px;" rendered="#{!auth.isLoggedIn}">
+<h:form>
+	<h:panelGrid class="tnk" columns="3">
+		<h:outputText value="#{bundle.username}" class="font2 bold cf" />
+		<h:outputText value="#{bundle.password}" class="font2 bold cf" />
+		<h:outputText value="" />
+		<p:inputText forceId="true" class="input" id="loginname" value="#{auth.username}" size="20" required="true" />
+		<p:password forceId="true" class="input" id="loginpass" value="#{auth.password}" size="20" required="true" onkeydown="return firelogin(event,1);" />
+		<p:commandLink forceId="true" id="firelogin" class="btns btn_blue" aonclick="return userandpass();" action="#{auth.login()}" value="#{bundle.login}" />
+	</h:panelGrid>
+	<h:messages class="font3 bold c1" globalOnly="true" layout="table" />
+</h:form>
+</div>
+</ui:composition>

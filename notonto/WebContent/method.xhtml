@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/mobile-card.xhtml">
+	<ui:define name="head">
+		<title>Notonto - Vokabeln lernen und behalten</title>
+	</ui:define>
+	<ui:define name="content">
+		<!-- ### CONTENT-START ### -->
+		<h1>
+			<h:outputText value="Lernmethode" />
+		</h1>
+		<h2>
+			<h:outputText value="Bitte wählen Sie, ob sie mit Karten lernen wollen oder die Wörter eingeben wollen." />
+		</h2>
+		<p />
+		<h:form>
+			<p:panelGrid columns="2">
+				<h:commandButton class="button" action="lesson" value="Karten"></h:commandButton>
+				<h:commandButton class="button" action="lesson_enter" value="Eingabe"></h:commandButton>
+			</p:panelGrid>
+		</h:form>
+		<!-- ### CONTENT-END ### -->
+	</ui:define>
+</ui:composition>
