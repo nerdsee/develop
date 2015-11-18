@@ -9,52 +9,43 @@
 	<ui:insert name="head" />
 </h:head>
 <h:body>
-	<h:form>
-		<pm:page id="p0" styleClass="jqm-demos">
-			<pm:header styleClass="jqm-header">
-				<p:panelGrid columns="2" styleClass="ui-responsive">
-					<h2>
-						<p:commandLink action="user.jsf">
-							<span class="c1 font4">no</span>
-							<span class="c2 font4">tonto</span>
-						</p:commandLink>
-					</h2>
-					<p:outputPanel>
-						<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="login" ajax="false" value="Login" rendered="#{!auth.isLoggedIn}" />
-						<p:commandButton styleClass="ui-btn-inline ui-btn-green" action="register" value="Register" rendered="#{!auth.isLoggedIn}" />
-					</p:outputPanel>
-					<p:outputPanel />
-				</p:panelGrid>
-			</pm:header>
-			<p:panelGrid rendered="#{not user.unlocked}">
-				<div class="ui-messages ui-widget" aria-live="polite">
-					<div class="ui-messages-warn ui-corner-all">
-						<span class="ui-messages-warn-icon"></span>
-						<ul>
-							<li><span class="ui-messages-info-summary">Bitte schalten Sie ihren Account frei.</span></li>
-						</ul>
-					</div>
+	<pm:page styleClass="jqm-demos">
+		<pm:header styleClass="jqm-header">
+			<h2>
+				<h:graphicImage url="/images/primefaces.png" alt="PrimeFaces Mobile" width="60" height="30" />
+			</h2>
+			<p>
+				<span class="logoDarkText">Mobile</span><span class="logoBlueText">Showcase</span>
+				<p:outputPanel>
+					<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="login" ajax="false" value="Login" rendered="#{!auth.isLoggedIn}" />
+					<p:commandButton styleClass="ui-btn-inline ui-btn-green" action="register" value="Register" rendered="#{!auth.isLoggedIn}" />
+				</p:outputPanel>
+			</p>
+			<a class="jqm-navmenu-link ui-nodisc-icon ui-alt-icon ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" href="#menu" data-role="button" role="button">Menu</a>
+		</pm:header>
+		<p:panelGrid rendered="#{not user.unlocked}">
+			<div class="ui-messages ui-widget" aria-live="polite">
+				<div class="ui-messages-warn ui-corner-all">
+					<span class="ui-messages-warn-icon"></span>
+					<ul>
+						<li><span class="ui-messages-info-summary">Bitte schalten Sie ihren Account frei.</span></li>
+					</ul>
 				</div>
-			</p:panelGrid>
-			<center>
-				<pm:content styleClass="jqm-content" style="max-width: 800px;">
-					<p:commandButton id="btn-basic" value="Basic" type="button" class="ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" />
-					<ui:insert name="content" />
-				</pm:content>
-			</center>
-			<p:overlayPanel for="btn-basic" widgetVar="pnl-basic" at="left" showEffect="overlay">
-				<p:menu styleClass="ui-corner-all ui-group-theme-c">
-					<p:menuitem value="#{bundle.menu_home}" icon="ui-icon-home" outcome="user" />
-					<p:menuitem value="Blog" icon="ui-icon-note" outcome="blog" />
-					<p:menuitem styleClass="m_lib" value="#{bundle.menu_library}" icon="ui-icon-note" outcome="library" />
-					<p:menuitem value="#{bundle.menu_learn}" outcome="user" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}" />
-					<p:menuitem value="#{bundle.menu_teacher}" outcome="/editlesson.jsf" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
-					<p:menuitem value="Optionen" outcome="/options.jsf" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
-					<p:menuitem value="#{bundle.menu_logout}" action="#{auth.logout}" rendered="#{auth.isLoggedIn}" ajax="false" />
-					<p:menuitem value="#{bundle.menu_admin}" url="/admin/user.jsf" icon="ui-icon-gear" rendered="#{auth.isLoggedIn and user.isAdmin}" />
-				</p:menu>
-			</p:overlayPanel>
-		</pm:page>
-	</h:form>
+			</div>
+		</p:panelGrid>
+		<pm:content styleClass="jqm-content">
+			<ui:insert name="content" />
+		</pm:content>
+		<div id="menu" data-role="panel" class="jqm-navmenu-panel" data-position="left" data-display="overlay" data-theme="a">
+			<ui:insert name="menu" />
+		</div>
+		<pm:footer styleClass="jqm-footer" fixed="true" tapToggle="false">
+			<p>Running #{build.primefacesVersion} on #{build.jsfVersion}</p>
+		</pm:footer>
+	</pm:page>
+	<script language="javascript" src="#{request.contextPath}/resources/main/js/sh.js"></script>
+	<script language="javascript">
+		SyntaxHighlighter.all();
+	</script>
 </h:body>
 </html>

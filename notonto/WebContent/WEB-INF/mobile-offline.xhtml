@@ -9,32 +9,37 @@
 	<ui:insert name="head" />
 </h:head>
 <h:body>
-	<pm:page id="p0" styleClass="jqm-demos">
+	<pm:page styleClass="jqm-demos">
 		<pm:header styleClass="jqm-header">
-			<h:form>
-				<p:panelGrid columns="2" styleClass="ui-responsive">
-					<h2>
-						<p:commandLink action="index.jsf">
-							<span class="c1 font4">no</span>
-							<span class="c2 font4">tonto</span>
-						</p:commandLink>
-					</h2>
+			<h2>
+				<h:graphicImage url="/images/primefaces.png" alt="PrimeFaces Mobile" width="60" height="30" />
+			</h2>
+			<p>
+				<span class="logoDarkText">Mobile</span><span class="logoBlueText">Showcase</span>
+				<h:form>
 					<p:outputPanel>
 						<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="login" ajax="false" value="Login" rendered="#{!auth.isLoggedIn}" />
 						<p:commandButton styleClass="ui-btn-inline ui-btn-green" action="register" value="Register" rendered="#{!auth.isLoggedIn}" />
 					</p:outputPanel>
-					<p:outputPanel />
-				</p:panelGrid>
-				<a id="jqm-navmenu-link" class="jqm-navmenu-link ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" href="#menu" data-role="button" role="button">Menu</a>
-			</h:form>
-		</pm:header>
-		<pm:content styleClass="ribbon bg1">
-			<center>
-				<h:form>
-					<ui:insert name="content" />
 				</h:form>
-			</center>
+			</p>
+		</pm:header>
+		<p:panelGrid rendered="#{not user.unlocked}">
+			<div class="ui-messages ui-widget" aria-live="polite">
+				<div class="ui-messages-warn ui-corner-all">
+					<span class="ui-messages-warn-icon"></span>
+					<ul>
+						<li><span class="ui-messages-info-summary">Bitte schalten Sie ihren Account frei.</span></li>
+					</ul>
+				</div>
+			</div>
+		</p:panelGrid>
+		<pm:content styleClass="jqm-content">
+			<ui:insert name="content" />
 		</pm:content>
+		<pm:footer styleClass="jqm-footer" fixed="true" tapToggle="false">
+			<p>Running #{build.primefacesVersion} on #{build.jsfVersion}</p>
+		</pm:footer>
 	</pm:page>
 </h:body>
 </html>
