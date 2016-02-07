@@ -156,6 +156,8 @@ public interface BrainDB {
 
 	Vector<UserScore> getTop5();
 
+	Vector<UserScore> getLessonTop5(Lesson lesson);
+
 	Topic getTopicTree(String lang);
 
 	int getItemCount(Lesson lesson) throws DBException;

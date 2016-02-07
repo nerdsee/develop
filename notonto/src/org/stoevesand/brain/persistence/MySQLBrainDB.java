@@ -547,10 +547,10 @@ public class MySQLBrainDB implements BrainDB {
 
 			String sql = "";
 			sql += "SELECT l.*,prefix FROM lessons l, users u ";
-			sql += "where ownergroupID=0 and l.ownerID=u.id and concat(prefix,code)=? and public=2 ";
+			sql += "where ownergroupID=0 and l.ownerID=u.id and code=? and public=2 ";
 			sql += "union ";
 			sql += "SELECT l.*,prefix FROM lessons l, groups u ";
-			sql += "where ownergroupID>0 and l.ownergroupID=u.id and concat(prefix,code)=? and public=2 ";
+			sql += "where ownergroupID>0 and l.ownergroupID=u.id and code=? and public=2 ";
 			sql += "order by description";
 
 			ps = conn.prepareStatement(sql);
@@ -2578,6 +2578,40 @@ public class MySQLBrainDB implements BrainDB {
 			sql += "group by u.name order by score desc limit 10";
 
 			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				String nick = DBUtil.getString(rs, "nick");
+				UserScore us = new UserScore(DBUtil.getString(rs, "name"), nick, DBUtil.getInt(rs, "score"));
+				ret.add(us);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (DBException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(ps);
+			close(conn);
+		}
+		return ret;
+	}
+
+	public Vector<UserScore> getLessonTop5(Lesson lesson) {
+		Vector<UserScore> ret = new Vector<UserScore>();
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection("getUserScore");
+			String sql = "select u.name as name, u.nick as nick, sum(level) as score from users u, userlessons ul, useritems ui, lessons l ";
+			sql += "where u.id=ul.userid and ui.userlessonid=ul.id and ul.lessonID=l.id and l.id=? and ui.last>now() - interval 14 month ";
+			sql += "group by u.name order by score desc limit 10";
+
+			ps = conn.prepareStatement(sql);
+			ps.setLong(1, lesson.getId());
 			rs = ps.executeQuery();
 
 			while (rs.next()) {

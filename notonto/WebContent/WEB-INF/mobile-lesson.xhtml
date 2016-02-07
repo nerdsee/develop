@@ -3,33 +3,43 @@
 <f:view renderKitId="PRIMEFACES_MOBILE" />
 <f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
 <h:head>
-	<link rel="stylesheet" type="text/css" href="/css/style2.css" />
-	<link rel="stylesheet" type="text/css" href="/css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
 	<script src="/js/code2.js" />
 	<ui:insert name="head" />
 </h:head>
 <h:body>
-	<pm:page id="p1" styleClass="jqm-demos">
+	<pm:page styleClass="jqm-demos">
 		<pm:header styleClass="jqm-header">
-			<h:form>
-				<p:panelGrid columns="2" styleClass="ui-responsive">
-					<h2>
-						<span class="c1 font4">no</span><span class="c2 font4">tonto</span>
-					</h2>
-					<p:outputPanel>
-						<p:button styleClass="ui-btn-inline ui-btn-orange" outcome="user" ajax="false" value="Fertig" />
-					</p:outputPanel>
-					<p:outputPanel />
-				</p:panelGrid>
-				<a id="jqm-navmenu-link" class="jqm-navmenu-link ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" href="#menu" data-role="button" role="button">Menu</a>
-			</h:form>
+			<h2>
+				<p:commandLink action="exit">
+					<h:graphicImage url="/images/back.png" alt="Notonto" />
+				</p:commandLink>
+			</h2>
+			<p>
+				<span class="logoDarkText">Lernen.</span><span class="logoBlueText">Behalten.</span>
+				<p:outputPanel>
+					<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="login" ajax="false" value="Login" rendered="#{!auth.isLoggedIn}" />
+					<p:commandButton styleClass="ui-btn-inline ui-btn-green" action="register" value="Register" rendered="#{!auth.isLoggedIn}" />
+				</p:outputPanel>
+			</p>
+			<a class="jqm-navmenu-link ui-nodisc-icon ui-alt-icon ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" href="#menu" data-role="button" role="button">Menu</a>
 		</pm:header>
+		<p:panelGrid rendered="#{not user.unlocked}">
+			<div class="ui-messages ui-widget" aria-live="polite">
+				<div class="ui-messages-warn ui-corner-all">
+					<span class="ui-messages-warn-icon"></span>
+					<ul>
+						<li><span class="ui-messages-info-summary">Bitte schalten Sie ihren Account frei.</span></li>
+					</ul>
+				</div>
+			</div>
+		</p:panelGrid>
 		<pm:content styleClass="jqm-content">
 			<ui:insert name="content" />
 		</pm:content>
-		<pm:footer styleClass="jqm-footer" fixed="true" tapToggle="false">
-			<ui:insert name="footer1" />
-		</pm:footer>
+		<div id="menu" data-role="panel" class="jqm-navmenu-panel" data-position="left" data-display="overlay" data-theme="a">
+			<ui:insert name="menu" />
+		</div>
 	</pm:page>
 </h:body>
 </html>

@@ -21,6 +21,7 @@ import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.Category;
 import org.stoevesand.brain.Group;
 import org.stoevesand.brain.LessonLoader;
+import org.stoevesand.brain.UserScore;
 import org.stoevesand.brain.auth.User;
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.brain.persistence.BrainDB;
@@ -146,6 +147,14 @@ public class Lesson {
 
 		}
 		dirty = false;
+	}
+
+	public Vector<UserScore> getTop5() {
+
+		BrainDB brainDB = brainSystem.getBrainDB();
+		Vector<UserScore> top5 = brainDB.getLessonTop5(this);
+		return top5;
+
 	}
 
 	public long getId() {

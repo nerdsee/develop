@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/mobile-card.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/mobile.xhtml">
 	<ui:define name="head">
 		<title>Notonto - Vokabeln lernen und behalten</title>
 	</ui:define>
@@ -11,12 +11,24 @@
 			<h:outputText value="Bitte wählen Sie, ob sie mit Karten lernen wollen oder die Wörter eingeben wollen." />
 		</h2>
 		<p />
-		<h:form>
-			<p:panelGrid columns="2">
-				<h:commandButton class="button" action="lesson" value="Karten"></h:commandButton>
-				<h:commandButton class="button" action="lesson_enter" value="Eingabe"></h:commandButton>
-			</p:panelGrid>
-		</h:form>
+		<p:panelGrid columns="2">
+			<p:commandButton action="lesson" value="Karten" />
+			<p:commandButton action="lesson_enter" value="Eingabe" />
+		</p:panelGrid>
 		<!-- ### CONTENT-END ### -->
+		<p:confirmDialog message="Wollen Sie wirklich diese Lektion löschen?" header="Lektion löschen" severity="alert" widgetVar="cd">
+			<p:commandButton value="Ja, wirklich!" action="#{brainSession.unsubscribeLesson()}" oncomplete="PF('cd').hide()" />
+			<p:commandButton value="Nein!" onclick="PF('cd').hide();" type="button" />
+		</p:confirmDialog>
+	</ui:define>
+	<ui:define name="menu">
+		<h:form>
+			<p:menu>
+				<p:menuitem value="Lektion löschen" onclick="PF('cd').show()" icon="ui-icon-lightbulb" />
+				<p:menuitem value="Optionen" outcome="options" icon="ui-icon-pencil" />
+				<p:menuitem value="Exit" outcome="exit" />
+			</p:menu>
+		</h:form>
+		<ui:include src="/snippets/top5lesson.xhtml"></ui:include>
 	</ui:define>
 </ui:composition>

@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
@@ -24,20 +23,12 @@ import javax.faces.model.ListDataModel;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.jboss.logging.Logger;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
-import org.jfree.data.xy.XYDataset;
-import org.primefaces.event.SelectEvent;
-import org.primefaces.event.UnselectEvent;
 import org.stoevesand.brain.auth.User;
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.brain.model.Item;
 import org.stoevesand.brain.model.Lesson;
 import org.stoevesand.brain.model.UserItem;
-import org.stoevesand.brain.model.UserLesson;
 import org.stoevesand.brain.model.UserLesson;
 import org.stoevesand.brain.persistence.Administration;
 import org.stoevesand.brain.persistence.BrainDB;
@@ -63,7 +54,7 @@ public class BrainSession {
 	}
 
 	UserLesson currentUserLesson = null;
-	
+
 	private static final String CAT_SELECTION = "mode_sel_cat";
 	private static final int CAT_SIZES = 3;
 
@@ -87,7 +78,6 @@ public class BrainSession {
 
 	private String filterText = "";
 	private String filterCat = "";
-	private String lessonCode = "";
 
 	private int loginAttempts = 0;
 	private int encoding = 0;
@@ -289,27 +279,6 @@ public class BrainSession {
 		return lastAnswerText;
 	}
 
-	private boolean selectedByCategory() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-
-		// mit diesem attribut im request wird geprüft, ob über einen Request
-		// Paramter (GET)
-		// selektiert wurde
-		String cat1 = request.getParameter("cat");
-		if (cat1 != null) {
-			cat1 = StringEscapeUtils.unescapeJava(cat1);
-			setCategory(cat1);
-			return true;
-		}
-
-		// mit diesem attribut im request wird geprüft, ob aus der tag cloud
-		// selektiert wurde
-		String cat2 = (String) request.getAttribute(CAT_SELECTION);
-
-		return cat2 != null;
-	}
-
 	/**
 	 * function to initialise the Session after a user logged in
 	 */
@@ -326,12 +295,6 @@ public class BrainSession {
 
 	public LessonWrapper getSelectedLesson() {
 		return selectedLesson;
-	}
-
-	public void onRowSelect(SelectEvent event) {
-	}
-
-	public void onRowUnselect(UnselectEvent event) {
 	}
 
 	public String learnLesson() {
@@ -386,37 +349,6 @@ public class BrainSession {
 		return "user";
 	}
 
-	TimeSeriesCollection dataset = null;
-
-	@SuppressWarnings("deprecation")
-	public XYDataset getScoreDataset() {
-
-		if (dataset == null) {
-
-			TimeSeries s1 = new TimeSeries("Score", Day.class);
-
-			BrainDB brainDB = brainSystem.getBrainDB();
-
-			try {
-				brainDB.loadScoreHistory(s1, currentUser);
-			} catch (DBException e) {
-				e.printStackTrace();
-			}
-
-			dataset = new TimeSeriesCollection();
-			dataset.addSeries(s1);
-
-			dataset.setDomainIsPointsInTime(true);
-		}
-
-		TimeSeries ts = dataset.getSeries(0);
-		int r = ts.getItemCount() - 1;
-		ts.delete(r, r);
-		ts.add(new Day(new Date()), currentUser.getScore());
-
-		return dataset;
-	}
-
 	public void setCategory(ActionEvent event) {
 		// TODO: ersetzen
 		// String cat = (String)
@@ -436,15 +368,7 @@ public class BrainSession {
 			filterCat = cat;
 		}
 
-		lessonCode = "";
-	}
-
-	public String getLessonCode() {
-		return lessonCode;
-	}
-
-	public void setLessonCode(String lessonCode) {
-		this.lessonCode = lessonCode;
+		//lessonCode = "";
 	}
 
 	public ListDataModel<Category> getLocalCategories() {
@@ -1122,6 +1046,10 @@ public class BrainSession {
 	public int getAvailable(UserLesson userLesson) throws DBException {
 		// return userStats.getAvailable();
 		return brainSystem.getBrainDB().getUserLessonAvailable(userLesson);
+	}
+
+	public void setItemList(ListDataModel<Item> il) {
+		this.itemList = il;
 	}
 
 }

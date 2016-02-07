@@ -126,12 +126,12 @@ function checkSpecialChar(evt, parent) {
 
 	kl = $("input[id$='keyboardLayout']").val();
 /*
- * erstmal auskommentiert
+ * erstmal auskommentiert */
 	if (csc(evt, parent, code)) {
 		evt.cancelBubble = true;
 		return false;
 	}
-*/
+
 	if (code == 13) {
 		updateData();
 		li = document.getElementById("answerform:submitlink");

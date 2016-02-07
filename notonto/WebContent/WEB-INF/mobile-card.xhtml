@@ -3,50 +3,60 @@
 <f:view renderKitId="PRIMEFACES_MOBILE" />
 <f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
 <h:head>
-	<link rel="stylesheet" type="text/css" href="/css/style2.css" />
-	<link rel="stylesheet" type="text/css" href="/css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
 	<script src="/js/code2.js" />
 	<ui:insert name="head" />
 </h:head>
 <h:body>
-	<pm:page id="p1" styleClass="jqm-demos">
+	<pm:page id="s0" styleClass="jqm-demos">
 		<pm:header styleClass="jqm-header">
-			<p:panelGrid layout="grid" columns="2">
-				<h:outputText class="c1 font4" value="#{brainSession.currentUserLesson.lesson.description}" />
-				<p:button styleClass="ui-btn-inline ui-btn-orange" outcome="exit" ajax="false" value="Fertig" />
-			</p:panelGrid>
+			<h2>
+				<p:commandLink action="exit">
+					<h:graphicImage url="/images/back.png" alt="Notonto" />
+				</p:commandLink>
+			</h2>
+			<p>
+				<span class="logoBlueText">#{brainSession.currentUserLesson.lesson.description}</span>
+			</p>
+			<a class="jqm-navmenu-link ui-nodisc-icon ui-alt-icon ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" href="#menu" data-role="button" role="button">Menu</a>
 		</pm:header>
+		<p:panelGrid rendered="#{not user.unlocked}">
+			<div class="ui-messages ui-widget" aria-live="polite">
+				<div class="ui-messages-warn ui-corner-all">
+					<span class="ui-messages-warn-icon"></span>
+					<ul>
+						<li><span class="ui-messages-info-summary">Bitte schalten Sie ihren Account frei.</span></li>
+					</ul>
+				</div>
+			</div>
+		</p:panelGrid>
 		<pm:content styleClass="jqm-content">
-			<h:form>
-				<p:commandButton id="btn-basic1" value="Basic" type="button" class="ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" />
-				<p:overlayPanel for="btn-basic1" widgetVar="pnl-basic" at="left" showEffect="overlay">
-					<p:menu styleClass="ui-corner-all ui-group-theme-c">
-						<p:menuitem value="Lektion löschen" action="#{brainSession.unsubscribeLesson()}" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}" />
-						<p:menuitem value="Optionen" outcome="options" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
-					</p:menu>
-				</p:overlayPanel>
-			</h:form>
 			<ui:insert name="content" />
 		</pm:content>
 	</pm:page>
-	<pm:page id="p2" styleClass="jqm-demos">
+	<pm:page id="s1" styleClass="jqm-demos">
 		<pm:header styleClass="jqm-header">
-			<p:panelGrid layout="grid" columns="2">
-				<h:outputText class="c1 font4" value="#{brainSession.currentUserLesson.lesson.description}" />
-				<p:button styleClass="ui-btn-inline ui-btn-orange" outcome="user" ajax="false" value="Fertig" />
-			</p:panelGrid>
-			<a id="jqm-navmenu-link" class="jqm-navmenu-link ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" href="#menu" data-role="button" role="button">Menu</a>
+			<h2>
+				<p:commandLink action="exit">
+					<h:graphicImage url="/images/back.png" alt="Notonto" />
+				</p:commandLink>
+			</h2>
+			<p>
+				<span class="logoBlueText">#{brainSession.currentUserLesson.lesson.description}</span>
+			</p>
+			<a class="jqm-navmenu-link ui-nodisc-icon ui-alt-icon ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" href="#menu" data-role="button" role="button">Menu</a>
 		</pm:header>
+		<p:panelGrid rendered="#{not user.unlocked}">
+			<div class="ui-messages ui-widget" aria-live="polite">
+				<div class="ui-messages-warn ui-corner-all">
+					<span class="ui-messages-warn-icon"></span>
+					<ul>
+						<li><span class="ui-messages-info-summary">Bitte schalten Sie ihren Account frei.</span></li>
+					</ul>
+				</div>
+			</div>
+		</p:panelGrid>
 		<pm:content styleClass="jqm-content">
-			<h:form>
-				<p:commandButton id="btn-basic2" value="Basic" type="button" class="ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" />
-				<p:overlayPanel for="btn-basic2" widgetVar="pnl-basic2" at="left" showEffect="overlay">
-					<p:menu styleClass="ui-corner-all ui-group-theme-c">
-						<p:menuitem value="Lektion löschen" action="#{brainSession.unsubscribeLesson()}" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}" />
-						<p:menuitem value="Optionen" outcome="options" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
-					</p:menu>
-				</p:overlayPanel>
-			</h:form>
 			<ui:insert name="content2" />
 		</pm:content>
 	</pm:page>

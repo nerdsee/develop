@@ -6,18 +6,61 @@
 		<h:outputText styleClass="headline" value="#{brainSession.currentUserLesson.lesson.description}" />
 	</ui:define>
 	<ui:define name="content">
-		<p:link outcome="pm:p2?transition=none">
-			<p:panel widgetVar="area_answer" rendered="#{not empty brainSession.currentUserLesson.currentUserItem}">
-				<f:facet name="header">
-					<h:outputText value="Level #{brainSession.currentUserItem.showLevel}" class="font5" />
-				</f:facet>
-				<!-- ### CONTENT-START ### -->
-				<p:panelGrid columnClasses="atop,atop">
-					<h:outputText value="#{brainSession.currentUserItem.item.formattedText}" escape="false" class="font4" rendered="#{brainSession.currentUserLesson.lesson.lessonType==0}" />
-					<h:outputText value="#{brainSession.currentUserItem.item.formattedText}" escape="false" class="fontsym ta_center" rendered="#{brainSession.currentUserLesson.lesson.lessonType==1}" />
-					<h:outputText value="[#{brainSession.currentUserItem.item.comment}]" class="font4 ta_center" rendered="#{brainSession.currentUserLesson.lesson.lessonType==1 and brainSession.currentUserLesson.config.showPinyin }" />
+		<h:form>
+			<p:link outcome="pm:s1?transition=none">
+				<p:panel widgetVar="area_answer" rendered="#{not empty brainSession.currentUserLesson.currentUserItem}">
+					<f:facet name="header">
+						<h:outputText value="Level #{brainSession.currentUserItem.showLevel}" class="font5" />
+					</f:facet>
+					<!-- ### CONTENT-START ### -->
+					<p:panelGrid>
+						<h:outputText value="#{brainSession.currentUserItem.item.formattedText}" escape="false" class="font4" rendered="#{brainSession.currentUserLesson.lesson.lessonType==0}" />
+						<h:outputText value="#{brainSession.currentUserItem.item.formattedText}" escape="false" class="fontsym ta_center" rendered="#{brainSession.currentUserLesson.lesson.lessonType==1}" />
+						<h:outputText value="[#{brainSession.currentUserItem.item.comment}]" class="font4 ta_center" rendered="#{brainSession.currentUserLesson.lesson.lessonType==1 and brainSession.currentUserLesson.config.showPinyin }" />
+					</p:panelGrid>
+				</p:panel>
+				<h:panelGrid columns="1" rendered="#{empty brainSession.currentUserLesson.currentUserItem}">
+					<h1>
+						<h:outputText value="#{bundle.noitems}" />
+					</h1>
+					<h2>
+						<h:outputText value="#{brainSession.currentUserLesson.nextUserItemTimeDiff}" />
+					</h2>
+					<p:commandButton class="btn_blue" action="#{brainSession.tryNextUserItem}" value="Refresh" rendered="#{auth.isLoggedIn}" />
+				</h:panelGrid>
+				<!-- ### CONTENT-END ### -->
+			</p:link>
+		</h:form>
+	</ui:define>
+	<!-- ##################### 2 ################################ -->
+	<ui:define name="content2">
+		<h:form>
+			<p:link outcome="pm:s0?transition=none">
+				<p:panel widgetVar="area_answer" footer="Footer" rendered="#{not empty brainSession.currentUserLesson.currentUserItem}">
+					<f:facet name="header">
+						<h:outputText value="Level #{brainSession.currentUserItem.showLevel}" class="font5" />
+					</f:facet>
+					<h:outputText value="[#{brainSession.currentUserItem.item.comment}]&lt;p>" escape="false" class="font4 ta_center" rendered="#{brainSession.currentUserLesson.lesson.lessonType==1 and not brainSession.currentUserLesson.config.showPinyin }" />
+					<p:dataList value="#{brainSession.currentUserItem.item.answers}" var="answer" itemStyleClass="#{brainSession.currentUserItem.item.answersSize>1 ? 'font5' : 'font4'}" layout="#{brainSession.currentUserItem.item.answersSize>1 ? 'unordered' : 'none'}"
+						class="plainlist #{brainSession.currentUserItem.item.answersSize>1 ? 'font5' : 'font4'}">
+						<h:panelGroup rendered="#{answer.visible == true}">
+							<h:outputText value="#{answer.text}" rendered="#{brainSession.currentUserLesson.lesson.alang!='ch'}" />
+							<h:outputText value="#{answer.text}" class="fontsym" rendered="#{brainSession.currentUserLesson.lesson.alang=='ch'}" />
+							<h:outputText value="#{answer.phonetic}" class="font4 c1" escape="false" />
+						</h:panelGroup>
+					</p:dataList>
+				</p:panel>
+			</p:link>
+			<center>
+				<p:commandButton id="btnyes" value="Gewusst" action="#{brainSession.knowAnswer}" styleClass="ui-btn-inline ui-btn-green" ajax="false" />
+				<p:commandButton id="btnno" value="Nicht gewusst" action="#{brainSession.failAnswer}" styleClass="ui-btn-inline ui-btn-red" ajax="false" />
+			</center>
+			<p:panelGrid columns="3">
+				<h:outputText></h:outputText>
+				<p:panelGrid>
 				</p:panelGrid>
-			</p:panel>
+				<h:outputText></h:outputText>
+			</p:panelGrid>
 			<h:panelGrid columns="1" class="" rendered="#{empty brainSession.currentUserLesson.currentUserItem}">
 				<h1>
 					<h:outputText value="#{bundle.noitems}" />
@@ -28,45 +71,15 @@
 				<p:commandButton class="btn_blue" action="#{brainSession.tryNextUserItem}" value="Refresh" rendered="#{auth.isLoggedIn}" />
 			</h:panelGrid>
 			<!-- ### CONTENT-END ### -->
-		</p:link>
+		</h:form>
 	</ui:define>
-	<!-- ##################### 2 ################################ -->
-	<ui:define name="content2">
-		<p:link outcome="pm:p1?transition=none">
-			<p:panel widgetVar="area_answer" footer="Footer" rendered="#{not empty brainSession.currentUserLesson.currentUserItem}">
-				<f:facet name="header">
-					<h:outputText value="Level #{brainSession.currentUserItem.showLevel}" class="font5" />
-				</f:facet>
-				<h:outputText value="[#{brainSession.currentUserItem.item.comment}]&lt;p>" escape="false" class="font4 ta_center" rendered="#{brainSession.currentUserLesson.lesson.lessonType==1 and not brainSession.currentUserLesson.config.showPinyin }" />
-				<p:dataList value="#{brainSession.currentUserItem.item.answers}" var="answer" itemStyleClass="#{brainSession.currentUserItem.item.answersSize>1 ? 'font5' : 'font4'}" layout="#{brainSession.currentUserItem.item.answersSize>1 ? 'unordered' : 'none'}"
-					class="plainlist #{brainSession.currentUserItem.item.answersSize>1 ? 'font5' : 'font4'}">
-					<h:panelGroup rendered="#{answer.visible == true}">
-						<h:outputText value="#{answer.text}" rendered="#{brainSession.currentUserLesson.lesson.alang!='ch'}" />
-						<h:outputText value="#{answer.text}" class="fontsym" rendered="#{brainSession.currentUserLesson.lesson.alang=='ch'}" />
-						<h:outputText value="#{answer.phonetic}" class="font4 c1" escape="false" />
-					</h:panelGroup>
-				</p:dataList>
-			</p:panel>
-		</p:link>
-		<center>
-			<p:commandButton id="btnyes" value="Gewusst" action="#{brainSession.knowAnswer}" styleClass="ui-btn-inline ui-btn-green" ajax="false" />
-			<p:commandButton id="btnno" value="Nicht gewusst" action="#{brainSession.failAnswer}" styleClass="ui-btn-inline ui-btn-red" ajax="false" />
-		</center>
-		<p:panelGrid columns="3">
-			<h:outputText></h:outputText>
-			<p:panelGrid>
-			</p:panelGrid>
-			<h:outputText></h:outputText>
-		</p:panelGrid>
-		<h:panelGrid columns="1" class="" rendered="#{empty brainSession.currentUserLesson.currentUserItem}">
-			<h1>
-				<h:outputText value="#{bundle.noitems}" />
-			</h1>
-			<h2>
-				<h:outputText value="#{brainSession.currentUserLesson.nextUserItemTimeDiff}" />
-			</h2>
-			<p:commandButton class="btn_blue" action="#{brainSession.tryNextUserItem}" value="Refresh" rendered="#{auth.isLoggedIn}" />
-		</h:panelGrid>
-		<!-- ### CONTENT-END ### -->
+	<ui:define name="menu">
+		<h:form>
+			<p:menu>
+				<p:menuitem value="Lektion löschen" action="#{brainSession.unsubscribeLesson()}" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}" />
+				<p:menuitem value="Optionen" outcome="options" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
+				<p:menuitem value="Exit" outcome="exit" />
+			</p:menu>
+		</h:form>
 	</ui:define>
 </ui:composition>

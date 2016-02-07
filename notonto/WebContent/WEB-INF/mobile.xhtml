@@ -3,8 +3,7 @@
 <f:view renderKitId="PRIMEFACES_MOBILE" />
 <f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
 <h:head>
-	<link rel="stylesheet" type="text/css" href="/css/style2.css" />
-	<link rel="stylesheet" type="text/css" href="/css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
 	<script src="/js/code2.js" />
 	<ui:insert name="head" />
 </h:head>
@@ -12,10 +11,10 @@
 	<pm:page styleClass="jqm-demos">
 		<pm:header styleClass="jqm-header">
 			<h2>
-				<h:graphicImage url="/images/primefaces.png" alt="PrimeFaces Mobile" width="60" height="30" />
+				<h:graphicImage url="/images/notonto.png" alt="Notonto" />
 			</h2>
 			<p>
-				<span class="logoDarkText">Mobile</span><span class="logoBlueText">Showcase</span>
+				<span class="logoDarkText">Lernen.</span><span class="logoBlueText">Behalten.</span>
 				<p:outputPanel>
 					<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="login" ajax="false" value="Login" rendered="#{!auth.isLoggedIn}" />
 					<p:commandButton styleClass="ui-btn-inline ui-btn-green" action="register" value="Register" rendered="#{!auth.isLoggedIn}" />
@@ -39,13 +38,6 @@
 		<div id="menu" data-role="panel" class="jqm-navmenu-panel" data-position="left" data-display="overlay" data-theme="a">
 			<ui:insert name="menu" />
 		</div>
-		<pm:footer styleClass="jqm-footer" fixed="true" tapToggle="false">
-			<p>Running #{build.primefacesVersion} on #{build.jsfVersion}</p>
-		</pm:footer>
 	</pm:page>
-	<script language="javascript" src="#{request.contextPath}/resources/main/js/sh.js"></script>
-	<script language="javascript">
-		SyntaxHighlighter.all();
-	</script>
 </h:body>
 </html>

@@ -12,6 +12,12 @@
 			<p />
 			<h:outputText value="#{bundle.intro2}" escape="false" />
 		</h:panelGroup>
+		<h:form>
+			<p:outputPanel>
+				<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="login" ajax="false" value="Login" rendered="#{!auth.isLoggedIn}" />
+				<p:commandButton styleClass="ui-btn-inline ui-btn-green" action="register" value="Register" rendered="#{!auth.isLoggedIn}" />
+			</p:outputPanel>
+		</h:form>
 		<!-- ### CONTENT-START ### -->
 		<h1>
 			<h:outputText value="#{bundle.menu_info_bg}" class="flowtext1" />

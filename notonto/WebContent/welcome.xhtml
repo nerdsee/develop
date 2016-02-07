@@ -7,7 +7,15 @@
 		<h1>
 			<h:outputText value="Willkommen bei notonto" />
 		</h1>
-		<h:outputText value="Wir haben eine email an #{auth.email} geschickt. Bitte bestätige diesen Account über den Link in der email. Danach steht notonto im vollen Umfang zur Verfügung." />
+		<h:outputText escape="false" value="Wir haben eine email an " styleClass="font4" />
+		<br/>
+		<h:outputText escape="false" value="#{auth.email}" styleClass="font4 bold"/>
+		<br/>
+		<h:outputText escape="false" value="geschickt." styleClass="font4"/>
+		<p/>
+		<h:outputText escape="false" value="Bitte bestätige diesen Account über den Link in der email." />
+		<p/>
+		<p:button outcome="user" styleClass="ui-btn-inline ui-btn-green" value="Los geht's" />
 		<!-- ### CONTENT-END ### -->
 	</ui:define>
 </ui:composition>

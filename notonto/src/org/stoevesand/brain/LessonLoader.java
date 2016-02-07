@@ -20,9 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.jboss.logging.Logger;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
@@ -166,6 +168,11 @@ public class LessonLoader {
 
 		Lesson currentLesson = lesson;
 
+		newItems = new Vector<Item>(10);
+		modifiedItems = new Vector<Item>(10);
+		removedItems = new Vector<Item>(10);
+		numberUploadedItems = 0;
+
 		HashMap<String, Item> items = new HashMap<String, Item>();
 		try {
 
@@ -174,9 +181,9 @@ public class LessonLoader {
 			// nur auf chapter prüfen, wenn dies explizit übergeben wurde!
 			boolean checkChapter = false;
 
-			HSSFWorkbook wb = new HSSFWorkbook(new POIFSFileSystem(inputStream));
-
-			HSSFSheet sheet1 = wb.getSheetAt(0);
+			Workbook wb = WorkbookFactory.create(inputStream);
+			
+			Sheet sheet1 = wb.getSheetAt(0);
 			Iterator<Row> rowsIterator = sheet1.iterator();
 
 			int cellsTotal = 0;
@@ -273,11 +280,6 @@ public class LessonLoader {
 
 			}
 
-			newItems = new Vector<Item>(10);
-			modifiedItems = new Vector<Item>(10);
-			removedItems = new Vector<Item>(10);
-			numberUploadedItems = 0;
-
 			for (Item item : items.values()) {
 				numberUploadedItems++;
 				Item org_item = currentLesson.getItemByExtID(item.getExtId());
@@ -317,7 +319,7 @@ public class LessonLoader {
 			session.getBrainMessage().setErrorText("Format error. Couldn't read the input file.");
 			newItems = new Vector<Item>();
 			numberUploadedItems = 0;
-			e.printStackTrace();
+			//e.printStackTrace();
 			log.debug(e);
 		}
 	}
@@ -409,7 +411,7 @@ public class LessonLoader {
 
 		validate = false;
 
-		return "editlessonmeta";
+		return "editlesson";
 	}
 
 	public String discardItems() {
@@ -421,7 +423,7 @@ public class LessonLoader {
 		numberUploadedItems = 0;
 		validate = false;
 
-		return "editlessonmeta";
+		return "editlesson";
 	}
 
 }

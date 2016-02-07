@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/mobile-edit.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/mobile.xhtml">
 	<ui:define name="head">
 		<title>Edit Item</title>
 	</ui:define>
@@ -10,26 +10,19 @@
 			<h:outputText value="#{brainSession.currentLesson.description}" />
 		</h2>
 		<h:form>
-			<h:panelGrid columns="2" class="tstd" columnClasses="ta_right,test">
-				<h:outputText value="Titel" class="font1 bold" />
-				<h:inputText value="#{brainSession.currentLesson.description}" size="40" />
-				<h:outputText value="Code" class="font1 bold" />
-				<h:panelGroup rendered="#{not empty BrainSession.currentLesson.owner.prefix}">
-					<p:selectOneListbox forceId="true" id="presel" size="1" value="#{brainSession.currentLesson.ownergroupId}" rendered="#{brainSession.currentLesson.prefixListSize>1}" onchange="calc_code();">
-						<f:selectItems value="#{brainSession.currentLesson.prefixList}" />
-					</p:selectOneListbox>
-					<h:outputText forceId="true" id="preselstat" value="#{brainSession.currentLesson.prefix}" class="font1" rendered="#{brainSession.currentLesson.prefixListSize==1}" />
-					<p:inputText forceId="true" id="itcode" value="#{brainSession.currentLesson.codeSuffix}" size="8" onkeyup="calc_code();" />
-					<h:outputText value=" " class="font1" />
-					<h:outputText forceId="true" id="gencode" value="" class="font1" />
-				</h:panelGroup>
-				<h:outputText value="#{bundle.selectprefix}" escape="false" class="c3 msgtext" rendered="#{empty BrainSession.currentLesson.owner.prefix}" />
-				<h:outputText value="Type" class="font1 bold" />
-				<p:selectOneMenu size="1" value="#{brainSession.currentLesson.lessonType}">
+			<pm:field>
+				<p:outputLabel for="f1" value="Titel" />
+				<p:inputText id="f1" value="#{brainSession.currentLesson.description}" size="40" />
+			</pm:field>
+			<pm:field>
+				<p:outputLabel for="f2" value="Type" />
+				<p:selectOneMenu id="f2" size="1" value="#{brainSession.currentLesson.lessonType}">
 					<f:selectItem itemValue="0" itemLabel="Standard" />
 					<f:selectItem itemValue="1" itemLabel="Symbol" />
 				</p:selectOneMenu>
-				<h:outputText value="Icon" class="font1 bold" />
+			</pm:field>
+			<pm:field>
+				<p:outputLabel for="flagsel" value="Icon" />
 				<p:selectOneMenu forceId="true" size="1" id="flagsel" value="#{brainSession.currentLesson.icon}" onchange="change_flag();">
 					<f:selectItem itemValue="allg" itemLabel="common knowledge" />
 					<f:selectItem itemValue="capax" itemLabel="capax" />
@@ -44,10 +37,14 @@
 					<f:selectItem itemValue="ru" itemLabel="russian" />
 					<f:selectItem itemValue="es" itemLabel="spanish" />
 				</p:selectOneMenu>
-				<h:outputText value="" class="font1 bold" />
+			</pm:field>
+			<pm:field>
+				<p:outputLabel for="iflag" value="" />
 				<p:graphicImage forceId="true" id="iflag" url="/images/lessons/lesson_button_#{brainSession.currentLesson.icon}.gif" class="icon" width="32" height="32" />
-				<h:outputText value="Language (Q-A)" class="font1 bold" />
-				<h:panelGroup>
+			</pm:field>
+			<pm:field>
+				<p:outputLabel for="f5" value="Language (Q-A)" />
+				<p:panelGrid id="f5" columns="2">
 					<p:selectOneMenu style="margin-righp: 5px;" size="1" value="#{brainSession.currentLesson.qlang}">
 						<f:selectItem itemValue="ch" itemLabel="ch" />
 						<f:selectItem itemValue="de" itemLabel="de" />
@@ -70,57 +67,31 @@
 						<f:selectItem itemValue="pt" itemLabel="pt" />
 						<f:selectItem itemValue="ru" itemLabel="ru" />
 					</p:selectOneMenu>
-				</h:panelGroup>
-				<h:outputText value="Tags" class="font1 bold" rendered="#{auth.isLoggedIn and BrainSession.currentUser.isAdmin}" />
-				<h:panelGrid columns="2" rendered="#{auth.isLoggedIn and BrainSession.currentUser.isAdmin}">
-					<h:outputText value="DE" class="font1 bold" />
-					<h:inputText value="#{brainSession.currentLesson.tagsDE}" size="40" />
-					<h:outputText value="EN" class="font1 bold" />
-					<h:inputText value="#{brainSession.currentLesson.tagsEN}" size="40" />
-					<h:outputText value="ES" class="font1 bold" />
-					<h:inputText value="#{brainSession.currentLesson.tagsES}" size="40" />
-				</h:panelGrid>
-				<h:outputText value="Abstract" class="font1 bold" />
-				<h:inputTextarea value="#{brainSession.currentLesson.abstract}" cols="60" rows="3" />
-				<h:outputText value="" />
-				<h:panelGroup>
-					<p:commandButton value="OK" action="#{brainSession.currentLesson.saveAction}" class="btn_blue" />
-					<p:commandButton value="Back" action="#{brainSession.currentLesson.rollbackAction}" class="btn_red" />
-				</h:panelGroup>
-			</h:panelGrid>
+				</p:panelGrid>
+			</pm:field>
+			<pm:field>
+				<p:outputLabel for="f7" value="Abstract" />
+				<p:inputTextarea id="f7" value="#{brainSession.currentLesson.abstract}" cols="60" rows="3" />
+			</pm:field>
+			<pm:field>
+				<p:outputLabel />
+				<p:commandButton value="OK" action="#{brainSession.currentLesson.saveAction}" class="ui-btn-inline ui-btn-green" />
+				<p:commandButton value="Abbrechen" action="#{brainSession.currentLesson.rollbackAction}" class="ui-btn-inline ui-btn-red" />
+			</pm:field>
+			<pm:field>
+				<p:outputLabel />
+			</pm:field>
 		</h:form>
 	</ui:define>
 	<ui:define name="menu">
-		<p:menu>
-			<p:menuitem value="OK" action="#{brainSession.currentLesson.saveAction}" icon="ui-icon-gear" />
-			<p:menuitem value="Cancel" action="#{brainSession.currentLesson.rollbackAction}" icon="ui-icon-gear" />
-			<p:submenu label="Lesson" icon="ui-icon-info">
-				<p:menuitem value="Download Lesson" action="#{brainSession.downloadLesson}" icon="ui-icon-gear" />
-			</p:submenu>
-		</p:menu>
-	</ui:define>
-	<ui:define name="sidebar">
-		<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
-		<div class="sidebar">
-			<!-- ### SIDEBAR-START ### -->
-			<h1 style="margin-top: 40px;">
-				<h:outputText value="Upload" />
-			</h1>
-			<h:form id="uploadfrm" enctype="multipart/form-data">
-				<p:growl id="msg"></p:growl>
-				<h:outputText value="#{bundle.fileformat}" class="font1" />
-				<p:fileUpload styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" label="Choose ..." value="#{lessonLoader.uploadedFile}" mode="simple" />
-				<p:commandButton id="uploadbtn" value="Upload" action="#{lessonLoader.fileLessonUploaded}" ajax="false" />
-			</h:form>
-			<h:form>
-				<p:commandButton value="#{bundle.btn_delete}" type="button" onclick="PF('cd').show()" />
-			</h:form>
-			<h:form>
-				<p:confirmDialog message="Sind sie sicher, dass sie die Lektion löschen wollen?" header="Lektion löschen" severity="alert" widgetVar="cd">
-					<p:commandButton value="Ja" action="#{brainSession.deleteOwnerLesson}" oncomplete="PF('cd').hide()" />
-					<p:commandButton value="Nein" onclick="PF('cd').hide();" type="button" />
-				</p:confirmDialog>
-			</h:form>
-		</div>
+		<h:form>
+			<p:menu>
+				<p:menuitem value="OK" action="#{brainSession.currentLesson.saveAction}" icon="ui-icon-gear" />
+				<p:menuitem value="Cancel" action="#{brainSession.currentLesson.rollbackAction}" icon="ui-icon-gear" />
+				<p:submenu label="Lesson" icon="ui-icon-info">
+					<p:menuitem value="Download Lesson" action="#{brainSession.downloadLesson}" icon="ui-icon-gear" />
+				</p:submenu>
+			</p:menu>
+		</h:form>
 	</ui:define>
 </ui:composition>

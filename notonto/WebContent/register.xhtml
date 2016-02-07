@@ -7,44 +7,46 @@
 		<h1>
 			<h:outputText value="#{bundle.register}" />
 		</h1>
-		<p:panelGrid columns="1" styleClass="tstd">
-			<p:messages autoUpdate="true" showDetail="true"></p:messages>
-			<p:message for="passinput" display="icon" />
-			<pm:field>
-				<p:outputLabel for="emailinput" value="#{bundle.email}" />
-				<p:inputText style="display:block;" id="emailinput" value="#{auth.email}" required="true" validatorMessage="Bitte geben Sie eine gültige Emailadresse ein.">
-					<f:validateRegex pattern=".+@.+" />
-				</p:inputText>
-			</pm:field>
-			<pm:field>
-				<p:outputLabel for="passinput" value="#{bundle.password}" />
-				<p:password id="passinput" value="#{auth.password}" required="true" />
+		<h:form>
+			<p:panelGrid columns="1" styleClass="tstd">
+				<p:messages autoUpdate="true" showDetail="true"></p:messages>
 				<p:message for="passinput" display="icon" />
-			</pm:field>
-			<pm:field>
-				<p:outputLabel for="passconfinput" value="#{bundle.passconfirm}" />
-				<p:password style="display:block;" id="passconfinput" value="#{auth.passconfirm}" label="#{bundle.passconfirm}" required="true" />
-			</pm:field>
-			<pm:field>
-				<p:outputLabel value="" />
-				<p:selectBooleanCheckbox id="acceptinput" required="true" validator="#{auth.validateRights}" itemLabel="#{bundle.confirm1} #{bundle.confirm2} #{bundle.confirm3}" />
-			</pm:field>
-			<pm:field>
-				<p:outputLabel value="" />
-				<p:commandLink class="font1 c1" value="#{bundle.confirm2}" onclick="PF('dlg1').show(); return false;" type="button" />
-			</pm:field>
-			<pm:field>
-				<p:outputLabel for="reg1" value="" />
-				<p:commandButton id="reg1" action="#{auth.register}" styleClass="ui-btn-inline ui-btn-green" value="#{bundle.register}" />
-			</pm:field>
-		</p:panelGrid>
-		<!-- ### CONTENT-END ### -->
-		<p:dialog header="#{bundle.confirm2}" widgetVar="dlg1" showEffect="pop" closeOnEscape="true" style="max-width: 200px;">
-			<h:outputText value="#{bundle.nutzung1}" />
-			<p />
-			<h:outputText value="#{bundle.nutzung2}" />
-			<p />
-			<h:outputText value="#{bundle.nutzung3}" />
-		</p:dialog>
+				<pm:field>
+					<p:outputLabel for="emailinput" value="#{bundle.email}" />
+					<p:inputText style="display:block;" id="emailinput" value="#{auth.email}" required="true" validatorMessage="Bitte geben Sie eine gültige Emailadresse ein.">
+						<f:validateRegex pattern=".+@.+" />
+					</p:inputText>
+				</pm:field>
+				<pm:field>
+					<p:outputLabel for="passinput" value="#{bundle.password}" />
+					<p:password id="passinput" value="#{auth.password}" required="true" />
+					<p:message for="passinput" display="icon" />
+				</pm:field>
+				<pm:field>
+					<p:outputLabel for="passconfinput" value="#{bundle.passconfirm}" />
+					<p:password style="display:block;" id="passconfinput" value="#{auth.passconfirm}" label="#{bundle.passconfirm}" required="true" />
+				</pm:field>
+				<pm:field>
+					<p:outputLabel value="" />
+					<p:selectBooleanCheckbox id="acceptinput" required="true" validator="#{auth.validateRights}" itemLabel="#{bundle.confirm1} #{bundle.confirm2} #{bundle.confirm3}" />
+				</pm:field>
+				<pm:field>
+					<p:outputLabel value="" />
+					<p:commandLink class="font1 c1" value="#{bundle.confirm2}" onclick="PF('dlg1').show(); return false;" type="button" />
+				</pm:field>
+				<pm:field>
+					<p:outputLabel for="reg1" value="" />
+					<p:commandButton id="reg1" action="#{auth.register}" styleClass="ui-btn-inline ui-btn-green" value="#{bundle.register}" />
+				</pm:field>
+			</p:panelGrid>
+			<!-- ### CONTENT-END ### -->
+			<p:dialog header="#{bundle.confirm2}" widgetVar="dlg1" showEffect="pop" closeOnEscape="true" style="max-width: 200px;">
+				<h:outputText value="#{bundle.nutzung1}" />
+				<p />
+				<h:outputText value="#{bundle.nutzung2}" />
+				<p />
+				<h:outputText value="#{bundle.nutzung3}" />
+			</p:dialog>
+		</h:form>
 	</ui:define>
 </ui:composition>

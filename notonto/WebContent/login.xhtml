@@ -3,20 +3,16 @@
 		<title>Notonto - Vokabeln lernen und behalten</title>
 	</ui:define>
 	<ui:define name="content">
-			<h1>
-				<h:outputText value="Login" />
-			</h1>
+		<h1>
+			<h:outputText value="Login" />
+		</h1>
+		<p:outputPanel>
 			<h:form>
-				<p:outputPanel>
-					<h:inputText forceId="true" id="loginname" value="#{auth.username}" required="true" placeholder="#{bundle.username}" rendered="#{!auth.isLoggedIn}" />
-					<h:inputSecret forceId="true" id="loginpass" value="#{auth.password}" required="true" placeholder="#{bundle.password}" onkeydown="return firelogin(event,1);" rendered="#{!auth.isLoggedIn}" />
-					<p:commandButton forceId="true" id="firelogin" onclick="return userandpass();" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
-				</p:outputPanel>
+				<h:inputText forceId="true" id="loginname" value="#{auth.username}" required="true" placeholder="#{bundle.username}" rendered="#{!auth.isLoggedIn}" />
+				<h:inputSecret forceId="true" id="loginpass" value="#{auth.password}" required="true" placeholder="#{bundle.password}" onkeydown="return firelogin(event,1);" rendered="#{!auth.isLoggedIn}" />
+				<p:commandButton forceId="true" id="firelogin" onclick="return userandpass();" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
 			</h:form>
-			<!-- ### CONTENT-END ### -->
-	</ui:define>
-	<ui:define name="sidebar">
-		<ui:include src="/snippets/top5.xhtml" />
-		<ui:include src="/snippets/tools.xhtml" />
+		</p:outputPanel>
+		<!-- ### CONTENT-END ### -->
 	</ui:define>
 </ui:composition>

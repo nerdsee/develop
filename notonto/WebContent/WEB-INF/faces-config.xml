@@ -3,7 +3,7 @@
 
 
 	<navigation-rule>
-		<from-view-id>lesson.xhtml</from-view-id>
+		<from-view-id>/lesson.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>options</from-outcome>
 			<to-view-id>intervals.xhtml</to-view-id>
@@ -15,7 +15,7 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>method.xhtml</from-view-id>
+		<from-view-id>/method.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>options</from-outcome>
 			<to-view-id>intervals.jsf</to-view-id>
@@ -27,11 +27,7 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>lesson_enter.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>options</from-outcome>
-			<to-view-id>intervals.xhtml</to-view-id>
-		</navigation-case>
+		<from-view-id>/lesson_enter.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
 			<to-view-id>user.xhtml</to-view-id>
@@ -39,7 +35,15 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>intervals.xhtml</from-view-id>
+		<from-view-id>/lesson_wrong.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/intervals.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
 			<to-view-id>method.xhtml</to-view-id>
@@ -47,7 +51,7 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>options.xhtml</from-view-id>
+		<from-view-id>/options.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
 			<to-view-id>user.xhtml</to-view-id>
@@ -55,7 +59,7 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>editlessonmeta.xhtml</from-view-id>
+		<from-view-id>/editlessonmeta.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
 			<to-view-id>editlesson.xhtml</to-view-id>
@@ -63,7 +67,7 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>editlessonupload.xhtml</from-view-id>
+		<from-view-id>/editlessonupload.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
 			<to-view-id>editlesson.xhtml</to-view-id>

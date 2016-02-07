@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/mobile-edit.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/mobile.xhtml">
 	<ui:define name="head">
 		<title><h:outputText value="Notonto - #{bundle.menu_teacher}" /></title>
 	</ui:define>
@@ -9,54 +9,51 @@
 		<h3>
 			<h:outputText value="#{bundle.teacherinfo}" />
 		</h3>
-		<div class="hinttext" rendered="#{not Auth.isLoggedIn}">
-			<h:outputText value="#{bundle.liblogin}" />
-		</div>
-		<h:form>
-			<p:dataTable value="#{brainSession.ownerLibrary}" var="lw" columnClasses="liblist,liblist w100p">
-				<p:column width="40">
-					<h:graphicImage url="/images/lessons/lesson_button_#{lw.lesson.icon}.gif" class="icon" width="32" height="32" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{lw.lesson.description}" class="font1 bold" />
-					<br />
-					<p:panelGrid columns="2" class="font3" columnClasses="">
-						<h:outputText escape="false" value="#{bundle.numberitems}" />
-						<h:outputText value="#{lw.lesson.itemCount}" />
-						<h:outputText escape="false" value="#{bundle.numbersubs}" />
-						<h:outputText value="#{lw.lesson.subscriberCount}" />
-						<h:outputText escape="false" value="#{bundle.usage}" />
-						<h:outputText value="#{lw.lesson.usageCount}" />
-					</p:panelGrid>
-				</p:column>
-				<p:column width="40">
-					<h:graphicImage class="flag" value="/images/#{lw.lesson.qlang}.gif" width="15" height="9" />
-					<h:outputText value="&amp;nbsp;" escape="false" />
-					<h:graphicImage class="flag" value="/images/#{lw.lesson.alang}.gif" width="15" height="9" />
-				</p:column>
-				<p:column width="80">
-					<p:commandButton class="btn_blue" value="#{bundle.btn_edit}" action="#{brainSession.editOwnerLesson}" />
-					<p:commandButton value="#{bundle.btn_subscribed}" escape="false" action="#{brainSession.subscribeOwnerLesson}" rendered="#{lw.isSubscribed}" />
-					<p:commandButton value="#{bundle.btn_subscribe}" action="#{brainSession.subscribeOwnerLesson}" rendered="#{not lw.isSubscribed}" />
-				</p:column>
-			</p:dataTable>
-		</h:form>
-		<div class="infotext" rendered="#{brainSession.ownerLibrary.rowCount==0}">
+		<p:panelGrid columns="1">
+			<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="#{libraryView.newLesson}" value="+ #{bundle.btn_newlesson}" style="float: right;" />
+		</p:panelGrid>
+		<p:dataTable value="#{libraryView.ownerLibrary}" var="lw" columnClasses="liblist,liblist w100p">
+			<p:column width="40">
+				<h:graphicImage url="/images/lessons/lesson_button_#{lw.lesson.icon}.gif" class="icon" width="32" height="32" />
+			</p:column>
+			<p:column>
+				<h:outputText value="#{lw.lesson.description}" class="font1 bold" />
+				<br />
+				<p:panelGrid columns="2" class="font3" columnClasses="">
+					<h:outputText escape="false" value="#{bundle.numberitems}" />
+					<h:outputText value="#{lw.lesson.itemCount}" />
+					<h:outputText escape="false" value="#{bundle.numbersubs}" />
+					<h:outputText value="#{lw.lesson.subscriberCount}" />
+					<h:outputText escape="false" value="#{bundle.usage}" />
+					<h:outputText value="#{lw.lesson.usageCount}" />
+				</p:panelGrid>
+			</p:column>
+			<p:column width="40">
+				<h:graphicImage class="flag" value="/images/#{lw.lesson.qlang}.gif" width="15" height="9" />
+				<h:outputText value="&amp;nbsp;" escape="false" />
+				<h:graphicImage class="flag" value="/images/#{lw.lesson.alang}.gif" width="15" height="9" />
+			</p:column>
+			<p:column width="80">
+				<h:form>
+					<p:commandButton class="btn_blue" value="#{bundle.btn_edit}" action="#{libraryView.editOwnerLesson}" />
+					<p:commandButton class="btn_blue" value="Upload" action="#{libraryView.editLessonUpload}" />
+					<p:commandButton value="#{bundle.btn_subscribed}" escape="false" disabled="true" rendered="#{lw.isSubscribed}" />
+					<p:commandButton value="#{bundle.btn_learn}" escape="false" action="#{brainSession.subscribeLesson(lw)}" rendered="#{not lw.isSubscribed}" />
+				</h:form>
+			</p:column>
+		</p:dataTable>
+		<div class="infotext" rendered="#{libraryView.ownerLibrary.rowCount==0}">
 			<h:outputText value="#{bundle.nolessons}" />
 		</div>
 	</ui:define>
 	<ui:define name="menu">
-		<p:menu>
-			<p:menuitem value="#{bundle.menu_home}" icon="ui-icon-home" outcome="index" />
-			<p:menuitem value="Blog" icon="ui-icon-note" outcome="blog" />
-			<p:menuitem styleClass="m_lib" value="#{bundle.menu_library}" icon="ui-icon-note" outcome="library" />
-			<p:menuitem value="#{bundle.menu_learn}" outcome="user" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}" />
-			<p:menuitem value="#{bundle.menu_teacher}" outcome="/editlesson.jsf" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
-			<p:menuitem value="#{bundle.menu_logout}" action="#{auth.logout}" rendered="#{auth.isLoggedIn}" ajax="false" />
-			<p:menuitem value="#{bundle.menu_admin}" url="/admin/user.jsf" icon="ui-icon-gear" rendered="#{auth.isLoggedIn and user.isAdmin}" />
-		</p:menu>
-	</ui:define>
-	<ui:define name="sidebar">
-		<ui:include src="/snippets/sidemenu_teacher.xhtml" />
+		<h:form>
+			<p:menu>
+				<p:menuitem value="#{bundle.menu_home}" icon="ui-icon-home" outcome="user" />
+				<p:menuitem value="#{bundle.menu_teacher}" outcome="/editlesson.jsf" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
+				<p:menuitem value="#{bundle.menu_logout}" action="#{auth.logout}" rendered="#{auth.isLoggedIn}" ajax="false" />
+				<p:menuitem value="#{bundle.menu_admin}" url="/admin/user.jsf" icon="ui-icon-gear" rendered="#{auth.isLoggedIn and user.isAdmin}" />
+			</p:menu>
+		</h:form>
 	</ui:define>
 </ui:composition>
