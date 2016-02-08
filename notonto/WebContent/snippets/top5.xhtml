@@ -1,4 +1,5 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile">
+<h2>Top 5</h2>
 	<p:dataTable var="user" value="#{brainSystem.top5}">
 		<p:column headerText="Punkte">
 			<h:outputText value="#{user.score}" />

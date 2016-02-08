@@ -17,8 +17,6 @@ import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
 import org.jboss.logging.Logger;
-import org.jfree.data.time.Day;
-import org.jfree.data.time.TimeSeries;
 import org.stoevesand.brain.Category;
 import org.stoevesand.brain.Group;
 import org.stoevesand.brain.Topic;
@@ -30,7 +28,6 @@ import org.stoevesand.brain.model.Answer;
 import org.stoevesand.brain.model.Item;
 import org.stoevesand.brain.model.Lesson;
 import org.stoevesand.brain.model.UserItem;
-import org.stoevesand.brain.model.UserLesson;
 import org.stoevesand.brain.model.UserLesson;
 import org.stoevesand.util.DBUtil;
 import org.stoevesand.util.News;
@@ -2171,35 +2168,6 @@ public class MySQLBrainDB implements BrainDB {
 			close(conn);
 		}
 		log.debug("delete...done.");
-
-	}
-
-	public void loadScoreHistory(TimeSeries s1, User user) throws DBException {
-		Connection conn = getConnection("loadScoreHistory");
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-
-		try {
-			ps = conn.prepareStatement("select logindate, score as 'Score' from stats where logindate>=subdate(now(), interval 30 day) and userID=?");
-			ps.setLong(1, user.getId());
-
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				Date ld = DBUtil.getDate(rs, "logindate");
-				long score = DBUtil.getLong(rs, "score");
-
-				s1.add(new Day(ld), score);
-
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rs);
-			close(ps);
-			close(conn);
-		}
 
 	}
 

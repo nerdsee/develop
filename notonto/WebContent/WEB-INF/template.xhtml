@@ -4,19 +4,24 @@
 <h:head>
 	<meta name="keywords" content="Vokabeltrainer,Vokabel,Vokabeln,Karteikasten,kostenlos,gratis,online,Englisch,Deutsch,Chinesisch,Italienisch,Allgemeinbildung,Vokabelprogramm,Bildung,Lernen,Lernprogramm,iPhone,iPod,iGoogle,iPad,Android" />
 	<meta name="description" content="Hier können Sie kostenlos Vokabeln lernen. Vorhandene Lektionen lernen oder eigene Lektionen erstellen." />
-	<link rel="stylesheet" type="text/css" href="/css/style2.css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
 	<script src="/js/code2.js" />
 	<ui:insert name="head" />
 </h:head>
 <h:body onkeydown="bodykeydown(event); return true;">
 	<ui:include src="/snippets/headline.xhtml" />
+	<p:spacer height="50px"></p:spacer>
 	<div class="ui-grid ui-grid-responsive">
 		<div class="ui-grid-row">
-			<div id="content" class="ui-grid-col-8">
+			<div id="content" class="ui-grid-col-2">
+			</div>
+			<div id="content" class="ui-grid-col-6">
 				<ui:insert name="content" />
 			</div>
-			<div id="sidebar" class="ui-grid-col-4">
+			<div id="sidebar" class="ui-grid-col-2">
 				<ui:insert name="sidebar" />
+			</div>
+			<div id="content" class="ui-grid-col-2">
 			</div>
 		</div>
 	</div>

@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/mobile-offline.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template-wide.xhtml">
 	<ui:define name="head">
 		<title>Notonto - Vokabeln lernen und behalten</title>
 	</ui:define>
@@ -6,13 +6,16 @@
 		<h1>
 			<h:outputText value="Login" />
 		</h1>
-		<p:outputPanel>
-			<h:form>
-				<h:inputText forceId="true" id="loginname" value="#{auth.username}" required="true" placeholder="#{bundle.username}" rendered="#{!auth.isLoggedIn}" />
-				<h:inputSecret forceId="true" id="loginpass" value="#{auth.password}" required="true" placeholder="#{bundle.password}" onkeydown="return firelogin(event,1);" rendered="#{!auth.isLoggedIn}" />
-				<p:commandButton forceId="true" id="firelogin" onclick="return userandpass();" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
-			</h:form>
-		</p:outputPanel>
+		<h:form>
+			<p:messages id="messages" showDetail="true" autoUpdate="true" />
+			<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
+				<h:outputLabel for="loginname" value="Username: *" />
+				<p:inputText id="loginname" value="#{auth.username}" label="Username" size="60" required="true" />
+				<h:outputLabel for="loginpass" value="Password: *" />
+				<p:password id="loginpass" value="#{auth.password}" label="Password" size="60" required="true" />
+			</h:panelGrid>
+			<p:commandButton id="firelogin" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
+		</h:form>
 		<!-- ### CONTENT-END ### -->
 	</ui:define>
 </ui:composition>

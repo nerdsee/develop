@@ -1,7 +1,5 @@
 package org.stoevesand.brain;
 
-import javax.faces.bean.ManagedProperty;
-
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.brain.model.UserLesson;
 

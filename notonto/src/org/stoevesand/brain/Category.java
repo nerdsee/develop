@@ -2,12 +2,7 @@ package org.stoevesand.brain;
 
 import java.sql.ResultSet;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.stoevesand.brain.exceptions.DBException;
-import org.stoevesand.brain.persistence.BrainDB;
 import org.stoevesand.util.DBUtil;
 
 public class Category {

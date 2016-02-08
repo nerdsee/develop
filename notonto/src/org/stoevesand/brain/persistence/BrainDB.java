@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Vector;
 
-import org.jfree.data.time.TimeSeries;
 import org.stoevesand.brain.Category;
 import org.stoevesand.brain.Group;
 import org.stoevesand.brain.Topic;
@@ -133,8 +132,6 @@ public interface BrainDB {
 	void storeLastLogin(User user) throws DBException;
 
 	void deleteLesson(Lesson lesson) throws DBException;
-
-	void loadScoreHistory(TimeSeries s1, User user) throws DBException;
 
 	int getCategoryItemCount(Category category) throws DBException;
 
