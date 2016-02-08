@@ -4,24 +4,23 @@ import java.sql.ResultSet;
 import java.util.Iterator;
 import java.util.Vector;
 
-import javax.faces.bean.ManagedProperty;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import net.sourceforge.pinyin4j.PinyinFormatter;
-
-import org.jboss.logging.Logger;
-import org.stoevesand.brain.BrainSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.brain.persistence.BrainDB;
 import org.stoevesand.util.DBUtil;
 import org.stoevesand.util.StringUtils;
 
+import net.sourceforge.pinyin4j.PinyinFormatter;
+
 @XmlRootElement(name = "item")
 public class Item {
 
-	private static Logger log = Logger.getLogger(Item.class);
+	private static Logger log = LogManager.getLogger(Item.class);
 
 	private String text = null;
 	private String comment = null;

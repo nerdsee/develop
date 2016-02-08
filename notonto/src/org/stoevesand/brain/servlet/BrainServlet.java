@@ -10,16 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.auth.User;
 import org.stoevesand.brain.exceptions.DBException;
-import org.stoevesand.brain.model.UserLesson;
 import org.stoevesand.brain.model.UserItem;
+import org.stoevesand.brain.model.UserLesson;
 
 public class BrainServlet extends HttpServlet {
 
-	private static Logger log = Logger.getLogger(BrainServlet.class);
+	private static Logger log = LogManager.getLogger(BrainServlet.class);
 
 	private static final long serialVersionUID = 1L;
 

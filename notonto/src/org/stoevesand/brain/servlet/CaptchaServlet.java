@@ -19,11 +19,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 
 public class CaptchaServlet extends HttpServlet {
 
-	private static Logger log = Logger.getLogger(CaptchaServlet.class);
+	private static Logger log = LogManager.getLogger(CaptchaServlet.class);
 
 	private static final long serialVersionUID = 1L;
 

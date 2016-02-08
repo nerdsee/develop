@@ -10,7 +10,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.ListDataModel;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
@@ -24,7 +25,7 @@ import org.stoevesand.brain.persistence.BrainDB;
 @SessionScoped
 public class LibraryView {
 
-	private static Logger log = Logger.getLogger(LibraryView.class);
+	private static Logger log = LogManager.getLogger(LibraryView.class);
 
 	private MenuModel model;
 

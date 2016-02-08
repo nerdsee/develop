@@ -6,21 +6,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainSession;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.Category;
 import org.stoevesand.brain.Group;
-import org.stoevesand.brain.LessonLoader;
 import org.stoevesand.brain.UserScore;
 import org.stoevesand.brain.auth.User;
 import org.stoevesand.brain.exceptions.DBException;
@@ -31,7 +28,7 @@ import org.stoevesand.util.DBUtil;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Lesson {
 
-	private static Logger log = Logger.getLogger(Lesson.class);
+	private static Logger log = LogManager.getLogger(Lesson.class);
 
 	private BrainSystem brainSystem;
 	private BrainSession brainSession;

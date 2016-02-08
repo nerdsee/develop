@@ -2,21 +2,18 @@ package org.stoevesand.brain.model;
 
 import java.sql.ResultSet;
 import java.text.MessageFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainMessage;
 import org.stoevesand.brain.BrainSession;
 import org.stoevesand.brain.BrainSystem;
@@ -34,7 +31,7 @@ public class UserLesson {
 	 * Neue Spalten:
 	 */
 
-	private static Logger log = Logger.getLogger(UserLesson.class);
+	private static Logger log = LogManager.getLogger(UserLesson.class);
 
 	@XmlElement
 	long id = 0;

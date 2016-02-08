@@ -8,7 +8,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.config.BrainConfigHandler;
 import org.xml.sax.InputSource;
@@ -16,7 +17,7 @@ import org.xml.sax.SAXException;
 
 public class Administration {
 
-	private static Logger log = Logger.getLogger(Administration.class);
+	private static Logger log = LogManager.getLogger(Administration.class);
 
 	/**
 	 * @param args

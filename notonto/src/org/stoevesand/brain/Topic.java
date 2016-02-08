@@ -7,7 +7,7 @@ import org.stoevesand.util.DBUtil;
 
 public class Topic {
 
-	//private static Logger log = Logger.getLogger(Topic.class);
+	//private static Logger log = LogManager.getLogger(Topic.class);
 
 	private String text = null;
 	private String icon = null;

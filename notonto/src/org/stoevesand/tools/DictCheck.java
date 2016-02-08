@@ -7,11 +7,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 
 public class DictCheck {
 
-	private static Logger log = Logger.getLogger(DictCheck.class);
+	private static Logger log = LogManager.getLogger(DictCheck.class);
 
 	/**
 	 * @param args

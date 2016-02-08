@@ -1,11 +1,11 @@
 package org.stoevesand.util;
 
-import org.jboss.logging.Logger;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class PinyinUtils {
 
-	private static Logger log = Logger.getLogger(PinyinUtils.class);
+	private static Logger log = LogManager.getLogger(PinyinUtils.class);
 
 	public static void main(String[] args) {
 		String text = "hao3";

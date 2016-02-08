@@ -10,11 +10,14 @@ import java.io.StringReader;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 
 public class StringUtils {
 
-	private static Logger log = Logger.getLogger(StringUtils.class);
+	private static Logger log = LogManager.getLogger(StringUtils.class);
 
 	public static String replaceSubstring(String text, String label, String replace) {
 		String ret = text;

@@ -10,12 +10,13 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Vector;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.exceptions.DBException;
 
 public class NewsletterDB {
 
-	private static Logger log = Logger.getLogger(NewsletterDB.class);
+	private static Logger log = LogManager.getLogger(NewsletterDB.class);
 	private String db_user;
 	private String db_pass;
 	private String db_server;

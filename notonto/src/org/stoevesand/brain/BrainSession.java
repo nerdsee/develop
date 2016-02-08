@@ -23,7 +23,8 @@ import javax.faces.model.ListDataModel;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.auth.User;
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.brain.model.Item;
@@ -58,7 +59,7 @@ public class BrainSession {
 	private static final String CAT_SELECTION = "mode_sel_cat";
 	private static final int CAT_SIZES = 3;
 
-	private static Logger log = Logger.getLogger(BrainSession.class);
+	private static Logger log = LogManager.getLogger(BrainSession.class);
 
 	private boolean loggedIn = false;
 

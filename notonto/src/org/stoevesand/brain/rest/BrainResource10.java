@@ -8,17 +8,18 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.auth.User;
-import org.stoevesand.brain.model.UserLesson;
 import org.stoevesand.brain.model.UserItem;
+import org.stoevesand.brain.model.UserLesson;
 import org.stoevesand.brain.persistence.BrainDB;
 
 @Path("/10")
 public class BrainResource10 {
 
-	private static Logger log = Logger.getLogger(BrainResource10.class);
+	private static Logger log = LogManager.getLogger(BrainResource10.class);
 
 	/**
 	 * Command: /<user>/<pass>/answeritem/<answer>/<useritemid>

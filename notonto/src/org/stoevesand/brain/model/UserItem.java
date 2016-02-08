@@ -11,7 +11,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainSession;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.auth.User;
@@ -23,7 +24,7 @@ import org.stoevesand.brain.exceptions.DBException;
 @XmlAccessorType( XmlAccessType.NONE )
 public class UserItem extends AbstractContent{
 
-	private static Logger log = Logger.getLogger(UserItem.class);
+	private static Logger log = LogManager.getLogger(UserItem.class);
 
 	private final int MAX_COUNTED_LEVEL = 5;
 	private final int MAX_SHOWN_LEVEL = 5;

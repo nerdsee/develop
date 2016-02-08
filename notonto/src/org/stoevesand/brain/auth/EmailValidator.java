@@ -21,20 +21,19 @@ package org.stoevesand.brain.auth;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.ValidatorException;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainSession;
 import org.stoevesand.brain.BrainSystem;
-import org.stoevesand.brain.persistence.BrainDB;
 
 @FacesValidator("emailValidator")
 public class EmailValidator implements javax.faces.validator.Validator {
 
-	private static Logger log = Logger.getLogger(EmailValidator.class);
+	private static Logger log = LogManager.getLogger(EmailValidator.class);
 
 	@ManagedProperty(value = "#{brainSystem}")
 	private BrainSystem brainSystem;

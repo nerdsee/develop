@@ -9,14 +9,15 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.util.DBUtil;
 
 @XmlRootElement(name = "answer")
 @XmlAccessorType(XmlAccessType.NONE)
 public class Answer {
 
-	private static Logger log = Logger.getLogger(Answer.class);
+	private static Logger log = LogManager.getLogger(Answer.class);
 
 	@XmlElement
 	private String text = null;

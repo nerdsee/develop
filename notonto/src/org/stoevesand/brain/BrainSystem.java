@@ -1,44 +1,33 @@
 package org.stoevesand.brain;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Vector;
 
-import javax.enterprise.inject.spi.Bean;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.ListDataModel;
 
-import org.jboss.logging.Logger;
-import org.primefaces.context.RequestContext;
-import org.stoevesand.brain.auth.Authorization;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.auth.User;
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.brain.model.Answer;
-import org.stoevesand.brain.model.UserLesson;
 import org.stoevesand.brain.model.Item;
 import org.stoevesand.brain.model.Lesson;
-import org.stoevesand.brain.model.UserItem;
 import org.stoevesand.brain.persistence.Administration;
 import org.stoevesand.brain.persistence.BrainDB;
 import org.stoevesand.brain.persistence.BrainDBFactory;
 import org.stoevesand.tools.DictMake;
-import org.stoevesand.util.News;
-import org.stoevesand.util.SendMailUsingAuthentication;
 import org.stoevesand.util.StringUtils;
 
 @ManagedBean
 @ApplicationScoped
 public class BrainSystem {
 
-	private static Logger log = Logger.getLogger(BrainSystem.class);
+	private static Logger log = LogManager.getLogger(BrainSystem.class);
 
 	private static boolean _DEBUG_ = false;
 

@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import javax.servlet.http.HttpSession;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 
 /**
  * Servlet filter which disables URL-encoded session identifiers.
@@ -46,7 +49,7 @@ import org.jboss.logging.Logger;
 @SuppressWarnings("deprecation")
 public class DisableUrlSessionFilter implements Filter {
 
-	private static Logger log = Logger.getLogger(DisableUrlSessionFilter.class);
+	private static Logger log = LogManager.getLogger(DisableUrlSessionFilter.class);
 
 	private boolean isSEOBrowser = false;
 	private String regex = "";

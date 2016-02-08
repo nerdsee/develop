@@ -9,13 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.exceptions.DBException;
 
 public class UnlockServlet extends HttpServlet {
 
-	private static Logger log = Logger.getLogger(UnlockServlet.class);
+	private static Logger log = LogManager.getLogger(UnlockServlet.class);
 
 	private static final long serialVersionUID = 1L;
 

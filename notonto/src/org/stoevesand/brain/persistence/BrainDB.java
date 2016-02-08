@@ -12,7 +12,6 @@ import org.stoevesand.brain.UserScore;
 import org.stoevesand.brain.auth.User;
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.brain.model.Answer;
-import org.stoevesand.brain.model.UserLesson;
 import org.stoevesand.brain.model.Item;
 import org.stoevesand.brain.model.Lesson;
 import org.stoevesand.brain.model.UserItem;

@@ -24,7 +24,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainSession;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.persistence.BrainDB;
@@ -36,7 +37,7 @@ import org.stoevesand.brain.persistence.BrainDB;
  */
 public class NickValidator implements javax.faces.validator.Validator {
 
-	private static Logger log = Logger.getLogger(NickValidator.class);
+	private static Logger log = LogManager.getLogger(NickValidator.class);
 
   @ManagedProperty(value="#{brainSystem}")
   private BrainSystem brainSystem;

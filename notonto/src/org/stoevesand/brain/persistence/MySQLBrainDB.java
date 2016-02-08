@@ -16,7 +16,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.Category;
 import org.stoevesand.brain.Group;
 import org.stoevesand.brain.Topic;
@@ -34,7 +35,7 @@ import org.stoevesand.util.News;
 
 public class MySQLBrainDB implements BrainDB {
 
-	private static Logger log = Logger.getLogger(MySQLBrainDB.class);
+	private static Logger log = LogManager.getLogger(MySQLBrainDB.class);
 
 	// Vector lessons = new Vector();
 	// Vector items = new Vector();

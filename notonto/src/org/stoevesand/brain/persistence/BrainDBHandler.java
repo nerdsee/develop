@@ -3,7 +3,8 @@ package org.stoevesand.brain.persistence;
 import java.util.Random;
 import java.util.Vector;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.auth.User;
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.brain.model.Answer;
@@ -15,7 +16,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class BrainDBHandler extends DefaultHandler {
 
-	private static Logger log = Logger.getLogger(BrainDBHandler.class);
+	private static Logger log = LogManager.getLogger(BrainDBHandler.class);
 
 	String text = null;
 	String comment = null;

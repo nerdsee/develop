@@ -3,11 +3,14 @@ package org.stoevesand.brain.newsletter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 
 public class SimplifiedUserLesson {
 
-	private static Logger log = Logger.getLogger(SimplifiedUserLesson.class);
+	private static Logger log = LogManager.getLogger(SimplifiedUserLesson.class);
 	private long id;
 	private long lessonId;
 	private String description;

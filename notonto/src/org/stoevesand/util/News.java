@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.faces.bean.ManagedProperty;
 
-import org.stoevesand.brain.BrainSession;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.brain.persistence.BrainDB;

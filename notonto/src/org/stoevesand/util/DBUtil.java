@@ -5,11 +5,14 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
 
 public class DBUtil {
 	
-	private static Logger log = Logger.getLogger(DBUtil.class);
+	private static Logger log = LogManager.getLogger(DBUtil.class);
 
 	public static long getLong(ResultSet rs, String field) {
 		try {

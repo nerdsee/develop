@@ -13,7 +13,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.util.StringUtils;
 import org.xml.sax.SAXException;
@@ -21,9 +22,9 @@ import org.xml.sax.SAXException;
 public class NewsletterMailer {
 
 	// private static org.apache.log4j.Logger log =
-	// Logger.getLogger("Authorization.class");
+	// LogManager.getLogger("Authorization.class");
 
-	private static Logger log = Logger.getLogger(NewsletterMailer.class);
+	private static Logger log = LogManager.getLogger(NewsletterMailer.class);
 	private final String pad = "                                                                                                            ";
 
 	NewsletterDB db = null;

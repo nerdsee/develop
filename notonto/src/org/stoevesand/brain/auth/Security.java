@@ -6,12 +6,13 @@ import java.security.KeyStore;
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jboss.resteasy.util.Base64;
 
 public class Security {
 
-	private static Logger log = Logger.getLogger(Security.class);
+	private static Logger log = LogManager.getLogger(Security.class);
 
 	private static String algorithm = "DESede";
 	private SecretKey key = null;

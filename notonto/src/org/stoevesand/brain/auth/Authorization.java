@@ -13,7 +13,8 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.jboss.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainSession;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.exceptions.DBException;
@@ -64,8 +65,8 @@ public class Authorization {
 	private static final int PWC_UNCHANGED = 6;
 
 	// private static org.apache.log4j.Logger log =
-	// Logger.getLogger("Authorization.class");
-	private static Logger log = Logger.getLogger(Authorization.class);
+	// LogManager.getLogger("Authorization.class");
+	private static Logger log = LogManager.getLogger(Authorization.class);
 
 	String username = "";
 	String password = "";

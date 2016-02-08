@@ -10,19 +10,19 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import org.jboss.logging.Logger;
-import org.stoevesand.brain.BrainSession;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.exceptions.DBException;
-import org.stoevesand.brain.model.UserLesson;
 import org.stoevesand.brain.model.Lesson;
+import org.stoevesand.brain.model.UserLesson;
 import org.stoevesand.brain.persistence.BrainDB;
 import org.stoevesand.util.DBUtil;
 
 @ManagedBean
 @SessionScoped
 public class User {
-	private static Logger log = Logger.getLogger(User.class);
+	private static Logger log = LogManager.getLogger(User.class);
 
 	@ManagedProperty(value = "#{brainSystem}")
 	private BrainSystem brainSystem;
