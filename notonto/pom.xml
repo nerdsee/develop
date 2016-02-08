@@ -60,9 +60,9 @@
 			<version>1.4.7</version>
 		</dependency>
 		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-core</artifactId>
-			<version>1.19</version>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-jaxrs</artifactId>
+			<version>3.0.14.Final</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
