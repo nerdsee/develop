@@ -3,28 +3,45 @@
 		<title><h:outputText value="Notonto - #{bundle.menu_learn}" /></title>
 	</ui:define>
 	<ui:define name="content">
-		<h:form>
-			<!-- ### CONTENT-START ### -->
-			<h1><h:outputText value="Willkommen bei notonto, #{brainSession.currentUser.nick}."/> </h1>
-			<h3><h:outputText value="Folgende Lektionen hast Du zum Lernen ausgewählt:"/> </h3>
-			<p:panelGrid columns="1" columnClasses="taright">
+		<div class="ui-grid-col-8">
+			<h:form>
+				<h1>Lernen</h1>
+				<h2>
+					<h:outputText value="Folgende Lektionen hast Du zum Lernen ausgewählt:" />
+				</h2>
 				<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="library" ajax="false" value="+ Hinzufügen" style="float:right;" />
-			</p:panelGrid>
-			<h:outputText value="#{bundle.subfirst}" class="infotext" rendered="#{empty user.lessons}" />
-			<p:dataList value="#{user.lessons}" rendered="#{not empty user.lessons}" var="userlesson">
-				<p:commandLink action="#{brainSession.learnLesson}">
-					<h:graphicImage url="/images/lessons/lesson_button_#{userlesson.lesson.icon}.gif" class="icon" width="32" height="32" />
-					<h:outputText value="#{userlesson.lesson.description}" class="font1 bold" />
-					<h:outputText value="&lt;br>" escape="false" />
-					<h:outputFormat value="#{bundle.learnitems}" class="font3">
-						<f:param value="#{brainSession.getAvailable(userlesson)}" />
-					</h:outputFormat>
-					<h:outputText value="&lt;br> [#{userlesson.nextUserItemTimeDiff} ]" escape="false" rendered="#{brainSession.getAvailable(userlesson)==0}" class="font3" />
-					<h:outputText value="&lt;br>&lt;i>Zieltermin: #{userlesson.realTargetDate}&lt;/i>" escape="false" rendered="#{userlesson.intervallType}" class="font3" />
-				</p:commandLink>
-			</p:dataList>
-			<!-- ### CONTENT-END ### -->
-		</h:form>
+				<p:spacer height="30"></p:spacer>
+				<h:outputText value="#{bundle.subfirst}" class="infotext" rendered="#{empty user.lessons}" />
+				<p:dataTable value="#{user.lessons}" rendered="#{not empty user.lessons}" var="userlesson">
+					<f:facet name="header">
+						<h:outputText value="Lektionen" />
+					</f:facet>
+					<p:column headerText="Beschreibung">
+						<p:commandLink action="#{brainSession.learnLesson}">
+							<div class="ui-grid ui-grid-responsive">
+								<div class="ui-grid-row">
+									<div class="ui-grid-col-1">
+										<h:graphicImage url="/images/lessons/lesson_button_#{userlesson.lesson.icon}.gif" class="icon" width="32" height="32" />
+									</div>
+									<div class="ui-grid-col-10">
+										<h2>
+											<h:outputText value="#{userlesson.lesson.description}" />
+										</h2>
+										<h:outputFormat value="#{bundle.learnitems}" class="font3">
+											<f:param value="#{brainSession.getAvailable(userlesson)}" />
+										</h:outputFormat>
+										<h:outputText value="&lt;br> [#{userlesson.nextUserItemTimeDiff} ]" escape="false" rendered="#{brainSession.getAvailable(userlesson)==0}" class="font3" />
+										<h:outputText value="&lt;br>&lt;i>Zieltermin: #{userlesson.realTargetDate}&lt;/i>" escape="false" rendered="#{userlesson.intervallType}" class="font3" />
+									</div>
+									<div class="ui-grid-col-1"></div>
+								</div>
+							</div>
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
+				<!-- ### CONTENT-END ### -->
+			</h:form>
+		</div>
 	</ui:define>
 	<ui:define name="menu">
 		<h:form>

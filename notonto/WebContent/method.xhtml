@@ -3,23 +3,25 @@
 		<title>Notonto - Vokabeln lernen und behalten</title>
 	</ui:define>
 	<ui:define name="content">
-		<!-- ### CONTENT-START ### -->
-		<h1>
-			<h:outputText value="Lernmethode" />
-		</h1>
-		<h2>
-			<h:outputText value="Bitte wählen Sie, ob sie mit Karten lernen wollen oder die Wörter eingeben wollen." />
-		</h2>
-		<p />
-		<p:panelGrid columns="2">
-			<p:commandButton action="lesson" value="Karten" />
-			<p:commandButton action="lesson_enter" value="Eingabe" />
-		</p:panelGrid>
-		<!-- ### CONTENT-END ### -->
-		<p:confirmDialog message="Wollen Sie wirklich diese Lektion löschen?" header="Lektion löschen" severity="alert" widgetVar="cd">
-			<p:commandButton value="Ja, wirklich!" action="#{brainSession.unsubscribeLesson()}" oncomplete="PF('cd').hide()" />
-			<p:commandButton value="Nein!" onclick="PF('cd').hide();" type="button" />
-		</p:confirmDialog>
+		<div class="ui-grid-col-8">
+			<!-- ### CONTENT-START ### -->
+			<h1>
+				<h:outputText value="Lernmethode" />
+			</h1>
+			<h2>
+				<h:outputText value="Bitte wählen Sie, ob sie mit Karten lernen wollen oder die Wörter eingeben wollen." />
+			</h2>
+			<p />
+			<p:panelGrid columns="2">
+				<p:commandButton action="lesson" value="Karten" />
+				<p:commandButton action="lesson_enter" value="Eingabe" />
+			</p:panelGrid>
+			<!-- ### CONTENT-END ### -->
+			<p:confirmDialog message="Wollen Sie wirklich diese Lektion löschen?" header="Lektion löschen" severity="alert" widgetVar="cd">
+				<p:commandButton value="Ja, wirklich!" action="#{brainSession.unsubscribeLesson()}" oncomplete="PF('cd').hide()" />
+				<p:commandButton value="Nein!" onclick="PF('cd').hide();" type="button" />
+			</p:confirmDialog>
+		</div>
 	</ui:define>
 	<ui:define name="menu">
 		<h:form>

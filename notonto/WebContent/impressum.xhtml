@@ -1,23 +1,15 @@
-<html xmlns="http://www.w3c.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
-<f:view locale="#{brainSession.currentLocale}">
-	<h:head>
-		<title>Notonto - Impressum</title>
-		<f:subview id="s_inc_head">
-			<ui:include src="/snippets/inc_head.xhtml" />
-		</f:subview>
-	</h:head>
-	<h:body>
-		<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
-		<ui:include src="/snippets/headline.xhtml" />
-		<main> <content>
-		<h1>
-			<h:outputText value="#{bundle.imprint}" />
-		</h1>
-		<h3>
-			Diese Webseite ist ein rein privates Projekt von:<br /> Jan Stövesand <br /> Kegelhofstr. 9 <br /> 20251 Hamburg <br /> <br /> email: info[at]notonto.de <br /> <br /> Inhaltlich Verantwortlicher gemäß 10 Absatz 3 MDStV <br /> <br /> Jan Stövesand (Anschrift wie oben) <br />
-		</h3>
-		<!-- ### CONTENT-END ### --> </content></main>
-		<ui:include src="/snippets/footer.xhtml" />
-	</h:body>
-</f:view>
-</html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+	<ui:define name="head">
+		<title>Notonto - Vokabeln lernen und behalten</title>
+	</ui:define>
+	<ui:define name="content">
+		<div id="content" class="ui-grid-col-8">
+			<h1>
+				<h:outputText value="#{bundle.imprint}" />
+			</h1>
+			<h3>
+				Diese Webseite ist ein rein privates Projekt von:<br /> Jan Stövesand <br /> Kegelhofstr. 9 <br /> 20251 Hamburg <br /> <br /> email: info[at]notonto.de <br /> <br /> Inhaltlich Verantwortlicher gemäß 10 Absatz 3 MDStV <br /> <br /> Jan Stövesand (Anschrift wie oben) <br />
+			</h3>
+		</div>
+	</ui:define>
+</ui:composition>
