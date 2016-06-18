@@ -11,14 +11,10 @@
 <h:body onkeydown="bodykeydown(event); return true;">
 	<ui:include src="/snippets/headline.xhtml" />
 	<p:spacer height="50px"></p:spacer>
-	<div class="ui-grid ui-grid-responsive">
-		<div class="ui-grid-row">
-			<div class="ui-grid-col-2">
-			</div>
-				<ui:insert name="content" />
-			<div class="ui-grid-col-2">
-			</div>
-		</div>
+	<div class="ui-g">
+		<div class="ui-g-2"></div>
+		<ui:insert name="content" />
+		<div class="ui-g-2"></div>
 	</div>
 </h:body>
 </html>
