@@ -3,62 +3,64 @@
 		<title>Notonto - Vokabeln lernen und behalten</title>
 	</ui:define>
 	<ui:define name="content">
-		<!-- ### CONTENT-START ### -->
-		<h1>
-			<h:outputText value="#{bundle.menu_library}" />
-		</h1>
-		<h:form>
-			<h2>
-				<h:outputText value="#{bundle.code}" />
-			</h2>
-			<p:outputPanel class="naked" rendered="#{auth.isLoggedIn}">
-				<h:outputText value="#{bundle.lessoncode}" class="font1" />
-				<h:inputText value="#{libraryView.lessonCode}" size="35" />
-				<h:commandLink class="btn btn_blue" action="#{libraryView.selectLessonCode}" value="#{bundle.btn_ok}" />
-			</p:outputPanel>
-		</h:form>
-		<h:form>
-			<h3>
-				<h:outputText value="#{bundle.libinfo}" />
-			</h3>
-			<!-- WARN PANEL -->
-			<p:outputPanel class="ui-messages ui-widget" rendered="#{not auth.isLoggedIn}">
-				<p:outputPanel class="ui-messages-warn ui-corner-all">
-					<span class="ui-messages-warn-icon"></span>
-					<ul>
-						<li><span class="ui-messages-warn-detail">#{bundle.liblogin}</span></li>
-					</ul>
-				</p:outputPanel>
-			</p:outputPanel>
-			<!-- WARN PANEL -->
-			<p:growl id="messages" showDetail="false" />
-			<p:menu id="topicMenu" model="#{libraryView.model}" />
-			<p:dataTable id="libraryDT" value="#{libraryView.lessons}" var="lw" class="w100p" emptyMessage="">
-				<f:facet name="header">
-					<h:outputText value="Select Lesson" />
-				</f:facet>
-				<p:column width="40">
-					<h:graphicImage url="/images/lessons/lesson_button_#{lw.lesson.icon}.gif" class="icon" width="32" height="32" />
-				</p:column>
-				<p:column>
-					<h:outputText value="#{lw.lesson.description}" class="font1 bold" />
-					<br />
-					<h:outputText escape="false" value="#{lw.lesson.abstract}" class="font3" />
-					<br />
-					<h:outputText escape="false" value="#{bundle.numberitems}&amp;nbsp;#{lw.lesson.itemCount}" class="font3 bold" />
-					<p:outputPanel style="text-align: right;">
-						<p:commandButton value="#{bundle.btn_subscribed}" disabled="true" escape="false" action="#{brainSession.subscribeLesson(lw)}" rendered="#{lw.isSubscribed}" />
-						<p:commandButton value="#{bundle.btn_subscribe}" action="#{brainSession.subscribeLesson(lw)}" rendered="#{not lw.isSubscribed}" />
+		<div id="content" class="ui-grid-col-6">
+			<h1>
+				<h:outputText value="#{bundle.menu_library}" />
+			</h1>
+			<h:form>
+				<h3>
+					<h:outputText value="#{bundle.libinfo}" />
+				</h3>
+				<!-- WARN PANEL -->
+				<p:outputPanel class="ui-messages ui-widget" rendered="#{not auth.isLoggedIn}">
+					<p:outputPanel class="ui-messages-warn ui-corner-all">
+						<span class="ui-messages-warn-icon"></span>
+						<ul>
+							<li><span class="ui-messages-warn-detail">#{bundle.liblogin}</span></li>
+						</ul>
 					</p:outputPanel>
-				</p:column>
-				<p:column width="40">
-					<h:graphicImage class="flag" value="/images/#{lw.lesson.qlang}.gif" width="15" height="9" />
-					<h:outputText value="&amp;nbsp;" escape="false" />
-					<h:graphicImage class="flag" value="/images/#{lw.lesson.alang}.gif" width="15" height="9" />
-				</p:column>
-			</p:dataTable>
-			<!-- ### CONTENT-END ### -->
-		</h:form>
+				</p:outputPanel>
+				<!-- WARN PANEL -->
+				<p:growl id="messages" showDetail="false" />
+				<p:slideMenu id="topicMenu" model="#{libraryView.model}" />
+				<p:dataTable id="libraryDT" value="#{libraryView.lessons}" var="lw" class="w100p" emptyMessage="">
+					<f:facet name="header">
+						<h:outputText value="Select Lesson" />
+					</f:facet>
+					<p:column width="40">
+						<h:graphicImage url="/images/lessons/lesson_button_#{lw.lesson.icon}.gif" class="icon" width="32" height="32" />
+					</p:column>
+					<p:column>
+						<h:outputText value="#{lw.lesson.description}" class="font1 bold" />
+						<br />
+						<h:outputText escape="false" value="#{lw.lesson.abstract}" class="font3" />
+						<br />
+						<h:outputText escape="false" value="#{bundle.numberitems}&amp;nbsp;#{lw.lesson.itemCount}" class="font3 bold" />
+						<p:outputPanel style="text-align: right;">
+							<p:commandButton value="#{bundle.btn_subscribed}" disabled="true" escape="false" action="#{brainSession.subscribeLesson(lw)}" rendered="#{lw.isSubscribed}" />
+							<p:commandButton value="#{bundle.btn_subscribe}" action="#{brainSession.subscribeLesson(lw)}" rendered="#{not lw.isSubscribed}" />
+						</p:outputPanel>
+					</p:column>
+					<p:column width="40">
+						<h:graphicImage class="flag" value="/images/#{lw.lesson.qlang}.gif" width="15" height="9" />
+						<h:outputText value="&amp;nbsp;" escape="false" />
+						<h:graphicImage class="flag" value="/images/#{lw.lesson.alang}.gif" width="15" height="9" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+		<div class="ui-grid-col-2">
+			<h:form>
+				<h2>
+					<h:outputText value="#{bundle.code}" />
+				</h2>
+				<p:outputPanel class="naked" rendered="#{auth.isLoggedIn}">
+					<h:outputText value="#{bundle.lessoncode}" class="font1" />
+					<h:inputText value="#{libraryView.lessonCode}" size="35" />
+					<h:commandLink class="btn btn_blue" action="#{libraryView.selectLessonCode}" value="#{bundle.btn_ok}" />
+				</p:outputPanel>
+			</h:form>
+		</div>
 	</ui:define>
 	<ui:define name="menu">
 		<h:form>
