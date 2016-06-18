@@ -170,62 +170,6 @@ public class LibraryFilterView {
 		return ownerLibrary;
 	}
 
-	public String newLesson() {
-		User currentUser = brainSession.getCurrentUser();
-		try {
-			Lesson lesson = new Lesson();
-			lesson.setOwner(currentUser);
-			lesson.setTitle("HALLO");
-			lesson.modify();
-			brainSession.setCurrentLesson(lesson);
-			setOwnerLibrary(null);
-			brainSession.setItemList(null);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "fatal_DB";
-		}
-		return "editlessonmeta";
-	}
-
-	public String editOwnerLesson() {
-		if (ownerLibrary != null) {
-			LessonWrapper lw2 = (LessonWrapper) ownerLibrary.getRowData();
-			log.debug("Edit Owner Lesson: " + lw2.getLesson().getDescription());
-			try {
-				// userItem.editItem();
-				// storeBeanFromFacesContext("CurrentLesson", context,
-				// lw2.getLesson());
-				brainSession.setCurrentLesson(lw2.getLesson());
-				brainSession.loadItemList(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-				return "fatal_DB";
-			}
-			return "editlessonmeta";
-		} else {
-			log.error("OwnerLesson is null.");
-		}
-		return null;
-	}
-
-	public String editLessonUpload() {
-		if (ownerLibrary != null) {
-			LessonWrapper lw2 = (LessonWrapper) ownerLibrary.getRowData();
-			log.debug("Edit Owner Lesson for Upload: " + lw2.getLesson().getDescription());
-			try {
-				brainSession.setCurrentLesson(lw2.getLesson());
-				brainSession.loadItemList(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-				return "fatal_DB";
-			}
-			return "editlessonupload";
-		} else {
-			log.error("OwnerLesson is null.");
-		}
-		return null;
-	}
-
 	// ##############################################
 
 }
