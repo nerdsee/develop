@@ -3,7 +3,7 @@
 
 
 	<navigation-rule>
-		<from-view-id>/lesson.xhtml</from-view-id>
+		<from-view-id>/user/lesson.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>options</from-outcome>
 			<to-view-id>intervals.xhtml</to-view-id>
@@ -15,7 +15,7 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/method.xhtml</from-view-id>
+		<from-view-id>/user/method.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>options</from-outcome>
 			<to-view-id>intervals.jsf</to-view-id>
@@ -27,7 +27,15 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/lesson_enter.xhtml</from-view-id>
+		<from-view-id>/user/invite.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>done</from-outcome>
+			<to-view-id>editlesson.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/user/lesson_enter.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
 			<to-view-id>user.xhtml</to-view-id>
@@ -35,7 +43,7 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/lesson_wrong.xhtml</from-view-id>
+		<from-view-id>/user/lesson_wrong.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
 			<to-view-id>user.xhtml</to-view-id>
@@ -43,15 +51,7 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/intervals.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>exit</from-outcome>
-			<to-view-id>method.xhtml</to-view-id>
-		</navigation-case>
-	</navigation-rule>
-
-	<navigation-rule>
-		<from-view-id>/options.xhtml</from-view-id>
+		<from-view-id>/user/intervals.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
 			<to-view-id>user.xhtml</to-view-id>
@@ -59,7 +59,15 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/editlessonmeta.xhtml</from-view-id>
+		<from-view-id>/user/options.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/user/editlessonmeta.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
 			<to-view-id>editlesson.xhtml</to-view-id>
@@ -67,10 +75,38 @@
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/editlessonupload.xhtml</from-view-id>
+		<from-view-id>/user/editlessonupload.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
 			<to-view-id>editlesson.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>info_bg</from-outcome>
+			<to-view-id>/info_bg.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>info_co</from-outcome>
+			<to-view-id>/info_bg.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>user</from-outcome>
+			<to-view-id>/user/user.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editlesson</from-outcome>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>library</from-outcome>
+			<to-view-id>/user/library.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+	<ui:define name="head">
+		<title><h:outputText value="Notonto - #{bundle.menu_learn}" /></title>
+	</ui:define>
+	<ui:define name="content">
+		<div class="ui-g-8">
+			<!-- ### CONTENT-START ### -->
+			<h1>
+				<h:outputText value="Optionen" />
+			</h1>
+			<h2>
+				<h:outputText value="#{brainSession.currentUserLesson.lesson.description}" />
+			</h2>
+			<p:separator style="height:5px; margin: 20px 0px;" />
+			<h3>
+				<h:outputText value="Lernen mit Zieltermin" />
+			</h3>
+			<h:form>
+				<p:messages autoUpdate="true"></p:messages>
+				<pm:field>
+					<p:outputLabel for="switch" value="Zieltermin" />
+					<p:inputSwitch id="switch" value="#{brainSession.currentUserLesson.intervallType}">
+						<p:ajax />
+					</p:inputSwitch>
+				</pm:field>
+				<pm:field>
+					<p:outputLabel for="targetcal" value="" />
+					<p:calendar id="targetcal" value="#{brainSession.currentUserLesson.realTargetDate}" style="width: 300px;">
+					</p:calendar>
+				</pm:field>
+				<h:panelGrid columns="2" class="tstd">
+					<h:panelGroup>
+						<p:commandButton action="#{brainSession.currentUserLesson.saveIntervalls}" styleClass="ui-btn-inline ui-btn-green" value="OK" />
+						<p:button outcome="exit" styleClass="ui-btn-inline ui-btn-orange" value="Abbrechen" />
+					</h:panelGroup>
+				</h:panelGrid>
+			</h:form>
+			<p:separator style="height:5px; margin: 20px 0px;" />
+			<h:form>
+				<h3>
+					<h:outputText value="Lektion löschen" />
+				</h3>
+				<p:commandButton value="Löschen" onclick="PF('cd').show()"></p:commandButton>
+				<p:confirmDialog message="Wollen Sie wirklich diese Lektion löschen?" header="Lektion löschen" severity="alert" widgetVar="cd">
+					<p:commandButton value="Ja, wirklich!" action="#{brainSession.unsubscribeLesson()}" oncomplete="PF('cd').hide()" />
+					<p:commandButton value="Nein!" onclick="PF('cd').hide();" type="button" />
+				</p:confirmDialog>
+				<!-- ### CONTENT-END ### -->
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -2,10 +2,10 @@
 h1 {
 	color: #4C4C45;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 45px;
+	font-size: 40px;
 	font-weight: 700;
 	line-height: 48px;
-	margin-bottom: 35px;
+	margin-bottom: 5px;
 	margin-left: 0px;
 	margin-right: 0px;
 	margin-top: 0px;
@@ -14,9 +14,21 @@ h1 {
 }
 
 h2 {
+	color: #4C4C45;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 24px;
+	font-weight: 400;
+	line-height: 28.5px;
+	margin-bottom: 19px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+}
+
+h3 {
 	color: #727267;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 21px;
+	font-size: 24px;
 	font-weight: 400;
 	line-height: 28.5px;
 	margin-bottom: 19px;
@@ -47,7 +59,6 @@ body {
 #menu .ui-table-row {
 	background: #ffffff none repeat scroll 0% 0%;
 }
-
 
 /* ------------------ FONTS ------------------ */
 .font1 {
@@ -94,6 +105,15 @@ body {
 	color: #8D1400;
 }
 
+.res_f {
+	font-weight: bold;
+}
+
+.res_r {
+	color: #88aa88;
+	font-weight: bold
+}
+
 .infotext {
 	font-size: 12px;
 	font-weight: bold;
@@ -127,247 +147,35 @@ body {
 	text-align: center;
 }
 
-/* Themes */
-.ui-theme {
-	background: url("#{resource['demo/images/themes.png']}") no-repeat top
-		left;
-	display: block;
+/*
+	Buttons
+*/
+.btn_green {
+	background: #D5FFC4 !important;
+	border: 1px solid #BCE0AC !important;
+	color: #667A5E !important;
 }
 
-.ui-theme.ui-theme-afterdark {
-	background-position: 0 0;
-	width: 30px;
-	height: 25px;
+.btn_red {
+	background: #F2DEDE !important;
+	border: 1px solid #EED3D7 !important;
+	color: #B94A48 !important;
 }
 
-.ui-theme.ui-theme-afternoon {
-	background-position: 0 -75px;
-	width: 30px;
-	height: 25px;
+.btn_yellow {
+	border-radius: 4px;
+	background: #FCF8E3;
+	border: 1px solid #FBEED5;
+	color: #C09853;
+	font-weight: bold;
 }
 
-.ui-theme.ui-theme-afterwork {
-	background-position: 0 -150px;
-	width: 30px;
-	height: 25px;
-}
+/*
+red bg #F2DEDE
+red border #EED3D7
+red #B94A48
 
-.ui-theme.ui-theme-aristo {
-	background-position: 0 -225px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-black-tie {
-	background-position: 0 -302px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-blitzer {
-	background-position: 0 -379px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-bluesky {
-	background-position: 0 -456px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-bootstrap {
-	background-position: 0 -533px;
-	width: 30px;
-	height: 26px;
-}
-
-.ui-theme.ui-theme-casablanca {
-	background-position: 0 -609px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-cruze {
-	background-position: 0 -686px;
-	width: 30px;
-	height: 25px;
-}
-
-.ui-theme.ui-theme-cupertino {
-	background-position: 0 -761px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-dark-hive {
-	background-position: 0 -838px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-delta {
-	background-position: 0 -915px;
-	width: 30px;
-	height: 30px;
-}
-
-.ui-theme.ui-theme-dot-luv {
-	background-position: 0 -995px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-eggplant {
-	background-position: 0 -1072px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-excite-bike {
-	background-position: 0 -1149px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-flick {
-	background-position: 0 -1226px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-glass-x {
-	background-position: 0 -1303px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-home {
-	background-position: 0 -1380px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-hot-sneaks {
-	background-position: 0 -1457px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-humanity {
-	background-position: 0 -1534px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-le-frog {
-	background-position: 0 -1611px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-midnight {
-	background-position: 0 -1688px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-mint-choc {
-	background-position: 0 -1765px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-overcast {
-	background-position: 0 -1842px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-pepper-grinder {
-	background-position: 0 -1919px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-redmond {
-	background-position: -80px 0;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-rocket {
-	background-position: -80px -77px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-sam {
-	background-position: -80px -154px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-smoothness {
-	background-position: -80px -231px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-south-street {
-	background-position: -80px -308px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-start {
-	background-position: -80px -385px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-sunny {
-	background-position: -80px -462px;
-	width: 30px;
-	height: 25px;
-}
-
-.ui-theme.ui-theme-swanky-purse {
-	background-position: -80px -537px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-trontastic {
-	background-position: -80px -614px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-ui-darkness {
-	background-position: -80px -691px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-ui-lightness {
-	background-position: -80px -768px;
-	width: 30px;
-	height: 27px;
-}
-
-.ui-theme.ui-theme-vader {
-	background-position: -80px -845px;
-	width: 30px;
-	height: 27px;
-}
-
-.logoDarkText {
-	text-shadow: none !important;
-	color: #5c666a;
-}
-
-.logoBlueText {
-	text-shadow: none !important;
-	color: #25aae1;
-}
+yellow bg #FCF8E3
+yellow border #FBEED5
+yellow #C09853
+*/

@@ -299,11 +299,9 @@ public class BrainSession {
 	}
 
 	public String learnLesson() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		UserLesson userLesson = (UserLesson) context.getExternalContext().getRequestMap().get("userlesson");
-		log.debug("UserLesson: " + userLesson);
 		try {
-			learnLesson(userLesson);
+			setLastUserItem(null);
+			currentUserLesson.getNextUserItem();
 		} catch (DBException e) {
 			e.printStackTrace();
 			return "fatal_DB";
@@ -336,7 +334,7 @@ public class BrainSession {
 			return "fatal_DB";
 		}
 
-		return "method";
+		return "user";
 	}
 
 	public String unsubscribeLesson() {
@@ -369,7 +367,7 @@ public class BrainSession {
 			filterCat = cat;
 		}
 
-		//lessonCode = "";
+		// lessonCode = "";
 	}
 
 	public ListDataModel<Category> getLocalCategories() {
@@ -925,6 +923,8 @@ public class BrainSession {
 	public String forceAnswer() {
 		UserItem userItem = getCurrentUserItem();
 		try {
+			String text = userItem.getItem().getText() + " : " + getAnswerText() + "";
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Richtig", text));
 			userItem.forceAnswer();
 			setLastUserItem(userItem);
 			setLastAnswerText();
@@ -944,13 +944,17 @@ public class BrainSession {
 		// if (answerText.length() > 0) {
 		try {
 			if (userItem.checkAnswerText(getAnswerText())) {
+				String text = userItem.getItem().getText() + " : " + getAnswerText() + "";
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Richtig", text));
 				ret = "lesson_enter";
 				setLastUserItem(userItem);
 				setLastAnswerText();
 				getNextUserItem();
+
 			} else {
 				setLastUserItem(null);
 				markedText = BrainSystem.findLongestCommonString(userItem.getItem(), getAnswerText());
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Falsch", markedText));
 			}
 		} catch (DBException e) {
 			e.printStackTrace();
@@ -1051,6 +1055,41 @@ public class BrainSession {
 
 	public void setItemList(ListDataModel<Item> il) {
 		this.itemList = il;
+	}
+
+	private boolean invitationPending = false;
+	private String inviteeEmail = "";
+	private String inviteeCode = "";
+
+	public void rememberInvitation(String inviteeEmail, String inviteeCode) {
+		this.setInviteeCode(inviteeCode);
+		this.setInviteeEmail(inviteeEmail);
+		setInvitationPending(true);
+		return;
+	}
+
+	public boolean isInvitationPending() {
+		return invitationPending;
+	}
+
+	public void setInvitationPending(boolean invitationPending) {
+		this.invitationPending = invitationPending;
+	}
+
+	public String getInviteeEmail() {
+		return inviteeEmail;
+	}
+
+	public void setInviteeEmail(String inviteeEmail) {
+		this.inviteeEmail = inviteeEmail;
+	}
+
+	public String getInviteeCode() {
+		return inviteeCode;
+	}
+
+	public void setInviteeCode(String inviteeCode) {
+		this.inviteeCode = inviteeCode;
 	}
 
 }

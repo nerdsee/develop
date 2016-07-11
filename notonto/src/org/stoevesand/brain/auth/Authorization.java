@@ -187,10 +187,6 @@ public class Authorization {
 		if (currentUser.isValid()) {
 
 			if (currentUser.getPassword().equals(password)) {
-				if (!currentUser.isUnlocked()) {
-					log.error("Unlock Message senden!");
-					context.addMessage(null, new FacesMessage("Bitte freischalten."));
-				}
 				ret = userLoggedIn();
 				return ret;
 			} else {
@@ -218,6 +214,12 @@ public class Authorization {
 			log.info("User logged in: " + currentUser.getName());
 			log.info("Browser: " + getBrowser());
 
+			// Sonderfall: Invitation Pending
+			if (brainSession.isInvitationPending()) {
+				brainSession.setInvitationPending(false);
+				currentUser.acceptInvitation(brainSession.getInviteeEmail(), brainSession.getInviteeCode());
+			}
+			
 			// Sonderfall direkteinstieg. Wenn eine Userlesson ID übergeben
 			// wurde
 			// dann wird sie geladen und gleich auf die lesson.jsf verzweigt.

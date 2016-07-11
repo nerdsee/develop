@@ -61,7 +61,7 @@ public class Lesson {
 	String keyboardLayout = "DE";
 	// int subscribedUsers;
 
-	boolean publicLesson;
+	int publicLesson;
 	String code = "";
 
 	private int maxitems;
@@ -92,7 +92,7 @@ public class Lesson {
 	}
 
 	public Lesson(ResultSet rs) throws SQLException {
-		this.id = DBUtil.getLong(rs, "l.id");
+		this.id = DBUtil.getLong(rs, "lessonid");
 		this.ownerId = DBUtil.getLong(rs, "ownerID");
 		this.ownergroupId = DBUtil.getLong(rs, "ownergroupID");
 
@@ -103,7 +103,7 @@ public class Lesson {
 		this.lessonType = DBUtil.getInt(rs, "type");
 		this.maxitems = DBUtil.getInt(rs, "maxitems");
 		this.icon = DBUtil.getString(rs, "icon");
-		this.publicLesson = DBUtil.getBoolean(rs, "public");
+		this.publicLesson = DBUtil.getInt(rs, "public");
 		this.code = DBUtil.getString(rs, "code");
 		// this.subscribedUsers = rs.getInt("cx");
 
@@ -396,7 +396,7 @@ public class Lesson {
 	}
 
 	public boolean isPublicLesson() {
-		return publicLesson;
+		return publicLesson == 1;
 	}
 
 	public boolean hasCode(String lessonCode) {

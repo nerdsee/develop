@@ -3,8 +3,7 @@
 		<title>Notonto - <h:outputText value="#{bundle.menu_info_bg}" /></title>
 	</ui:define>
 	<ui:define name="content">
-		<pm:content styleClass="jqm-content">
-			<!-- ### CONTENT-START ### -->
+		<div class="ui-g-6">
 			<h1>
 				<h:outputText value="#{bundle.menu_info_bg}" class="flowtext1" />
 			</h1>
@@ -24,10 +23,9 @@
 					lernen. Internetzugang genügt.</p>
 			</h:panelGroup>
 			<!-- ### CONTENT-END ### -->
-		</pm:content>
-	</ui:define>
-	<ui:define name="sidebar">
-		<ui:include src="/snippets/top5.xhtml" />
-		<ui:include src="/snippets/tools.xhtml" />
+		</div>
+		<div class="ui-g-2">
+			<ui:include src="/snippets/top5.xhtml" />
+		</div>
 	</ui:define>
 </ui:composition>

@@ -3,7 +3,7 @@
 		<title>Notonto - Vokabeln lernen und behalten</title>
 	</ui:define>
 	<ui:define name="content">
-		<div id="content" class="ui-grid-col-6">
+		<div id="content" class="ui-g-6">
 			<h1>
 				<h:outputText value="#{bundle.menu_library}" />
 			</h1>
@@ -22,8 +22,8 @@
 				</p:outputPanel>
 				<!-- WARN PANEL -->
 				<p:growl id="messages" showDetail="false" />
-				<p:slideMenu id="topicMenu" model="#{libraryView.model}" />
-				<p:dataTable id="libraryDT" value="#{libraryView.lessons}" var="lw" class="w100p" emptyMessage="">
+				<p:slideMenu id="topicMenu" model="#{libraryFilterView.model}" />
+				<p:dataTable id="libraryDT" value="#{libraryFilterView.lessons}" var="lw" class="w100p" emptyMessage="">
 					<f:facet name="header">
 						<h:outputText value="Select Lesson" />
 					</f:facet>
@@ -49,15 +49,15 @@
 				</p:dataTable>
 			</h:form>
 		</div>
-		<div class="ui-grid-col-2">
+		<div class="ui-g-2">
 			<h:form>
 				<h2>
 					<h:outputText value="#{bundle.code}" />
 				</h2>
 				<p:outputPanel class="naked" rendered="#{auth.isLoggedIn}">
 					<h:outputText value="#{bundle.lessoncode}" class="font1" />
-					<h:inputText value="#{libraryView.lessonCode}" size="35" />
-					<h:commandLink class="btn btn_blue" action="#{libraryView.selectLessonCode}" value="#{bundle.btn_ok}" />
+					<h:inputText value="#{libraryFilterView.lessonCode}" size="35" />
+					<h:commandLink class="btn btn_blue" action="#{libraryFilterView.selectLessonCode}" value="#{bundle.btn_ok}" />
 				</p:outputPanel>
 			</h:form>
 		</div>

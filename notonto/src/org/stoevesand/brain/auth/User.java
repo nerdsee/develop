@@ -6,12 +6,15 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.stoevesand.brain.BrainSession;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.brain.model.Lesson;
@@ -27,16 +30,16 @@ public class User {
 	@ManagedProperty(value = "#{brainSystem}")
 	private BrainSystem brainSystem;
 
-	//@ManagedProperty(value = "#{brainSession}")
-	//private BrainSession brainSession;
+	// @ManagedProperty(value = "#{brainSession}")
+	// private BrainSession brainSession;
 
 	public void setBrainSystem(BrainSystem bs) {
 		this.brainSystem = bs;
 	}
 
-//	public void setBrainSession(BrainSession bs) {
-//		this.brainSession = bs;
-//	}
+	// public void setBrainSession(BrainSession bs) {
+	// this.brainSession = bs;
+	// }
 
 	final static int USER_TYPE_ADMIN = 9;
 	final static int USER_TYPE_TEACHER = 7;
@@ -78,7 +81,7 @@ public class User {
 
 	boolean dirty = false;
 	boolean loggedIn = false;
-	private boolean valid=false;
+	private boolean valid = false;
 
 	public boolean isValid() {
 		return valid;
@@ -132,7 +135,7 @@ public class User {
 		this.statusLang = DBUtil.getString(rs, "status_lang");
 		this.prefix = DBUtil.getString(rs, "prefix");
 
-		this.valid=true;
+		this.valid = true;
 	}
 
 	public long getId() {
@@ -158,7 +161,7 @@ public class User {
 
 	public Vector<UserLesson> getLessons() {
 		try {
-			if ( (userLessons == null) || (userLessons.size()==0))
+			if ((userLessons == null) || (userLessons.size() == 0))
 				userLessons = brainSystem.getBrainDB().getUserLessons(this);
 		} catch (DBException e) {
 			e.printStackTrace();
@@ -168,10 +171,15 @@ public class User {
 
 	public UserLesson subscribeLesson(Lesson lesson) throws DBException {
 		UserLesson ret = null;
-		// UserLesson userLesson =
-		ret = brainSystem.getBrainDB().subscribeLesson(this, lesson);
-		// lessons.add(userLesson);
-		// brainSession.loadLibrary();
+
+		Vector<UserLesson> uls = brainSystem.getBrainDB().getUserLessons(lesson);
+
+		if (uls.size() == 0) {
+			ret = brainSystem.getBrainDB().subscribeLesson(this, lesson);
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Sie haben diese Lektion bereits abonniert."));
+		}
+
 		userLessons = null;
 		return ret;
 	}
@@ -322,12 +330,12 @@ public class User {
 	}
 
 	public void loadUser(String username) {
-		 try {
+		try {
 			brainSystem.getBrainDB().loadUser(this, username);
 		} catch (DBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 	}
 
 	public boolean isUnlocked() {
@@ -336,6 +344,28 @@ public class User {
 
 	public void setUnlocked(boolean unlocked) {
 		this.unlocked = unlocked;
+	}
+
+	public void acceptInvitation(String inviteeEmail, String inviteeCode) {
+
+		if (name.equals(inviteeEmail)) {
+			Vector<Lesson> lessons;
+			try {
+				lessons = brainSystem.getBrainDB().getLessonsByCode(inviteeCode);
+				if (lessons != null) {
+					for (Lesson lesson : lessons) {
+						subscribeLesson(lesson);
+					}
+				} else {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Diese Lektion ist unbekannt."));
+				}
+			} catch (DBException e) {
+				e.printStackTrace();
+			}
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Die Einladung gehört nicht zu Ihrem Konto."));
+		}
+		return;
 	}
 
 }

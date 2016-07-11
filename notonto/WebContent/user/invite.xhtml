@@ -3,14 +3,27 @@
 		<title>Edit Item</title>
 	</ui:define>
 	<ui:define name="content">
-		<div id="content" class="ui-grid-col-8">
+		<div id="content" class="ui-g-8">
 			<h1>
-				<h:outputText value="#{bundle.editlesson}" />
+				<h:outputText value="#{bundle.invite}" />
 			</h1>
 			<h2>
 				<h:outputText value="#{brainSession.currentLesson.description}" />
 			</h2>
+			<h3>Sie haben zwei Möglichkeiten, damit andere Benutzer diese Lektion verwenden können.</h3>
 			<h:form>
+				<p:panel>
+			Der Freischaltcode für diese Lektion lautet: #{brainSession.currentLesson.code}
+			</p:panel>
+				<p:panel>
+			Verschicken Sie eine Email, mit einem direkten Link als Einladung.
+				<h:panelGrid columns="2">
+						<p:outputLabel>Email Adresse</p:outputLabel>
+						<p:inputText value="#{libraryFilterView.inviteeEmail}" size="60" />
+						<p:outputLabel></p:outputLabel>
+						<p:commandButton value="OK" action="#{libraryFilterView.sendInvitation}" class="ui-btn-inline ui-btn-green" />
+					</h:panelGrid>
+				</p:panel>
 				<h:panelGrid columns="2">
 					<p:outputLabel for="f1" value="Titel" />
 					<p:inputText id="f1" value="#{brainSession.currentLesson.description}" size="40" />

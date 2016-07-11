@@ -10,8 +10,21 @@
 </h:head>
 <h:body onkeydown="bodykeydown(event); return true;">
 	<ui:include src="/snippets/headline.xhtml" />
-	<p:spacer height="50px"></p:spacer>
 	<div class="ui-g">
+		<div class="ui-g-2"></div>
+		<div class="ui-g-8">
+			<p:panelGrid rendered="#{!user.unlocked and auth.isLoggedIn}">
+				<div class="ui-messages ui-widget" aria-live="polite">
+					<div class="ui-messages-warn ui-corner-all">
+						<span class="ui-messages-warn-icon"></span>
+						<ul>
+							<li><span class="ui-messages-info-summary">Bitte schalten Sie ihren Account frei.</span></li>
+						</ul>
+					</div>
+				</div>
+			</p:panelGrid>
+		</div>
+		<div class="ui-g-2"></div>
 		<div class="ui-g-2"></div>
 		<ui:insert name="content" />
 		<div class="ui-g-2"></div>

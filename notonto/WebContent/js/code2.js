@@ -25,14 +25,14 @@ function unmark(inp) {
 }
 
 function show_answer() {
-	document.getElementById(PF('area_question').id).className='hidden';
-	document.getElementById(PF('area_answer').id).className='shown';
+	$("#area_question").hide();
+	$("#area_answer").show();
 	return false;
 }
 
 function show_question() {
-	document.getElementById(PF('area_question').id).className='shown';
-	document.getElementById(PF('area_answer').id).className='hidden';
+	$("#area_question").show();
+	$("#area_answer").hide();
 	return false;
 }
 

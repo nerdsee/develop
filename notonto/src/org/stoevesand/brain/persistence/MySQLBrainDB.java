@@ -3,9 +3,11 @@ package org.stoevesand.brain.persistence;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
@@ -30,6 +32,7 @@ import org.stoevesand.brain.model.Item;
 import org.stoevesand.brain.model.Lesson;
 import org.stoevesand.brain.model.UserItem;
 import org.stoevesand.brain.model.UserLesson;
+import org.stoevesand.util.CryptUtils;
 import org.stoevesand.util.DBUtil;
 import org.stoevesand.util.News;
 
@@ -58,7 +61,8 @@ public class MySQLBrainDB implements BrainDB {
 			// java:jboss/datasources/notonto
 			try {
 				Context initContext = new InitialContext();
-				// Context envContext = (Context) initContext.lookup("java:jboss");
+				// Context envContext = (Context)
+				// initContext.lookup("java:jboss");
 				// ds = (DataSource) envContext.lookup("datasources/notonto");
 				ds = (DataSource) initContext.lookup("java:jboss/datasources/notonto");
 				if (ds == null) {
@@ -357,11 +361,20 @@ public class MySQLBrainDB implements BrainDB {
 			if (rs.next()) {
 				long newId = rs.getLong(1);
 				lesson.setId(newId);
-			}
 
+				// Code erzeugen und speichern
+				String code = createCode(newId, lesson.getOwnerId());
+				lesson.setCode(code);
+				close(ps);
+				ps = conn.prepareStatement("update lessons set code=? where id=?");
+				ps.setString(1, lesson.getCode());
+				ps.setLong(2, newId);
+				ps.executeUpdate();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			close(rs);
 			close(ps);
 			close(conn);
 		}
@@ -373,6 +386,12 @@ public class MySQLBrainDB implements BrainDB {
 			item.store();
 		}
 
+	}
+
+	private String createCode(long newId, long ownerId) {
+		String ret=""+newId+"-"+ownerId;
+		ret = Base64.getEncoder().encodeToString(ret.getBytes()).toUpperCase();
+		return ret;
 	}
 
 	public void updateLesson(Lesson lesson) throws DBException {
@@ -447,9 +466,10 @@ public class MySQLBrainDB implements BrainDB {
 		ResultSet rs = null;
 		Lesson lesson = null;
 		try {
-			// ps = conn.prepareStatement("SELECT l.*, count(*) as cx FROM lessons l,
+			// ps = conn.prepareStatement("SELECT l.*, count(*) as cx FROM
+			// lessons l,
 			// userlessons ul where ul.lessonID=l.id group by l.id");
-			ps = conn.prepareStatement("SELECT * FROM lessons l order by description");
+			ps = conn.prepareStatement("SELECT l.id as lessonid, l.* FROM lessons l order by description");
 
 			rs = ps.executeQuery();
 
@@ -475,9 +495,10 @@ public class MySQLBrainDB implements BrainDB {
 		ResultSet rs = null;
 		Lesson lesson = null;
 		try {
-			// ps = conn.prepareStatement("SELECT l.*, count(*) as cx FROM lessons l,
+			// ps = conn.prepareStatement("SELECT l.*, count(*) as cx FROM
+			// lessons l,
 			// userlessons ul where ul.lessonID=l.id group by l.id");
-			String sql = "SELECT * FROM lessons l ";
+			String sql = "SELECT l.id as lessonid, l.* FROM lessons l ";
 			sql += "where public=1 and (topic1=? or topic2=?) ";
 			sql += "order by description ";
 			ps = conn.prepareStatement(sql);
@@ -507,11 +528,12 @@ public class MySQLBrainDB implements BrainDB {
 		ResultSet rs = null;
 		Lesson lesson = null;
 		try {
-			// ps = conn.prepareStatement("SELECT l.*, count(*) as cx FROM lessons l,
+			// ps = conn.prepareStatement("SELECT l.*, count(*) as cx FROM
+			// lessons l,
 			// userlessons ul where ul.lessonID=l.id group by l.id");
 
 			String sql = "";
-			sql += "SELECT distinct l.* FROM lessons l, les_cat lc, categories c ";
+			sql += "SELECT distinct l.id as lessonid, l.* FROM lessons l, les_cat lc, categories c ";
 			sql += "where l.id=lc.lessonID and lc.categoryID=c.id and public=1 and text=? ";
 
 			ps = conn.prepareStatement(sql);
@@ -540,14 +562,15 @@ public class MySQLBrainDB implements BrainDB {
 		ResultSet rs = null;
 		Lesson lesson = null;
 		try {
-			// ps = conn.prepareStatement("SELECT l.*, count(*) as cx FROM lessons l,
+			// ps = conn.prepareStatement("SELECT l.*, count(*) as cx FROM
+			// lessons l,
 			// userlessons ul where ul.lessonID=l.id group by l.id");
 
 			String sql = "";
-			sql += "SELECT l.*,prefix FROM lessons l, users u ";
-			sql += "where ownergroupID=0 and l.ownerID=u.id and code=? and public=2 ";
+			sql += "SELECT l.id as lessonid, l.*,prefix FROM lessons l, users u ";
+			sql += "where ownergroupID=0 and l.ownerID=u.id and code=? ";
 			sql += "union ";
-			sql += "SELECT l.*,prefix FROM lessons l, groups u ";
+			sql += "SELECT l.id as lessonid, l.*,prefix FROM lessons l, groups u ";
 			sql += "where ownergroupID>0 and l.ownergroupID=u.id and code=? and public=2 ";
 			sql += "order by description";
 
@@ -558,6 +581,12 @@ public class MySQLBrainDB implements BrainDB {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
+				ResultSetMetaData meta = rs.getMetaData();
+				for (int i=1; i<=meta.getColumnCount(); i++) {
+					String col = meta.getColumnLabel(i);
+					String nam = meta.getColumnName(i);
+					String a="";
+				}
 				lesson = new Lesson(rs);
 				ret.add(lesson);
 			}
@@ -581,9 +610,10 @@ public class MySQLBrainDB implements BrainDB {
 		ResultSet rs = null;
 		Lesson lesson = null;
 		try {
-			// ps = conn.prepareStatement("SELECT l.*, count(*) as cx FROM lessons l,
+			// ps = conn.prepareStatement("SELECT l.*, count(*) as cx FROM
+			// lessons l,
 			// userlessons ul where ul.lessonID=l.id group by l.id");
-			String sql = "SELECT * FROM lessons l ";
+			String sql = "SELECT l.id as lessonid, l.* FROM lessons l ";
 			sql += "where ownerID=? OR (ownergroupID=? and ownergroupID!=0)";
 			sql += "order by description ";
 			ps = conn.prepareStatement(sql);
@@ -653,7 +683,8 @@ public class MySQLBrainDB implements BrainDB {
 	// java.sql.Timestamp now = new
 	// java.sql.Timestamp(System.currentTimeMillis());
 	// ps =
-	// conn.prepareStatement("insert into useritems (userlessonID, itemID, level, last, next, active) values (?,?,?,?,?,?)");
+	// conn.prepareStatement("insert into useritems (userlessonID, itemID,
+	// level, last, next, active) values (?,?,?,?,?,?)");
 	// while (it.hasNext()) {
 	// Long itemId = it.next();
 	// // log.debug("subscribe.-." + item.getText());
@@ -717,8 +748,8 @@ public class MySQLBrainDB implements BrainDB {
 	}
 
 	/**
-	 * In einer UserLesson können sich nur die Lernintervalle ändern. Diese werden
-	 * hier gespeichert.
+	 * In einer UserLesson können sich nur die Lernintervalle ändern. Diese
+	 * werden hier gespeichert.
 	 * 
 	 * @param userLesson
 	 * @return
@@ -738,7 +769,7 @@ public class MySQLBrainDB implements BrainDB {
 				ps.setLong(1, userLesson.getIntervallUnit());
 				ps.setDate(2, new java.sql.Date(userLesson.getRealTargetDate().getTime()));
 			}
-			ps.setShort(3, userLesson.isIntervallType() ? (short)1 : (short)0);
+			ps.setShort(3, userLesson.isIntervallType() ? (short) 1 : (short) 0);
 			ps.setLong(4, userLesson.getId());
 			ps.executeUpdate();
 
@@ -900,8 +931,9 @@ public class MySQLBrainDB implements BrainDB {
 
 	static public void close(Connection conn) {
 		try {
-			if (conn != null)
+			if (conn != null) {
 				conn.close();
+			}
 		} catch (Exception e) {
 		}
 	}
@@ -913,7 +945,7 @@ public class MySQLBrainDB implements BrainDB {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			String sql = "select *, ul.id as ulid, l.id as lid from userlessons ul, lessons l ";
+			String sql = "select *, ul.id as ulid, l.id as lessonid, l.id as lid from userlessons ul, lessons l ";
 			sql += "where userID=? and ul.lessonID=l.id and parentID=0 order by description";
 			ps = conn.prepareStatement(sql);
 			ps.setLong(1, user.getId());
@@ -974,7 +1006,7 @@ public class MySQLBrainDB implements BrainDB {
 		ResultSet rs = null;
 
 		try {
-			ps = conn.prepareStatement("select * from lessons l where id=?");
+			ps = conn.prepareStatement("select l.id as lessonid, l.* from lessons l where id=?");
 			ps.setLong(1, lessonId);
 
 			rs = ps.executeQuery();
@@ -1423,7 +1455,6 @@ public class MySQLBrainDB implements BrainDB {
 			ps.setLong(5, useritem.getWrong());
 			ps.setLong(6, useritem.getId());
 			ps.execute();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -1604,7 +1635,7 @@ public class MySQLBrainDB implements BrainDB {
 		ResultSet rs = null;
 
 		try {
-			ps = conn.prepareStatement("select ul.id as ulid, userID, lessonID, combined, interval_unit, target_date, intervall_type, l.* from userlessons ul, lessons l where ul.id=? and userID=? and ul.lessonID=l.id");
+			ps = conn.prepareStatement("select ul.id as ulid, userID, lessonID, combined, interval_unit, target_date, intervall_type, l.id as lessonid, l.* from userlessons ul, lessons l where ul.id=? and userID=? and ul.lessonID=l.id");
 
 			ps.setLong(1, userLessonId);
 			ps.setLong(2, user.getId());

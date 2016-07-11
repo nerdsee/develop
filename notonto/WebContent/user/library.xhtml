@@ -3,7 +3,7 @@
 		<title>Notonto - Vokabeln lernen und behalten</title>
 	</ui:define>
 	<ui:define name="content">
-		<div id="content" class="ui-grid-col-8">
+		<div id="content" class="ui-g-8">
 			<h1>
 				<h:outputText value="#{bundle.menu_library}" />
 			</h1>
@@ -21,30 +21,24 @@
 					</p:outputPanel>
 				</p:outputPanel>
 				<!-- WARN PANEL -->
-				<p:dataTable  id="libraryDT" value="#{libraryFilterView.lessons}" widgetVar="libraryTable" var="lw" class="w100p" emptyMessage="" filteredValue="#{libraryFilterView.filteredLessons}" rows="4" paginator="true"
+				<p:dataTable  id="libraryDT" value="#{libraryFilterView.lessons}" widgetVar="libraryTable" var="lw" class="w100p" emptyMessage="No matching lesson found." filteredValue="#{libraryFilterView.filteredLessons}" rows="5" paginator="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15">
 					<f:facet name="header">
 						<p:outputPanel>
 							<h:outputText value="Wählen Sie eine Lektion aus der Liste oder geben Sie einen Code ein: " />
-							<p:inputText id="globalFilter" onkeyup="PF('libraryTable').filter()" style="width:150px" placeholder="Enter lesson code" />
+							<p:inputText value="#{libraryFilterView.lessonCode}" id="globalFilter" onkeyup="PF('libraryTable').filter()" style="width:150px" placeholder="Enter lesson code" />
 						</p:outputPanel>
 					</f:facet>
-					<p:column filterBy="#{lw.lesson.icon}" width="40" headerText="Category">
-						<f:facet name="filter">
-							<p:selectOneMenu onchange="PF('libraryTable').filter()">
-								<f:selectItem itemLabel="Select One" itemValue="#{null}" noSelectionOption="true" />
-								<f:selectItems value="#{libraryFilterView.categories}" />
-							</p:selectOneMenu>
-						</f:facet>
+					<p:column width="40">
 						<h:graphicImage url="/images/lessons/lesson_button_#{lw.lesson.icon}.gif" class="icon" width="32" height="32" />
 					</p:column>
-					<p:column filterBy="#{lw.lesson.description}" headerText="Description" filterMatchMode="contains">
+					<p:column filterBy="#{lw.lesson.description}" filterStyle="width: 400px" headerText="Description" filterMatchMode="contains">
 						<h:outputText value="#{lw.lesson.description}" class="font1 bold" />
 						<br />
 						<h:outputText escape="false" value="#{lw.lesson.abstract}" class="font3" />
 					</p:column>
-					<p:column filterBy="#{lw.lesson.code}" headerText="Code" filterMatchMode="exact">
-						<h:outputText value="#{lw.lesson.code}" class="font1 bold" />
+					<p:column visible="false" filterBy="#{lw.lesson.code}" filterMatchMode="contains" headerText="Code">
+						<h:outputText escape="false" value="#{lw.lesson.code}" class="font3" />
 					</p:column>
 					<p:column width="20">
 						<h:graphicImage class="flag" value="/images/#{lw.lesson.qlang}.gif" width="15" height="9" />
@@ -56,29 +50,10 @@
 						<h:outputText escape="false" value="#{lw.lesson.itemCount}" class="font3 bold" />
 					</p:column>
 					<p:column width="120">
-							<p:commandButton value="#{bundle.btn_subscribed}" disabled="true" escape="false" action="#{brainSession.subscribeLesson(lw)}" rendered="#{lw.isSubscribed}" />
-							<p:commandButton value="#{bundle.btn_subscribe}" action="#{brainSession.subscribeLesson(lw)}" rendered="#{not lw.isSubscribed}" />
+							<p:commandButton value="#{bundle.btn_subscribe}" action="#{brainSession.subscribeLesson(lw)}" rendered="#{auth.isLoggedIn and not lw.isSubscribed}" />
 					</p:column>
 				</p:dataTable>
 			</h:form>
-			<!--  -->
-			<h:form>
-				<h2>
-					<h:outputText value="#{bundle.code}" />
-				</h2>
-				<p:outputPanel class="naked" rendered="#{auth.isLoggedIn}">
-					<h:outputText value="#{bundle.lessoncode}" class="font1" />
-					<h:inputText value="#{libraryView.lessonCode}" size="35" />
-					<h:commandLink class="btn btn_blue" action="#{libraryView.selectLessonCode}" value="#{bundle.btn_ok}" />
-				</p:outputPanel>
-			</h:form>
 		</div>
-	</ui:define>
-	<ui:define name="menu">
-		<h:form>
-			<p:menu styleClass="ui-corner-all ui-group-theme-c">
-				<p:menuitem value="Exit" icon="ui-icon-home" outcome="user" />
-			</p:menu>
-		</h:form>
 	</ui:define>
 </ui:composition>
