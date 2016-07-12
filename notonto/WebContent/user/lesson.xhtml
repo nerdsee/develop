@@ -2,11 +2,11 @@
 	<ui:define name="head">
 		<title>Notonto - Lektion</title>
 	</ui:define>
-	<ui:define name="headline">
-		<h:outputText styleClass="headline" value="#{brainSession.currentUserLesson.lesson.description}" />
-	</ui:define>
 	<ui:define name="content">
 		<div class="ui-g-8">
+			<h2>
+				<h:outputText styleClass="headline" value="#{brainSession.currentUserLesson.lesson.description}" />
+			</h2>
 			<h:form>
 				<div id="area_question" onclick="show_answer()">
 					<p:panel id="panel" rendered="#{not empty brainSession.currentUserLesson.currentUserItem}">
@@ -59,9 +59,11 @@
 							</div>
 							<div class="ui-g-6 ta_right">
 								<p:commandButton id="btnyes" value="Gewusst" action="#{brainSession.knowAnswer()}" styleClass="btn_green" ajax="false" />
+								<p:commandLink id="nbtnyes" value="Gewusst" action="#{brainSession.knowAnswer()}" styleClass="button button-circle button-action" ajax="false" />
 							</div>
 							<div class="ui-g-6">
 								<p:commandButton id="btnno" value="Nicht gewusst" partialSubmit="false" action="#{brainSession.failAnswer()}" styleClass="btn_red" ajax="false" />
+								<p:commandLink id="nbtnno" value="Nicht gewusst" partialSubmit="false" action="#{brainSession.failAnswer()}" styleClass="button button-circle button-caution" ajax="false" />
 							</div>
 						</div>
 						<!-- ### CONTENT-END ### -->
