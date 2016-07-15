@@ -3,57 +3,59 @@
 		<title>Notonto - Vokabeln lernen und behalten</title>
 	</ui:define>
 	<ui:define name="content">
-		<div id="content" class="ui-g-8">
-			<h1>
-				<h:outputText value="#{bundle.menu_library}" />
-			</h1>
-			<h:form>
-				<h3>
-					<h:outputText value="#{bundle.libinfo}" />
-				</h3>
-				<!-- WARN PANEL -->
-				<p:outputPanel class="ui-messages ui-widget" rendered="#{not auth.isLoggedIn}">
-					<p:outputPanel class="ui-messages-warn ui-corner-all">
-						<span class="ui-messages-warn-icon"></span>
-						<ul>
-							<li><span class="ui-messages-warn-detail">#{bundle.liblogin}</span></li>
-						</ul>
-					</p:outputPanel>
-				</p:outputPanel>
-				<!-- WARN PANEL -->
-				<p:dataTable  id="libraryDT" value="#{libraryFilterView.lessons}" widgetVar="libraryTable" var="lw" class="w100p" emptyMessage="No matching lesson found." filteredValue="#{libraryFilterView.filteredLessons}" rows="5" paginator="true"
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15">
-					<f:facet name="header">
-						<p:outputPanel>
-							<h:outputText value="Wählen Sie eine Lektion aus der Liste oder geben Sie einen Code ein: " />
-							<p:inputText value="#{libraryFilterView.lessonCode}" id="globalFilter" onkeyup="PF('libraryTable').filter()" style="width:150px" placeholder="Enter lesson code" />
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<h1>
+					<h:outputText value="#{bundle.menu_library}" />
+				</h1>
+				<h:form>
+					<h3>
+						<h:outputText value="#{bundle.libinfo}" />
+					</h3>
+					<!-- WARN PANEL -->
+					<p:outputPanel class="ui-messages ui-widget" rendered="#{not auth.isLoggedIn}">
+						<p:outputPanel class="ui-messages-warn ui-corner-all">
+							<span class="ui-messages-warn-icon"></span>
+							<ul>
+								<li><span class="ui-messages-warn-detail">#{bundle.liblogin}</span></li>
+							</ul>
 						</p:outputPanel>
-					</f:facet>
-					<p:column width="40">
-						<h:graphicImage url="/images/lessons/lesson_button_#{lw.lesson.icon}.gif" class="icon" width="32" height="32" />
-					</p:column>
-					<p:column filterBy="#{lw.lesson.description}" filterStyle="width: 400px" headerText="Description" filterMatchMode="contains">
-						<h:outputText value="#{lw.lesson.description}" class="font1 bold" />
-						<br />
-						<h:outputText escape="false" value="#{lw.lesson.abstract}" class="font3" />
-					</p:column>
-					<p:column visible="false" filterBy="#{lw.lesson.code}" filterMatchMode="contains" headerText="Code">
-						<h:outputText escape="false" value="#{lw.lesson.code}" class="font3" />
-					</p:column>
-					<p:column width="20">
-						<h:graphicImage class="flag" value="/images/#{lw.lesson.qlang}.gif" width="15" height="9" />
-					</p:column>
-					<p:column width="20">
-						<h:graphicImage class="flag" value="/images/#{lw.lesson.alang}.gif" width="15" height="9" />
-					</p:column>
-					<p:column headerText="#" width="20">
-						<h:outputText escape="false" value="#{lw.lesson.itemCount}" class="font3 bold" />
-					</p:column>
-					<p:column width="120">
+					</p:outputPanel>
+					<!-- WARN PANEL -->
+					<p:dataTable id="libraryDT" value="#{libraryFilterView.lessons}" widgetVar="libraryTable" var="lw" class="w100p" emptyMessage="No matching lesson found." filteredValue="#{libraryFilterView.filteredLessons}" rows="5" paginator="true"
+						paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15">
+						<f:facet name="header">
+							<p:outputPanel>
+								<h:outputText value="Wählen Sie eine Lektion aus der Liste oder geben Sie einen Code ein: " />
+								<p:inputText value="#{libraryFilterView.lessonCode}" id="globalFilter" onkeyup="PF('libraryTable').filter()" style="width:150px" placeholder="Enter lesson code" />
+							</p:outputPanel>
+						</f:facet>
+						<p:column width="50" priority="5">
+							<h:graphicImage url="/images/lessons/lesson_button_#{lw.lesson.icon}.gif" class="icon" width="32" height="32" />
+						</p:column>
+						<p:column filterBy="#{lw.lesson.description}" afilterStyle="width: 200px" headerText="Description" filterMatchMode="contains">
+							<h:outputText value="#{lw.lesson.description}" class="font1 bold" />
+							<br />
+							<h:outputText escape="false" value="#{lw.lesson.abstract}" class="font3" />
+						</p:column>
+						<p:column priority="2" visible="false" filterBy="#{lw.lesson.code}" filterMatchMode="contains" headerText="Code">
+							<h:outputText escape="false" value="#{lw.lesson.code}" class="font3" />
+						</p:column>
+						<p:column priority="6" width="40">
+							<h:graphicImage class="flag" value="/images/#{lw.lesson.qlang}.gif" width="15" height="9" />
+						</p:column>
+						<p:column priority="6" width="40">
+							<h:graphicImage class="flag" value="/images/#{lw.lesson.alang}.gif" width="15" height="9" />
+						</p:column>
+						<p:column priority="2" headerText="#" width="40">
+							<h:outputText escape="false" value="#{lw.lesson.itemCount}" class="font3 bold" />
+						</p:column>
+						<p:column width="140">
 							<p:commandButton value="#{bundle.btn_subscribe}" action="#{brainSession.subscribeLesson(lw)}" rendered="#{auth.isLoggedIn and not lw.isSubscribed}" />
-					</p:column>
-				</p:dataTable>
-			</h:form>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</div>
 		</div>
 	</ui:define>
 </ui:composition>

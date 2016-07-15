@@ -3,30 +3,32 @@
 		<title>Edit Item</title>
 	</ui:define>
 	<ui:define name="content">
-		<div id="content" class="ui-g-8">
-			<h1>
-				<h:outputText value="Lektion hochladen" />
-			</h1>
-			<h2>
-				<h:outputText value="#{brainSession.currentLesson.description}" />
-			</h2>
-			<h:outputText value="#{bundle.fileformat}" />
-			<h:form id="ff">
-				<p:fileUpload fileUploadListener="#{lessonLoader.handleFileUpload}" mode="advanced" dragDropSupport="false" auto="true" update="ff:TT" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(xls|xlsx)$/" />
-				<p:growl id="messages" showDetail="true" />
-				<h:outputText value="#{lessonLoader.validate}" id="TT"/> 
-				<p:commandButton id="validatebtn" value="Überprüfen" action="validateupload" disabled="#{lessonLoader.validate}"/>			
-			</h:form>
-			<h:form enctype="multipart/form-data">
-				<pm:field>
-					<p:outputLabel for="f1" value="Datei" />
-					<p:fileUpload id="f1" label="Choose ..." value="#{lessonLoader.uploadedFile}" required="true" mode="simple" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
-				</pm:field>
-				<pm:field>
-					<p:outputLabel for="f2" value="" />
-					<p:commandButton id="f2" value="Upload" action="#{lessonLoader.fileLessonUploaded}" ajax="false" />
-				</pm:field>
-			</h:form>
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<h1>
+					<h:outputText value="Lektion hochladen" />
+				</h1>
+				<h2>
+					<h:outputText value="#{brainSession.currentLesson.description}" />
+				</h2>
+				<h:outputText value="#{bundle.fileformat}" />
+				<h:form id="ff">
+					<p:fileUpload fileUploadListener="#{lessonLoader.handleFileUpload}" mode="advanced" dragDropSupport="false" auto="true" update="ff:TT" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(xls|xlsx)$/" />
+					<p:growl id="messages" showDetail="true" />
+					<h:outputText value="#{lessonLoader.validate}" id="TT" />
+					<p:commandButton id="validatebtn" value="Überprüfen" action="validateupload" disabled="#{lessonLoader.validate}" />
+				</h:form>
+				<h:form enctype="multipart/form-data">
+					<pm:field>
+						<p:outputLabel for="f1" value="Datei" />
+						<p:fileUpload id="f1" label="Choose ..." value="#{lessonLoader.uploadedFile}" required="true" mode="simple" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
+					</pm:field>
+					<pm:field>
+						<p:outputLabel for="f2" value="" />
+						<p:commandButton id="f2" value="Upload" action="#{lessonLoader.fileLessonUploaded}" ajax="false" />
+					</pm:field>
+				</h:form>
+			</div>
 		</div>
 	</ui:define>
 	<ui:define name="menu">

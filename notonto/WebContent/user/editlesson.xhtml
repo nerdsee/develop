@@ -3,67 +3,69 @@
 		<title><h:outputText value="Notonto - #{bundle.menu_teacher}" /></title>
 	</ui:define>
 	<ui:define name="content">
-		<div id="content" class="ui-g-8">
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-			<h1>
-				<h:outputText value="#{bundle.menu_teacher}" />
-			</h1>
-			<h3>
-				<h:outputText value="#{bundle.teacherinfo}" />
-			</h3>
-			<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="#{libraryFilterView.newLesson}" value="+ #{bundle.btn_newlesson}" style="float: right;" />
-			<p:spacer height="30px" />
-			<h:form>
-				<p:dataTable id="dt" value="#{libraryFilterView.ownerLibrary}" var="lw" emptyMessage="#{bundle.nolessons}" columnClasses="liblist,liblist w100p">
-					<f:facet name="header">
-						<h:outputText value="Eigene Lektionen" />
-					</f:facet>
-					<p:column>
-						<div class="ui-grid ui-grid-responsive">
-							<div class="ui-grid-row">
-								<div class="ui-g-1">
-									<h:graphicImage url="/images/lessons/lesson_button_#{lw.lesson.icon}.gif" class="icon" width="32" height="32" />
-									<br />
-									<h:graphicImage class="flag" value="/images/#{lw.lesson.qlang}.gif" width="15" height="9" />
-									<h:outputText value="&amp;nbsp;" escape="false" />
-									<h:graphicImage class="flag" value="/images/#{lw.lesson.alang}.gif" width="15" height="9" />
-								</div>
-								<div class="ui-g-8">
-									<h2>
-										<h:outputText value="#{lw.lesson.description} - #{lw.lesson.code}" class="font1 bold" />
-									</h2>
-									<p:panelGrid columns="2" class="font3" columnClasses="">
-										<h:outputText escape="false" value="#{bundle.numberitems}" />
-										<h:outputText value="#{lw.lesson.itemCount}" />
-										<h:outputText escape="false" value="#{bundle.numbersubs}" />
-										<h:outputText value="#{lw.lesson.subscriberCount}" />
-										<h:outputText escape="false" value="#{bundle.usage}" />
-										<h:outputText value="#{lw.lesson.usageCount}" />
-									</p:panelGrid>
-								</div>
-								<div class="ui-g-3" style="text-align: right;">
-									<p:commandButton class="btn_blue" value="#{bundle.btn_edit}" action="#{libraryFilterView.editOwnerLesson}" />
-									<br />
-									<p:commandButton class="btn_blue" value="Upload" action="#{libraryFilterView.editLessonUpload}" />
-									<br />
-									<p:commandButton value="#{bundle.btn_subscribed}" escape="false" disabled="true" rendered="#{lw.isSubscribed}" />
-									<p:commandButton value="#{bundle.btn_learn}" escape="false" action="#{brainSession.subscribeLesson(lw)}" rendered="#{not lw.isSubscribed}" />
-									<br />
-									<p:commandButton class="btn_blue" value="#{bundle.invite}" action="#{libraryFilterView.invite}" />
-									<br />
-									<p:commandButton value="Löschen" action="#{libraryFilterView.deleteLesson}" update="dt">
-										<p:confirm header="Confirmation" message="Sind sie sicher, dass Sie diese Lektion löschen wollen? Dies ist nicht umkehrbar!" icon="ui-icon-alert" />
-									</p:commandButton>
-									<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-										<p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-										<p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-									</p:confirmDialog>
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+				<h1>
+					<h:outputText value="#{bundle.menu_teacher}" />
+				</h1>
+				<h3>
+					<h:outputText value="#{bundle.teacherinfo}" />
+				</h3>
+				<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="#{libraryFilterView.newLesson}" value="+ #{bundle.btn_newlesson}" style="float: right;" />
+				<p:spacer height="30px" />
+				<h:form>
+					<p:dataTable id="dt" value="#{libraryFilterView.ownerLibrary}" var="lw" emptyMessage="#{bundle.nolessons}" columnClasses="liblist,liblist w100p">
+						<f:facet name="header">
+							<h:outputText value="Eigene Lektionen" />
+						</f:facet>
+						<p:column>
+							<div class="ui-grid ui-grid-responsive">
+								<div class="ui-grid-row">
+									<div class="ui-g-1">
+										<h:graphicImage url="/images/lessons/lesson_button_#{lw.lesson.icon}.gif" class="icon" width="32" height="32" />
+										<br />
+										<h:graphicImage class="flag" value="/images/#{lw.lesson.qlang}.gif" width="15" height="9" />
+										<h:outputText value="&amp;nbsp;" escape="false" />
+										<h:graphicImage class="flag" value="/images/#{lw.lesson.alang}.gif" width="15" height="9" />
+									</div>
+									<div class="ui-g-8">
+										<h2>
+											<h:outputText value="#{lw.lesson.description} - #{lw.lesson.code}" class="font1 bold" />
+										</h2>
+										<p:panelGrid columns="2" class="font3" columnClasses="">
+											<h:outputText escape="false" value="#{bundle.numberitems}" />
+											<h:outputText value="#{lw.lesson.itemCount}" />
+											<h:outputText escape="false" value="#{bundle.numbersubs}" />
+											<h:outputText value="#{lw.lesson.subscriberCount}" />
+											<h:outputText escape="false" value="#{bundle.usage}" />
+											<h:outputText value="#{lw.lesson.usageCount}" />
+										</p:panelGrid>
+									</div>
+									<div class="ui-g-3" style="text-align: right;">
+										<p:commandButton class="btn_blue" value="#{bundle.btn_edit}" action="#{libraryFilterView.editOwnerLesson}" />
+										<br />
+										<p:commandButton class="btn_blue" value="Upload" action="#{libraryFilterView.editLessonUpload}" />
+										<br />
+										<p:commandButton value="#{bundle.btn_subscribed}" escape="false" disabled="true" rendered="#{lw.isSubscribed}" />
+										<p:commandButton value="#{bundle.btn_learn}" escape="false" action="#{brainSession.subscribeLesson(lw)}" rendered="#{not lw.isSubscribed}" />
+										<br />
+										<p:commandButton class="btn_blue" value="#{bundle.invite}" action="#{libraryFilterView.invite}" />
+										<br />
+										<p:commandButton value="Löschen" action="#{libraryFilterView.deleteLesson}" update="dt">
+											<p:confirm header="Confirmation" message="Sind sie sicher, dass Sie diese Lektion löschen wollen? Dies ist nicht umkehrbar!" icon="ui-icon-alert" />
+										</p:commandButton>
+										<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+											<p:commandButton value="Ja" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+											<p:commandButton value="Nein" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+										</p:confirmDialog>
+									</div>
 								</div>
 							</div>
-						</div>
-					</p:column>
-				</p:dataTable>
-			</h:form>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</div>
 		</div>
 	</ui:define>
 	<ui:define name="menu">

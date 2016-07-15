@@ -3,55 +3,52 @@
 		<title><h:outputText value="Notonto - #{bundle.menu_learn}" /></title>
 	</ui:define>
 	<ui:define name="content">
-		<div class="ui-g-8">
-			<h:form>
-				<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-				<h1>Lernen</h1>
-				<h2>
-					<h:outputText value="Folgende Lektionen hast Du zum Lernen ausgewählt:" />
-				</h2>
-				<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="library" ajax="false" value="+ Hinzufügen" style="float:right;" />
-				<p:spacer height="30"></p:spacer>
-				<p:dataTable value="#{user.lessons}" emptyMessage="#{bundle.subfirst}" var="userlesson">
-					<f:facet name="header">
-						<h:outputText value="Lektionen" />
-					</f:facet>
-					<p:column headerText="Beschreibung">
-						<p:commandLink action="#{brainSession.learnLesson}">
-							<f:setPropertyActionListener value="#{userlesson}" target="#{brainSession.currentUserLesson}" />
-							<div class="ui-grid ui-grid-responsive">
-								<div class="ui-grid-row">
-									<div class="ui-g-1">
-										<h:graphicImage url="/images/lessons/lesson_button_#{userlesson.lesson.icon}.gif" class="icon" width="32" height="32" />
-									</div>
-									<div class="ui-g-10">
-										<h2>
-											<h:outputText value="#{userlesson.lesson.description}" />
-										</h2>
-										<h:outputFormat value="#{bundle.learnitems}" class="font3">
-											<f:param value="#{brainSession.getAvailable(userlesson)}" />
-										</h:outputFormat>
-										<h:outputText value="&lt;br> [#{userlesson.nextUserItemTimeDiff} ]" escape="false" rendered="#{brainSession.getAvailable(userlesson)==0}" class="font3" />
-										<h:outputText value="&lt;br>&lt;i>Zieltermin: #{userlesson.realTargetDate}&lt;/i>" escape="false" rendered="#{userlesson.intervallType}" class="font3" />
-									</div>
-									<div class="ui-g-1"></div>
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<h:form>
+					<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+					<h1>Lernen</h1>
+					<h2>
+						<h:outputText value="Folgende Lektionen hast Du zum Lernen ausgewählt:" />
+					</h2>
+					<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="library" ajax="false" value="+ Hinzufügen" style="float:right; margin-bottom: 10px;" />
+					<p:spacer height="30"></p:spacer>
+					<p:dataTable value="#{user.lessons}" emptyMessage="#{bundle.subfirst}" var="userlesson">
+						<f:facet name="header">
+							<h:outputText value="Lektionen" />
+						</f:facet>
+						<p:column headerText="Beschreibung">
+							<p:commandLink action="#{brainSession.learnLesson}">
+								<f:setPropertyActionListener value="#{userlesson}" target="#{brainSession.currentUserLesson}" />
+							</p:commandLink>
+							<div class="ui-g">
+								<div class="ui-g-12 ui-lg-1" style="text-align: center">
+									<h:graphicImage url="/images/lessons/lesson_button_#{userlesson.lesson.icon}.gif" class="icon" width="32" height="32" />
+								</div>
+								<div class="ui-g-12 ui-lg-8">
+									<h2>
+										<h:outputText value="#{userlesson.lesson.description}" />
+									</h2>
+									<h:outputFormat value="#{bundle.learnitems}" class="font3">
+										<f:param value="#{brainSession.getAvailable(userlesson)}" />
+									</h:outputFormat>
+									<h:outputText value="&lt;br> [#{userlesson.nextUserItemTimeDiff} ]" escape="false" rendered="#{brainSession.getAvailable(userlesson)==0}" class="font3" />
+									<h:outputText value="&lt;br>&lt;i>Zieltermin: #{userlesson.realTargetDate}&lt;/i>" escape="false" rendered="#{userlesson.intervallType}" class="font3" />
+								</div>
+								<div class="ui-g-12 ui-lg-3" style="text-align: center">
+									<p:commandButton value="Lernen" action="#{brainSession.learnLesson}" style="margin: 10px 10px 0px 0px;">
+										<f:setPropertyActionListener value="#{userlesson}" target="#{brainSession.currentUserLesson}" />
+									</p:commandButton>
+									<p:commandButton value="Optionen" action="intervals" icon="ui-icon-gear" style="margin: 10px 10px 0px 0px;">
+										<f:setPropertyActionListener value="#{userlesson}" target="#{brainSession.currentUserLesson}" />
+									</p:commandButton>
 								</div>
 							</div>
-						</p:commandLink>
-					</p:column>
-					<p:column width="100">
-						<p:commandButton value="Lernen" action="#{brainSession.learnLesson}">
-							<f:setPropertyActionListener value="#{userlesson}" target="#{brainSession.currentUserLesson}" />
-						</p:commandButton>
-					</p:column>
-					<p:column width="120">
-						<p:commandButton value="Optionen" action="intervals" icon="ui-icon-gear">
-							<f:setPropertyActionListener value="#{userlesson}" target="#{brainSession.currentUserLesson}" />
-						</p:commandButton>
-					</p:column>
-				</p:dataTable>
-				<!-- ### CONTENT-END ### -->
-			</h:form>
+						</p:column>
+					</p:dataTable>
+					<!-- ### CONTENT-END ### -->
+				</h:form>
+			</div>
 		</div>
 	</ui:define>
 	<ui:define name="menu">
