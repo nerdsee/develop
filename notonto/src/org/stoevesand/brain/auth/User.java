@@ -172,9 +172,9 @@ public class User {
 	public UserLesson subscribeLesson(Lesson lesson) throws DBException {
 		UserLesson ret = null;
 
-		Vector<UserLesson> uls = brainSystem.getBrainDB().getUserLessons(lesson);
+		UserLesson ul = brainSystem.getBrainDB().getUserLessonByLessonID(this, lesson.getId());
 
-		if (uls.size() == 0) {
+		if (ul == null) {
 			ret = brainSystem.getBrainDB().subscribeLesson(this, lesson);
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Sie haben diese Lektion bereits abonniert."));
