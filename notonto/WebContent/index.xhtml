@@ -3,19 +3,21 @@
 		<title>Notonto - Vokabeln lernen und behalten</title>
 	</ui:define>
 	<ui:define name="content">
-		<div id="content" class="ui-g-6">
-			<h1>
-				<h:outputText value="#{bundle.welcome1}" />
-			</h1>
-			<h:outputText value="#{bundle.welcome2}" />
-			<h:panelGroup class="font1">
-				<h:outputText value="#{bundle.intro1}" escape="false" />
-				<p />
-				<h:outputText value="#{bundle.intro2}" escape="false" />
-			</h:panelGroup>
-		</div>
-		<div id="sidebar" class="ui-g-2">
-			<ui:include src="/snippets/top5.xhtml" />
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-8">
+				<h1>
+					<h:outputText value="#{bundle.welcome1}" />
+				</h1>
+				<h:outputText value="#{bundle.welcome2}" />
+				<h:panelGroup class="font1">
+					<h:outputText value="#{bundle.intro1}" escape="false" />
+					<p />
+					<h:outputText value="#{bundle.intro2}" escape="false" />
+				</h:panelGroup>
+			</div>
+			<div id="sidebar" class="ui-g-12 ui-md-12 ui-lg-4">
+				<ui:include src="/snippets/top5.xhtml" />
+			</div>
 		</div>
 	</ui:define>
 </ui:composition>

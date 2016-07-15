@@ -5,7 +5,7 @@
 	<navigation-rule>
 		<from-view-id>/user/lesson.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>options</from-outcome>
+			<from-outcome>intervals</from-outcome>
 			<to-view-id>intervals.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
@@ -17,7 +17,7 @@
 	<navigation-rule>
 		<from-view-id>/user/method.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>options</from-outcome>
+			<from-outcome>intervals</from-outcome>
 			<to-view-id>intervals.jsf</to-view-id>
 		</navigation-case>
 		<navigation-case>
@@ -107,6 +107,30 @@
 		<navigation-case>
 			<from-outcome>library</from-outcome>
 			<to-view-id>/user/library.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>options</from-outcome>
+			<to-view-id>/user/options.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>intervals</from-outcome>
+			<to-view-id>/user/intervals.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>register</from-outcome>
+			<to-view-id>/register.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>impressum</from-outcome>
+			<to-view-id>/impressum.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>unlock</from-outcome>
+			<to-view-id>/user/unlock.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 

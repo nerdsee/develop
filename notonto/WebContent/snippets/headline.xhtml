@@ -1,5 +1,5 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
-	<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default navbar-static-top">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -11,7 +11,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li class="active"><p:link outcome="user" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}">
+					<li><p:link outcome="user" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}">
 							<span class="glyphicon glyphicon-education"></span>
 							<h:outputText value=" #{bundle.menu_learn}" />
 						</p:link></li>
@@ -21,7 +21,7 @@
 						</p:link></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><p:link outcome="editlesson" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}">
+					<li><p:link outcome="impressum" icon="ui-icon-lightbulb">
 							<span class="glyphicon glyphicon-info-sign"></span>
 							<h:outputText value=" Impressum" />
 						</p:link></li>
@@ -47,31 +47,4 @@
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
-	<div id="headline" class="ui-grid ui-grid-responsive">
-		<div class="ui-grid-row">
-			<div id="content" class="ui-g-2"></div>
-			<div id="content" class="ui-g-8">
-				<h:form>
-					<p:menubar>
-						<p:menuitem value="#{bundle.menu_home}" icon="ui-icon-home" outcome="index" />
-						<p:menuitem value="#{bundle.menu_learn}" outcome="user" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}" />
-						<p:menuitem value="#{bundle.menu_teacher}" outcome="editlesson" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
-						<p:menuitem value="#{bundle.menu_admin}" url="/admin/user.jsf" icon="ui-icon-gear" rendered="#{auth.isLoggedIn and user.isAdmin}" />
-						<p:submenu label="Infos" icon="ui-icon-info">
-							<p:menuitem value="#{bundle.menu_info_bg}" outcome="info_bg" />
-							<p:menuitem value="#{bundle.menu_info_ls}" outcome="info_co" />
-						</p:submenu>
-						<p:menuitem value="Impressum" url="/impressum.jsf" icon="ui-icon-info" />
-						<f:facet name="options">
-							<p:commandButton action="login" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
-							<p:commandButton action="register" value="#{bundle.register}" rendered="#{!auth.isLoggedIn}" />
-							<p:commandButton action="options" value="#{bundle.options}" rendered="#{auth.isLoggedIn}" ajax="false" />
-							<p:commandButton action="#{auth.logout}" value="#{bundle.menu_logout}" rendered="#{auth.isLoggedIn}" ajax="false" />
-						</f:facet>
-					</p:menubar>
-				</h:form>
-			</div>
-			<div id="content" class="ui-g-2"></div>
-		</div>
-	</div>
 </ui:composition>

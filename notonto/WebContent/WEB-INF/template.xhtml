@@ -4,30 +4,35 @@
 <h:head>
 	<meta name="keywords" content="Vokabeltrainer,Vokabel,Vokabeln,Karteikasten,kostenlos,gratis,online,Englisch,Deutsch,Chinesisch,Italienisch,Allgemeinbildung,Vokabelprogramm,Bildung,Lernen,Lernprogramm,iPhone,iPod,iGoogle,iPad,Android" />
 	<meta name="description" content="Hier können Sie kostenlos Vokabeln lernen. Vorhandene Lektionen lernen oder eigene Lektionen erstellen." />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="/css/buttons.css" />
 	<link rel="stylesheet" type="text/css" href="/css/style.css" />
 	<script src="/js/code2.js" />
+	<script src="/js/bootstrap.min.js" />
 	<ui:insert name="head" />
 </h:head>
 <h:body onkeydown="bodykeydown(event); return true;">
 	<ui:include src="/snippets/headline.xhtml" />
 	<div class="ui-g">
-		<div class="ui-g-2"></div>
-		<div class="ui-g-8">
-			<p:panelGrid rendered="#{!user.unlocked and auth.isLoggedIn}">
+		<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
+		<div class="ui-g-12 ui-md-8 ui-lg-8" style="margin: 0px; padding: 0px;">
+			<ui:fragment rendered="#{!user.unlocked and auth.isLoggedIn}">
 				<div class="ui-messages ui-widget" aria-live="polite">
 					<div class="ui-messages-warn ui-corner-all">
 						<span class="ui-messages-warn-icon"></span>
 						<ul>
-							<li><span class="ui-messages-info-summary">Bitte schalten Sie ihren Account frei.</span></li>
+							<li><span class="ui-messages-info-summary">Bitte schalten Sie ihren Account frei. <p:link outcome="unlock">Wie geht denn das?</p:link></span></li>
 						</ul>
 					</div>
 				</div>
-			</p:panelGrid>
+			</ui:fragment>
 		</div>
-		<div class="ui-g-2"></div>
-		<div class="ui-g-2"></div>
-		<ui:insert name="content" />
-		<div class="ui-g-2"></div>
+		<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
+		<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
+		<div class="ui-g-12 ui-md-8 ui-lg-8" style="margin: 0px; padding: 0px;">
+			<ui:insert name="content" />
+		</div>
+		<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
 	</div>
 </h:body>
 </html>
