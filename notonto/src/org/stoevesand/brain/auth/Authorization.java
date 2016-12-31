@@ -196,7 +196,7 @@ public class Authorization {
 			log.info("user " + username + " invalid.");
 		}
 
-		context.addMessage(null, new FacesMessage(bundle.getString("loginfailed")));
+		context.addMessage("login_form", new FacesMessage(bundle.getString("loginfailed")));
 		brainSession.incrementLoginCounter();
 
 		return "logout";
@@ -283,11 +283,11 @@ public class Authorization {
 		try {
 			FacesContext context = FacesContext.getCurrentInstance();
 			if (!passwordsMatch()) {
-				context.addMessage("Password", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Check", "Passwörter stimmen nicht überein."));
+				context.addMessage("register_form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Check", "Passwörter stimmen nicht überein."));
 				return "register";
 			}
 			if (db.emailIsAlreadyUsed(emailAddress)) {
-				context.addMessage("Password", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Check", "Mit dieser Emailadresse ist bereits ein Konto eröffnet."));
+				context.addMessage("register_form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Check", "Mit dieser Emailadresse ist bereits ein Konto eröffnet."));
 				return "register";
 			}
 		} catch (DBException e) {
@@ -557,7 +557,7 @@ public class Authorization {
 	public void validateRights(FacesContext context, UIComponent toValidate, Object value) {
 		log.debug("VR");
 
-		String message = "Bitte stimmen Sie den Benutzungshinweisen zu!";
+		String message = "Bitte stimmen Sie den Nutzungsbedingungen zu!";
 		Boolean rights = (Boolean) value;
 		if (!rights.booleanValue()) {
 			((UIInput) toValidate).setValid(false);

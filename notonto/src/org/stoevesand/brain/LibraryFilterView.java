@@ -291,7 +291,7 @@ public class LibraryFilterView {
 			return "fatal_DB";
 		}
 
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Invitation sent."));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Einladung wurde an " + inviteeEmail + " verschickt."));
 		return "done";
 	}
 

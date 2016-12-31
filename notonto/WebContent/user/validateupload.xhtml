@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template-exit.xhtml">
 	<ui:define name="head">
 		<title><h:outputText value="Notonto - #{bundle.menu_learn}" /></title>
 	</ui:define>
@@ -78,12 +78,19 @@
 					<h1 style="margin-top: 40px;">
 						<h:outputText value="#{bundle.confirm_changes}" />
 					</h1>
-					<pm:field>
-						<p:selectBooleanCheckbox id="selectBooleanCheckbox" value="#{lessonLoader.deleteRemovedItems}" itemLabel="#{bundle.lesson_confirm}" />
-					</pm:field>
-					<pm:field>
-						<p:commandButton action="#{lessonLoader.confirmNewItems}" value="#{bundle.btn_accept}" class="btn_blue" />
-					</pm:field>
+					<div class="ui-grid-row">
+						<div class="ui-g-1">
+							<p:selectBooleanCheckbox id="selectBooleanCheckbox" value="#{lessonLoader.deleteRemovedItems}" />
+						</div>
+						<div class="ui-g-11">
+							<h:outputText value="#{bundle.lesson_confirm}" />
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-g-12">
+							<p:commandButton action="#{lessonLoader.confirmNewItems}" value="#{bundle.btn_accept}" class="btn_blue" />
+						</div>
+					</div>
 					<h1 style="margin-top: 40px;">
 						<h:outputText value="#{bundle.discard_changes}" />
 					</h1>

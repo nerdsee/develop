@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template-exit.xhtml">
 	<ui:define name="head">
 		<title>Notonto - UserLesson</title>
 	</ui:define>
@@ -34,10 +34,10 @@
 					<div class="ui-g">
 						<div class="ui-g-6">
 							<p:focus id="focus" context="nextfrm" for="nextfrm:nextbtn" />
-							<p:commandButton id="nextbtn" styleClass="btn_green" value="#{bundle.btn_next}" action="#{brainSession.getNextItem}" />
+							<p:commandButton id="nextbtn" styleClass="btn btn-lg btn-success" value="#{bundle.btn_next}" action="#{brainSession.getNextItem}" />
 						</div>
 						<div class="ui-g-6" style="text-align: right;">
-							<p:commandButton id="iknowlink" styleClass="btn_yellow" value="#{bundle.btn_force}" action="#{brainSession.forceAnswer}" />
+							<p:commandButton id="iknowlink" styleClass="btn btn-lg btn-warning" value="#{bundle.btn_force}" action="#{brainSession.forceAnswer}" />
 						</div>
 					</div>
 				</h:form>

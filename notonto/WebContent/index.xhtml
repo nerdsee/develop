@@ -1,23 +1,7 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template_hp.xhtml">
 	<ui:define name="head">
 		<title>Notonto - Vokabeln lernen und behalten</title>
 	</ui:define>
 	<ui:define name="content">
-		<div class="ui-g">
-			<div id="content" class="ui-g-12 ui-md-12 ui-lg-8">
-				<h1>
-					<h:outputText value="#{bundle.welcome1}" />
-				</h1>
-				<h:outputText value="#{bundle.welcome2}" />
-				<h:panelGroup class="font1">
-					<h:outputText value="#{bundle.intro1}" escape="false" />
-					<p />
-					<h:outputText value="#{bundle.intro2}" escape="false" />
-				</h:panelGroup>
-			</div>
-			<div id="sidebar" class="ui-g-12 ui-md-12 ui-lg-4">
-				<ui:include src="/snippets/top5.xhtml" />
-			</div>
-		</div>
 	</ui:define>
 </ui:composition>

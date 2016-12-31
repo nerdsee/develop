@@ -10,7 +10,7 @@
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
-			<to-view-id>user.xhtml</to-view-id>
+			<to-view-id>/user/user.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -22,7 +22,7 @@
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
-			<to-view-id>user.xhtml</to-view-id>
+			<to-view-id>/user/user.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -30,7 +30,11 @@
 		<from-view-id>/user/invite.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>done</from-outcome>
-			<to-view-id>editlesson.xhtml</to-view-id>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -38,15 +42,15 @@
 		<from-view-id>/user/lesson_enter.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
-			<to-view-id>user.xhtml</to-view-id>
+			<to-view-id>/user/user.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
 	<navigation-rule>
-		<from-view-id>/user/lesson_wrong.xhtml</from-view-id>
+		<from-view-id>/user/lessonwrong.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
-			<to-view-id>user.xhtml</to-view-id>
+			<to-view-id>/user/user.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -54,7 +58,7 @@
 		<from-view-id>/user/intervals.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
-			<to-view-id>user.xhtml</to-view-id>
+			<to-view-id>/user/user.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -62,7 +66,7 @@
 		<from-view-id>/user/options.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
-			<to-view-id>user.xhtml</to-view-id>
+			<to-view-id>/user/user.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -70,7 +74,7 @@
 		<from-view-id>/user/editlessonmeta.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
-			<to-view-id>editlesson.xhtml</to-view-id>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -78,10 +82,17 @@
 		<from-view-id>/user/editlessonupload.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>exit</from-outcome>
-			<to-view-id>editlesson.xhtml</to-view-id>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
+	<navigation-rule>
+		<from-view-id>/user/validateupload.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
@@ -122,11 +133,11 @@
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>register</from-outcome>
-			<to-view-id>/register.xhtml</to-view-id>
+			<to-view-id>/index.xhtml#register</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>impressum</from-outcome>
-			<to-view-id>/impressum.xhtml</to-view-id>
+			<to-view-id>/index.xhtml#impressum</to-view-id>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>unlock</from-outcome>

@@ -32,21 +32,17 @@
 
 h1 {
 	color: #4C4C45;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: 700;
-	max-width: 936px;
 	text-rendering: optimizelegibility;
 }
 
 h2 {
 	color: #4C4C45;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: 400;
 }
 
 h3 {
 	color: #727267;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight: 400;
 }
 
@@ -191,3 +187,4 @@ yellow bg #FCF8E3
 yellow border #FBEED5
 yellow #C09853
 */
+

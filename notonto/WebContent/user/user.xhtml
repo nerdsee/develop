@@ -36,10 +36,10 @@
 									<h:outputText value="&lt;br>&lt;i>Zieltermin: #{userlesson.realTargetDate}&lt;/i>" escape="false" rendered="#{userlesson.intervallType}" class="font3" />
 								</div>
 								<div class="ui-g-12 ui-lg-3" style="text-align: center">
-									<p:commandButton value="Lernen" action="#{brainSession.learnLesson}" style="margin: 10px 10px 0px 0px;">
+									<p:commandButton value="Lernen" action="#{brainSession.learnLesson}" style="margin: 10px 10px 0px 0px; width: 140px;">
 										<f:setPropertyActionListener value="#{userlesson}" target="#{brainSession.currentUserLesson}" />
 									</p:commandButton>
-									<p:commandButton value="Optionen" action="intervals" icon="ui-icon-gear" style="margin: 10px 10px 0px 0px;">
+									<p:commandButton value="Optionen" action="intervals" icon="ui-icon-gear" style="margin: 10px 10px 0px 0px; width: 140px;">
 										<f:setPropertyActionListener value="#{userlesson}" target="#{brainSession.currentUserLesson}" />
 									</p:commandButton>
 								</div>

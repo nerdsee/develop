@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template-exit.xhtml">
 	<ui:define name="head">
 		<title><h:outputText value="Notonto - #{bundle.menu_learn}" /></title>
 	</ui:define>
@@ -32,7 +32,6 @@
 					<h:panelGrid columns="2" class="tstd">
 						<h:panelGroup>
 							<p:commandButton action="#{brainSession.currentUserLesson.saveIntervalls}" styleClass="ui-btn-inline ui-btn-green" value="OK" />
-							<p:button outcome="exit" styleClass="ui-btn-inline ui-btn-orange" value="Abbrechen" />
 						</h:panelGroup>
 					</h:panelGrid>
 				</h:form>

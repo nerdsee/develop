@@ -1,50 +1,46 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui">
-	<nav class="navbar navbar-default navbar-static-top">
-		<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="/index.jsf">Notonto</a>
-			</div>
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li><p:link outcome="user" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}">
-							<span class="glyphicon glyphicon-education"></span>
-							<h:outputText value=" #{bundle.menu_learn}" />
+		<nav id="mainNav" class="navbar navbar-default navbar-custom-affix navbar-custom navbar-fixed-top">
+			<div class="container">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header page-scroll">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="/index.jsf">Notonto</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><p:link outcome="user" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}">
+								<span class="glyphicon glyphicon-education"></span>
+								<h:outputText value=" #{bundle.menu_learn}" />
+							</p:link></li>
+						<li><p:link outcome="editlesson" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}">
+								<span class="glyphicon glyphicon-edit"></span>
+								<h:outputText value=" Erstellen" />
+							</p:link></li>
+					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<ui:fragment rendered="#{!auth.isLoggedIn}">
+							<li><p:link outcome="register">
+									<span class="glyphicon glyphicon-user"></span> Register
 						</p:link></li>
-					<li><p:link outcome="editlesson" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}">
-							<span class="glyphicon glyphicon-edit"></span>
-							<h:outputText value=" #{bundle.menu_teacher}" />
+							<li><p:link outcome="login">
+									<span class="glyphicon glyphicon-log-in"></span> Login
 						</p:link></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><p:link outcome="impressum" icon="ui-icon-lightbulb">
-							<span class="glyphicon glyphicon-info-sign"></span>
-							<h:outputText value=" Impressum" />
+						</ui:fragment>
+						<ui:fragment rendered="#{auth.isLoggedIn}">
+							<li><p:link outcome="options">
+									<span class="glyphicon glyphicon-user"></span> Einstellungen
 						</p:link></li>
-					<ui:fragment rendered="#{!auth.isLoggedIn}">
-						<li><p:link outcome="register">
-								<span class="glyphicon glyphicon-user"></span> Register
-						</p:link></li>
-						<li><p:link outcome="login">
-								<span class="glyphicon glyphicon-log-in"></span> Login
-						</p:link></li>
-					</ui:fragment>
-					<ui:fragment rendered="#{auth.isLoggedIn}">
-						<li><p:link outcome="options">
-								<span class="glyphicon glyphicon-user"></span> Einstellungen
-						</p:link></li>
-						<li><p:commandLink action="#{auth.logout}">
-								<span class="glyphicon glyphicon-log-out"></span> Logout
+							<li><p:commandLink action="#{auth.logout}">
+									<span class="glyphicon glyphicon-log-out"></span> Logout
 						</p:commandLink></li>
-					</ui:fragment>
-				</ul>
+						</ui:fragment>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
 			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container-fluid -->
-	</nav>
+			<!-- /.container-fluid -->
+		</nav>
 </ui:composition>

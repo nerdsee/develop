@@ -1,0 +1,100 @@
+.ui-selectbooleanbutton.ui-button.ui-state-active, .ui-selectonebutton .ui-button.ui-state-active, .ui-selectmanybutton .ui-button.ui-state-active {
+    background: #186ba0 none repeat scroll 0 0;
+    border: 1px solid #156090;
+    color: #fff;
+}
+
+.form-control {
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555;
+    display: block;
+    font-size: 28px;
+    height: 34px;
+    line-height: 1.42857;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+}
+
+/* section login */
+
+section#login {
+    background-color: #222;
+}
+section#login .section-heading {
+    color: #fff;
+}
+section#login .form-group {
+    margin-bottom: 25px;
+}
+section#login .form-group input, section#contact .form-group textarea {
+    padding: 20px;
+}
+section#login .form-group input.form-control {
+    height: auto;
+}
+section#login .form-group textarea.form-control {
+    height: 236px;
+}
+section#login .form-control:focus {
+    border-color: #fed136;
+    box-shadow: none;
+}
+section#login *:-moz-placeholder {
+    color: #eee;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+section#login *::-moz-placeholder {
+    color: #eee;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+section#login .text-danger {
+    color: #e74c3c;
+}
+
+/* section login */
+
+section#register {
+}
+section#register .section-heading {
+    color: #fff;
+}
+section#register .form-group {
+    margin-bottom: 25px;
+}
+section#register .form-group input, section#contact .form-group textarea {
+    padding: 20px;
+}
+section#register .form-group input.form-control {
+    height: auto;
+}
+section#register .form-group textarea.form-control {
+    height: 236px;
+}
+section#register .form-control:focus {
+    border-color: #fed136;
+    box-shadow: none;
+}
+section#register *:-moz-placeholder {
+    color: #eee;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+section#register *::-moz-placeholder {
+    color: #eee;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+section#register .text-danger {
+    color: #e74c3c;
+}

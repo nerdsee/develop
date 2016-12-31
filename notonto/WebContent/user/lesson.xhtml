@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template-exit.xhtml">
 	<ui:define name="head">
 		<title>Notonto - Lektion</title>
 	</ui:define>
@@ -9,7 +9,7 @@
 					<h:outputText styleClass="headline" value="#{brainSession.currentUserLesson.lesson.description}" />
 				</h2>
 				<h:form>
-					<div id="area_question" onclick="show_answer()">
+					<div id="area_question" onclick="show_answer(0)">
 						<p:panel id="panel" rendered="#{not empty brainSession.currentUserLesson.currentUserItem}">
 							<f:facet name="header">
 								<h:outputText value="Level #{brainSession.currentUserItem.showLevel}" class="font5" />
@@ -35,7 +35,7 @@
 					</div>
 				</h:form>
 				<h:form>
-					<div id="area_answer" onclick="show_question()" style="display: none;">
+					<div id="area_answer" onclick="show_question(1)" style="display: none;">
 						<p:panel rendered="#{not empty brainSession.currentUserLesson.currentUserItem}">
 							<f:facet name="header">
 								<h:outputText value="Level #{brainSession.currentUserItem.showLevel}" class="font5" />
@@ -59,10 +59,10 @@
 									<div class="ui-g-1"></div>
 								</div>
 								<div class="ui-g-6 ta_right">
-									<p:commandLink id="nbtnyes" value="Gewusst" action="#{brainSession.knowAnswer()}" styleClass="button button-circle button-action" ajax="false" />
+									<p:commandLink id="nbtnyes" onclick="noop(event);" value="Gewusst" action="#{brainSession.knowAnswer()}" styleClass="btn btn-lg btn-success" ajax="false" />
 								</div>
 								<div class="ui-g-6">
-									<p:commandLink id="nbtnno" value="Nicht gewusst" partialSubmit="false" action="#{brainSession.failAnswer()}" styleClass="button button-circle button-caution" ajax="false" />
+									<p:commandLink id="nbtnno" onclick="noop(event);" value="Nicht gewusst" action="#{brainSession.failAnswer()}" styleClass="btn btn-lg btn-danger" ajax="false" />
 								</div>
 							</div>
 							<!-- ### CONTENT-END ### -->

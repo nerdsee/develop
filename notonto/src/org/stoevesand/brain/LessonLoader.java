@@ -144,8 +144,13 @@ public class LessonLoader {
 			log.debug("f: " + uploadedFile.getFileName());
 
 			try {
-				readNewItems(brainSession, uploadedFile.getInputstream(), lesson);
-				System.out.println("Successfully uploaded file " + uploadedFile.getFileName() + " (" + uploadedFile.getSize() + " bytes)");
+				boolean success = readNewItems(brainSession, uploadedFile.getInputstream(), lesson);
+				if (success) {
+					System.out.println("Successfully uploaded file " + uploadedFile.getFileName() + " (" + uploadedFile.getSize() + " bytes)");
+				} else {
+					System.out.println("Something went wrong: " + uploadedFile.getFileName() + " (" + uploadedFile.getSize() + " bytes)");
+					return "exit";
+				}
 				validate = true;
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -158,14 +163,16 @@ public class LessonLoader {
 		return "";
 	}
 
-	void readNewItems(BrainSession session, InputStream inputStream, Lesson lesson) {
+	boolean readNewItems(BrainSession session, InputStream inputStream, Lesson lesson) {
 		// if (fileFormat == 0)
 		// readNewItemsText(inputStream);
 		// else
-		readNewItemsExcel(session, inputStream, lesson);
+		return readNewItemsExcel(session, inputStream, lesson);
 	}
 
-	void readNewItemsExcel(BrainSession session, InputStream inputStream, Lesson lesson) {
+	boolean readNewItemsExcel(BrainSession session, InputStream inputStream, Lesson lesson) {
+
+		boolean ret = true;
 
 		Lesson currentLesson = lesson;
 
@@ -183,7 +190,7 @@ public class LessonLoader {
 			boolean checkChapter = false;
 
 			Workbook wb = WorkbookFactory.create(inputStream);
-			
+
 			Sheet sheet1 = wb.getSheetAt(0);
 			Iterator<Row> rowsIterator = sheet1.iterator();
 
@@ -225,25 +232,25 @@ public class LessonLoader {
 
 					if (cell != null) {
 						switch (cell.getCellType()) {
-						case Cell.CELL_TYPE_STRING:
-							// System.out.println(cell.getRichStringCellValue().getString());
-							cellValueString += cell.getRichStringCellValue().getString();
-							break;
-						case Cell.CELL_TYPE_NUMERIC:
-							DecimalFormat myFormatter = new DecimalFormat();
-							cellValueString = myFormatter.format(cell.getNumericCellValue());
-							cellValueLong = Math.round(cell.getNumericCellValue());
-							break;
-						case Cell.CELL_TYPE_BOOLEAN:
-							// System.out.println(cell.getBooleanCellValue());
-							cellValueString += cell.getBooleanCellValue();
-							break;
-						case Cell.CELL_TYPE_FORMULA:
-							// System.out.println(cell.getCellFormula());
-							cellValueString += cell.getCellFormula();
-							break;
-						default:
-							// System.out.println();
+							case Cell.CELL_TYPE_STRING:
+								// System.out.println(cell.getRichStringCellValue().getString());
+								cellValueString += cell.getRichStringCellValue().getString();
+								break;
+							case Cell.CELL_TYPE_NUMERIC:
+								DecimalFormat myFormatter = new DecimalFormat();
+								cellValueString = myFormatter.format(cell.getNumericCellValue());
+								cellValueLong = Math.round(cell.getNumericCellValue());
+								break;
+							case Cell.CELL_TYPE_BOOLEAN:
+								// System.out.println(cell.getBooleanCellValue());
+								cellValueString += cell.getBooleanCellValue();
+								break;
+							case Cell.CELL_TYPE_FORMULA:
+								// System.out.println(cell.getCellFormula());
+								cellValueString += cell.getCellFormula();
+								break;
+							default:
+								// System.out.println();
 						}
 					}
 
@@ -269,7 +276,8 @@ public class LessonLoader {
 					}
 				}
 
-				// wenn zweimal die gleiche Frage auftaucht, werden die Antworten
+				// wenn zweimal die gleiche Frage auftaucht, werden die
+				// Antworten
 				// einfach rangehängt.
 				String key = (item.getExtId() > 0) ? "" + item.getExtId() : item.getText();
 				Item i2 = items.get(key);
@@ -317,12 +325,17 @@ public class LessonLoader {
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			session.getBrainMessage().setErrorText("Format error. Couldn't read the input file.");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Format error. Couldn't read the input file."));
+	    
 			newItems = new Vector<Item>();
 			numberUploadedItems = 0;
-			//e.printStackTrace();
+			// e.printStackTrace();
 			log.debug(e);
+			ret = false;
 		}
+		return ret;
 	}
 
 	private String getPattern(Vector<String> pattern, int i) {

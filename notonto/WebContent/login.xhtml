@@ -3,14 +3,13 @@
 		<title>Notonto - Vokabeln lernen und behalten</title>
 	</ui:define>
 	<ui:define name="content">
-		<div class="ui-g-2">
-		</div>
+		<div class="ui-g-2"></div>
 		<div id="content" class="ui-g-4">
 			<h1>
 				<h:outputText value="Login" />
 			</h1>
 			<h:form>
-			<p:focus />
+				<p:focus />
 				<p:messages id="messages" showDetail="true" autoUpdate="true" />
 				<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
 					<h:outputLabel for="loginname" value="Username" />
@@ -21,8 +20,7 @@
 				<p:commandButton id="firelogin" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
 			</h:form>
 		</div>
-		<div class="ui-g-2">
-		</div>
+		<div class="ui-g-2"></div>
 		<!-- ### CONTENT-END ### -->
 	</ui:define>
 </ui:composition>

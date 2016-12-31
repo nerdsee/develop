@@ -31,6 +31,10 @@ public class UserLesson {
 	 * Neue Spalten:
 	 */
 
+	// private static final int TARGET_DATE = 1;
+	private static final int INTERVALL_STD = 0;
+	private static final int INTERVALL_TARGET_DATE = 1;
+
 	private static Logger log = LogManager.getLogger(UserLesson.class);
 
 	@XmlElement
@@ -44,15 +48,15 @@ public class UserLesson {
 	/**
 	 * 0=standard, 1=Zieltermin
 	 */
-	boolean intervallType = false; // 0=standard 1=Zieltermin
+	short intervallType = 0; // 0=standard 1=Zieltermin
 
 	public boolean isIntervallType() {
-		return intervallType;
+		return intervallType == INTERVALL_TARGET_DATE;
 	}
 
-	public void setIntervallType(boolean intervallType) {
+	public void setIntervallType(short intervallType) {
 		this.intervallType = intervallType;
-		if (!this.intervallType) {
+		if (this.intervallType == INTERVALL_STD) {
 			setRealTargetDate(null);
 		}
 	}
@@ -97,7 +101,7 @@ public class UserLesson {
 		this.userId = DBUtil.getLong(rs, "userID");
 		this.intervallUnit = DBUtil.getLong(rs, "interval_unit");
 		this.realTargetDate = DBUtil.getDate(rs, "target_date");
-		this.intervallType = DBUtil.getShort(rs, "intervall_type") == 1;
+		this.intervallType = DBUtil.getShort(rs, "intervall_type");
 
 		this.lesson = lesson;
 
@@ -171,7 +175,7 @@ public class UserLesson {
 
 	public String saveIntervalls() {
 		String ret = "user";
-		if (!intervallType) {
+		if (intervallType == INTERVALL_STD) {
 			// targetDate = "";
 			realTargetDate = null;
 			store();
@@ -374,7 +378,7 @@ public class UserLesson {
 
 	public long getBreakTime(int i) {
 		long breakTime = 0;
-		if (intervallType) {
+		if (intervallType == INTERVALL_TARGET_DATE) {
 			breakTime = breakTimes[i];
 		} else {
 			breakTime = BrainSystem.getBrainSystem().getBreakTime(i);

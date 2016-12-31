@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template-exit.xhtml">
 	<ui:define name="head">
 		<title>Edit Item</title>
 	</ui:define>
@@ -12,21 +12,13 @@
 					<h:outputText value="#{brainSession.currentLesson.description}" />
 				</h2>
 				<h:outputText value="#{bundle.fileformat}" />
-				<h:form id="ff">
-					<p:fileUpload fileUploadListener="#{lessonLoader.handleFileUpload}" mode="advanced" dragDropSupport="false" auto="true" update="ff:TT" sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(xls|xlsx)$/" />
-					<p:growl id="messages" showDetail="true" />
-					<h:outputText value="#{lessonLoader.validate}" id="TT" />
-					<p:commandButton id="validatebtn" value="Überprüfen" action="validateupload" disabled="#{lessonLoader.validate}" />
-				</h:form>
 				<h:form enctype="multipart/form-data">
-					<pm:field>
+					<h:panelGrid columns="2" cellpadding="5">
 						<p:outputLabel for="f1" value="Datei" />
 						<p:fileUpload id="f1" label="Choose ..." value="#{lessonLoader.uploadedFile}" required="true" mode="simple" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
-					</pm:field>
-					<pm:field>
 						<p:outputLabel for="f2" value="" />
 						<p:commandButton id="f2" value="Upload" action="#{lessonLoader.fileLessonUploaded}" ajax="false" />
-					</pm:field>
+					</h:panelGrid>
 				</h:form>
 			</div>
 		</div>

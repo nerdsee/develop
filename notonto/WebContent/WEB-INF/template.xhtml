@@ -4,35 +4,45 @@
 <h:head>
 	<meta name="keywords" content="Vokabeltrainer,Vokabel,Vokabeln,Karteikasten,kostenlos,gratis,online,Englisch,Deutsch,Chinesisch,Italienisch,Allgemeinbildung,Vokabelprogramm,Bildung,Lernen,Lernprogramm,iPhone,iPod,iGoogle,iPad,Android" />
 	<meta name="description" content="Hier können Sie kostenlos Vokabeln lernen. Vorhandene Lektionen lernen oder eigene Lektionen erstellen." />
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
-	<link rel="stylesheet" type="text/css" href="/css/buttons.css" />
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+	<link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css' />
 	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="/css/lightness-overwrite.css" />
 	<script src="/js/code2.js" />
+	<link href="/css/agency.min.css" rel="stylesheet" />
 	<script src="/js/bootstrap.min.js" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+	<script src="/js/jquery.mousewheel.js"></script>
+	<script src="/js/plugins.js"></script>
+	<script src="/js/jquery.longpress.js"></script>
+	<script src="/js/app.js"></script>
+	<link href="/css/longpress.css" rel="stylesheet" />
 	<ui:insert name="head" />
 </h:head>
-<h:body onkeydown="bodykeydown(event); return true;">
+<h:body id="page-top" class="index" onkeydown="bodykeydown(event); return true;">
 	<ui:include src="/snippets/headline.xhtml" />
-	<div class="ui-g">
-		<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
-		<div class="ui-g-12 ui-md-8 ui-lg-8" style="margin: 0px; padding: 0px;">
-			<ui:fragment rendered="#{!user.unlocked and auth.isLoggedIn}">
-				<div class="ui-messages ui-widget" aria-live="polite">
-					<div class="ui-messages-warn ui-corner-all">
-						<span class="ui-messages-warn-icon"></span>
-						<ul>
-							<li><span class="ui-messages-info-summary">Bitte schalten Sie ihren Account frei. <p:link outcome="unlock">Wie geht denn das?</p:link></span></li>
-						</ul>
+	<div class="container" style="margin-top: 70px;">
+		<div class="ui-g">
+			<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
+			<div class="ui-g-12 ui-md-8 ui-lg-8" style="margin: 0px; padding: 0px;">
+				<ui:fragment rendered="#{!user.unlocked and auth.isLoggedIn}">
+					<div class="ui-messages ui-widget" aria-live="polite">
+						<div class="ui-messages-warn ui-corner-all">
+							<span class="ui-messages-warn-icon"></span>
+							<ul>
+								<li><span class="ui-messages-info-summary">Bitte schalten Sie ihren Account frei. <p:link outcome="unlock">Wie geht denn das?</p:link></span></li>
+							</ul>
+						</div>
 					</div>
-				</div>
-			</ui:fragment>
+				</ui:fragment>
+			</div>
+			<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
+			<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
+			<div class="ui-g-12 ui-md-8 ui-lg-8" style="margin: 0px; padding: 0px;">
+				<ui:insert name="content" />
+			</div>
+			<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
 		</div>
-		<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
-		<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
-		<div class="ui-g-12 ui-md-8 ui-lg-8" style="margin: 0px; padding: 0px;">
-			<ui:insert name="content" />
-		</div>
-		<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
 	</div>
 </h:body>
 </html>

@@ -37,7 +37,7 @@ public class BrainSystem {
 
 	private long breakTimes[] = new long[10];
 
-	private String brainHomeDir;
+	private String notontoHomeDir;
 
 	private int maxItemsLevel0;
 
@@ -52,7 +52,7 @@ public class BrainSystem {
 	public static BrainSystem getBrainSystem() {
 		if (_instance == null) {
 			FacesContext theFacesContext = FacesContext.getCurrentInstance();
-			_instance = (BrainSystem)theFacesContext.getApplication().evaluateExpressionGet(theFacesContext, "#{brainSystem}", BrainSystem.class);
+			_instance = (BrainSystem) theFacesContext.getApplication().evaluateExpressionGet(theFacesContext, "#{brainSystem}", BrainSystem.class);
 		}
 		return _instance;
 	}
@@ -66,10 +66,10 @@ public class BrainSystem {
 
 	private void init() {
 
-		brainHomeDir = System.getProperty("fivetoknow.dir");
+		notontoHomeDir = System.getProperty("fivetoknow.dir");
 
 		debug("INIT.");
-		File configFile = new File(brainHomeDir + "/brain_config.xml");
+		File configFile = new File(notontoHomeDir + "/brain_config.xml");
 		Administration.loadConfig(configFile, this);
 
 		loadTemplates();
@@ -78,10 +78,10 @@ public class BrainSystem {
 
 	private void loadTemplates() {
 
-		brainHomeDir = System.getProperty("fivetoknow.dir");
+		notontoHomeDir = System.getProperty("fivetoknow.dir");
 
 		debug("INIT. ");
-		File registerFile = new File(brainHomeDir + "/register.txt");
+		File registerFile = new File(notontoHomeDir + "/register.txt");
 
 		registerText = StringUtils.loadFileToString(registerFile);
 
@@ -105,7 +105,7 @@ public class BrainSystem {
 	}
 
 	public String loadLessons() {
-		File dbfile = new File(brainHomeDir + "/lessons/radikal214-ch-de.txt.dict.xml");
+		File dbfile = new File(notontoHomeDir + "/lessons/radikal214-ch-de.txt.dict.xml");
 		Administration.loadDB(dbfile);
 		return "ok";
 	}
@@ -228,7 +228,7 @@ public class BrainSystem {
 	}
 
 	public String loadUsers() {
-		File dbfile = new File(brainHomeDir + "/users.xml");
+		File dbfile = new File(notontoHomeDir + "/users.xml");
 		Administration.loadDB(dbfile);
 		return "ok";
 	}
@@ -242,11 +242,11 @@ public class BrainSystem {
 	}
 
 	/**
-	 * Wandelt die Unterbrechungszeit in Textform in Millisekunden um. Erlaubt ist
-	 * eine Zahl mit einem Kenner am Ende: M=Minutes, H=Hours, D=Days
+	 * Wandelt die Unterbrechungszeit in Textform in Millisekunden um. Erlaubt
+	 * ist eine Zahl mit einem Kenner am Ende: M=Minutes, H=Hours, D=Days
 	 * 
 	 * @param breakTime
-	 *          Unterbrechungszeit in Textform
+	 *            Unterbrechungszeit in Textform
 	 * @return Zeit in Millisekunden
 	 */
 	public static long breakTimeInMillies(String breakTime) {

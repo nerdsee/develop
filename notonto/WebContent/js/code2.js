@@ -24,13 +24,17 @@ function unmark(inp) {
 	inp.removeClass('noinp');
 }
 
-function show_answer() {
+function noop(event) {
+	event.stopPropagation();
+}
+
+function show_answer(tid) {
 	$("#area_question").hide();
 	$("#area_answer").show();
 	return false;
 }
 
-function show_question() {
+function show_question(tid) {
 	$("#area_question").show();
 	$("#area_answer").hide();
 	return false;

@@ -1,4 +1,4 @@
-<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template-exit.xhtml">
 	<ui:define name="head">
 		<title>Notonto - Lektion</title>
 		<ui:fragment rendered="#{brainSession.currentUserLesson.lesson.keyboardLayout=='ES'}">
@@ -32,7 +32,8 @@
 						<h:outputText value="#{brainSession.currentUserItem.item.formattedText}" escape="false" class="fontsym ta_center" rendered="#{brainSession.currentUserLesson.lesson.lessonType==1}" />
 						<h:outputText value="[#{brainSession.currentUserItem.item.comment}]" class="font4 ta_center" rendered="#{brainSession.currentUserLesson.lesson.lessonType==1 and brainSession.currentUserLesson.config.showPinyin }" />
 						<br/>
-						<h:inputText id="answerinput" onkeydown="return checkSpecialChar(event, this);" onkeyup="parse(this)" autocomplete="off" />
+						<h:inputText class="long-press" id="answerinput" onkeyup="parse(this)" autocomplete="off" />
+						<!-- onkeydown="return checkSpecialChar(event, this);"  -->
 						<br/>
 						<h:outputText id="pinyin2" value="-" rendered="#{brainSession.currentUserLesson.lesson.keyboardLayout=='PY'}" />
 						<br/>
