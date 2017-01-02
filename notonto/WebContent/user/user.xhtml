@@ -11,7 +11,7 @@
 					<h2>
 						<h:outputText value="Folgende Lektionen hast Du zum Lernen ausgewählt:" />
 					</h2>
-					<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="library" ajax="false" value="+ Hinzufügen" style="float:right; margin-bottom: 10px;" />
+					<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="library" ajax="false" icon="fa fa-plus" value="Hinzufügen" style="float:right; margin-bottom: 10px;" />
 					<p:spacer height="30"></p:spacer>
 					<p:dataTable value="#{user.lessons}" emptyMessage="#{bundle.subfirst}" var="userlesson">
 						<f:facet name="header">

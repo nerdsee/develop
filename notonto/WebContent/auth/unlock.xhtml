@@ -6,17 +6,9 @@
 		<div class="ui-g">
 			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
 				<h1>
-					<h:outputText value="Konto freischalten" />
+					<h:outputText value="Fehler." />
 				</h1>
-				<h2>
-					<h:outputText value="#{brainSession.currentLesson.description}" />
-				</h2>
-				<h3>Wir haben Ihnen bei Ihrer Registrierung eine email an </h3>
-				<h3><h:outputText value="#{brainSession.currentUser.name}"/></h3>
-				<h3>geschickt.</h3>
-				<h:form>
-				<p:commandButton action="#{brainSession.resendUnlockEmail}" value="Erneut senden."/>
-				</h:form>
+				<h3>Der verwendete Code war leider falsch.</h3>
 			</div>
 		</div>
 	</ui:define>

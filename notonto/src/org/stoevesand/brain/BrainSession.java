@@ -35,6 +35,7 @@ import org.stoevesand.brain.persistence.Administration;
 import org.stoevesand.brain.persistence.BrainDB;
 import org.stoevesand.util.News;
 import org.stoevesand.util.SendMailUsingAuthentication;
+import org.stoevesand.util.StringUtils;
 
 @ManagedBean
 @SessionScoped
@@ -1048,6 +1049,52 @@ public class BrainSession {
 		return null;
 	}
 
+	/** Funktion wird von der Website aus aufgerufen.
+	 * 
+	 * @return
+	 */
+	public String resendUnlockEmail() {
+		
+		sendUnlockEmail(getCurrentUser().getUnlock(), getCurrentUser().getName());
+		
+		return "sent";
+	}
+
+	/**
+	 * Hilfsfunktion, die genutzt werden kann, um die Unlock email zu verschicken.
+	 * 
+	 * @param unlock
+	 * @param emailAddress
+	 * @return
+	 */
+	public String sendUnlockEmail(String unlock, String emailAddress) {
+		try {
+			FacesContext context = FacesContext.getCurrentInstance();
+
+			log.debug("confirm");
+
+			String emailSubjectTxt = "Your Registration at notonto.";
+			String emailMsgTxt = brainSystem.getRegisterText();
+			emailMsgTxt = StringUtils.replaceSubstring(emailMsgTxt, "@CODE@", unlock);
+
+			String rcp = context.getExternalContext().getRequestContextPath();
+
+			String unlockLink = "http://" + brainSystem.getServerName() + rcp + "/unlock/" + emailAddress + "/" + unlock;
+			emailMsgTxt = StringUtils.replaceSubstring(emailMsgTxt, "@LINK@", unlockLink);
+
+			SendMailUsingAuthentication.sendConfirmationMail(emailAddress, emailSubjectTxt, emailMsgTxt);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "fatal_DB";
+		}
+
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Die Freischalt-Email wurde an " + emailAddress + " verschickt."));
+
+		return "unlock";
+	}
+
+	
 	public int getAvailable(UserLesson userLesson) throws DBException {
 		// return userStats.getAvailable();
 		return brainSystem.getBrainDB().getUserLessonAvailable(userLesson);

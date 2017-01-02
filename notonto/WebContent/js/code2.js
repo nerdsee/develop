@@ -169,9 +169,8 @@ function updateData() {
 	real = $("[id$='answerin']");
 	kl = $("input[id$='keyboardLayout']").val();
 
-	
 	if (kl == "PY") {
-		real.val( addtones(dummy.value) );
+		real.val( addtones(dummy.val()) );
 	} else {
 		real.val( dummy.val() );
 	}

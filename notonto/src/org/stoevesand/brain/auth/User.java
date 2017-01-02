@@ -348,22 +348,18 @@ public class User {
 
 	public void acceptInvitation(String inviteeEmail, String inviteeCode) {
 
-		if (name.equals(inviteeEmail)) {
-			Vector<Lesson> lessons;
-			try {
-				lessons = brainSystem.getBrainDB().getLessonsByCode(inviteeCode);
-				if (lessons != null) {
-					for (Lesson lesson : lessons) {
-						subscribeLesson(lesson);
-					}
-				} else {
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Diese Lektion ist unbekannt."));
+		Vector<Lesson> lessons;
+		try {
+			lessons = brainSystem.getBrainDB().getLessonsByCode(inviteeCode);
+			if (lessons != null) {
+				for (Lesson lesson : lessons) {
+					subscribeLesson(lesson);
 				}
-			} catch (DBException e) {
-				e.printStackTrace();
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Diese Lektion ist unbekannt."));
 			}
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Die Einladung gehört nicht zu Ihrem Konto."));
+		} catch (DBException e) {
+			e.printStackTrace();
 		}
 		return;
 	}

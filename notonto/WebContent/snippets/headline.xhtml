@@ -22,10 +22,10 @@
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<ui:fragment rendered="#{!auth.isLoggedIn}">
-							<li><p:link outcome="register">
+							<li><p:link href="/index.jsf#register" >
 									<span class="glyphicon glyphicon-user"></span> Register
 						</p:link></li>
-							<li><p:link outcome="login">
+							<li><p:link href="/index.jsf#login">
 									<span class="glyphicon glyphicon-log-in"></span> Login
 						</p:link></li>
 						</ui:fragment>

@@ -12,7 +12,7 @@
 				<h3>
 					<h:outputText value="#{bundle.teacherinfo}" />
 				</h3>
-				<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="#{libraryFilterView.newLesson}" value="+ #{bundle.btn_newlesson}" style="float: right;" />
+				<p:commandButton styleClass="ui-btn-inline ui-btn-orange" icon="fa fa-plus" action="#{libraryFilterView.newLesson}" value="#{bundle.btn_newlesson}" style="float: right;" />
 				<p:spacer height="30px" />
 				<h:form>
 					<p:dataTable id="dt" value="#{libraryFilterView.ownerLibrary}" var="lw" emptyMessage="#{bundle.nolessons}" columnClasses="liblist,liblist w100p">
@@ -35,7 +35,7 @@
 										</h2>
 									</div>
 									<div class="ui-g-3" style="text-align: right;">
-										<p:commandButton style="margin-right: 10px;" styleClass="btn btn-lg btn-default" value="Einladung" action="#{libraryFilterView.invite}" />
+										<p:commandButton style="margin-right: 10px;" icon="fa fa-bullhorn" value="Einladung" action="#{libraryFilterView.invite}" />
 									</div>
 								</div>
 								<div class="ui-grid-row">

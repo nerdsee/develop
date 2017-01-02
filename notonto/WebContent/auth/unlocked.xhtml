@@ -1,42 +1,15 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
-<f:view locale="#{brainSession.currentLocale}">
-	<html>
-	<h:head>
-	<title>User</title>
-	<f:subview id="s_inc_head">
-		<ui:include src="/snippets/inc_head.jsp" />
-	</f:subview>
-	</h:head>
-	<h:body onLoad="document.getElementById('loginfrm:loginname').focus()">
-	<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
-	<f:subview id="s_headline">
-		<ui:include src="/snippets/headline.jsp" />
-	</f:subview>
-	<!-- LAYOUT-BLOCK 2-1 START -->
-	<div id="shade" forceId="true" class="outer">
-		<div class="block">
-			<div class="content_col">
-				<div class="content">
-					<!-- ### CONTENT-START ### -->
-					<h1><h:outputText value="#{bundle.unlock}" /></h1>
-					<f:verbatim>
-				Ihr Account ist jetzt freigeschaltet. 
-				Viel Spass und Erfolg bei der Nutzung von notonto.
-				</f:verbatim>
-					<!-- ### CONTENT-END ### -->
-				</div>
-			</div>
-			<div class="sidebar_col">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+	<ui:define name="head">
+		<title>Edit Item</title>
+	</ui:define>
+	<ui:define name="content">
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<h1>
+					<h:outputText value="Account freigeschaltet" />
+				</h1>
+				<h3>Viel Spass und Erfolg bei der Nutzung von notonto.</h3>
 			</div>
 		</div>
-	</div>
-	<!-- LAYOUT-BLOCK 2-1 END -->
-	</h:body>
-	</html>
-</f:view>
+	</ui:define>
 </ui:composition>

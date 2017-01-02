@@ -75,7 +75,7 @@ public class SendMailUsingAuthentication {
 		props.put("mail.smtp.auth", "true");
 
 		Authenticator auth = new SMTPAuthenticator();
-		Session session = Session.getDefaultInstance(props, auth);
+		Session session = Session.getInstance(props, auth);
 
 		session.setDebug(debug);
 

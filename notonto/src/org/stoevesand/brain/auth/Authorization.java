@@ -426,23 +426,15 @@ public class Authorization {
 	// }
 
 	public String confirm() {
+		
+		
 		try {
-			FacesContext context = FacesContext.getCurrentInstance();
 
 			log.debug("confirm");
 
 			unlock = randomUnlockString();
 
-			String emailSubjectTxt = "Your Registration at notonto.";
-			String emailMsgTxt = brainSystem.getRegisterText();
-			emailMsgTxt = StringUtils.replaceSubstring(emailMsgTxt, "@CODE@", unlock);
-
-			String rcp = context.getExternalContext().getRequestContextPath();
-
-			String unlockLink = "http://www.notonto.de" + rcp + "/unlock/" + emailAddress + "/" + unlock;
-			emailMsgTxt = StringUtils.replaceSubstring(emailMsgTxt, "@LINK@", unlockLink);
-
-			SendMailUsingAuthentication.sendConfirmationMail(emailAddress, emailSubjectTxt, emailMsgTxt);
+			brainSession.sendUnlockEmail(unlock, emailAddress);
 
 			currentUser.initUser(emailAddress, password, unlock, false);
 			currentUser.store();

@@ -27,6 +27,10 @@ import org.stoevesand.util.StringUtils;
 @ApplicationScoped
 public class BrainSystem {
 
+	private static final String SERVER_DEV = "localhost:8090";
+
+	private static final String SERVER_PROD = "www.notonto.de";
+
 	private static Logger log = LogManager.getLogger(BrainSystem.class);
 
 	private static boolean _DEBUG_ = false;
@@ -48,6 +52,9 @@ public class BrainSystem {
 	Vector<Category> categories = null;
 
 	private String registerText;
+	private String inviteText;
+
+	private boolean developMode;
 
 	public static BrainSystem getBrainSystem() {
 		if (_instance == null) {
@@ -67,7 +74,8 @@ public class BrainSystem {
 	private void init() {
 
 		notontoHomeDir = System.getProperty("fivetoknow.dir");
-
+		developMode = System.getProperty("notonto.develop") != null;
+		
 		debug("INIT.");
 		File configFile = new File(notontoHomeDir + "/brain_config.xml");
 		Administration.loadConfig(configFile, this);
@@ -76,14 +84,20 @@ public class BrainSystem {
 
 	}
 
+	public String getServerName() {
+		return developMode ? SERVER_DEV : SERVER_PROD;
+	}
+	
 	private void loadTemplates() {
 
 		notontoHomeDir = System.getProperty("fivetoknow.dir");
 
 		debug("INIT. ");
 		File registerFile = new File(notontoHomeDir + "/register.txt");
-
 		registerText = StringUtils.loadFileToString(registerFile);
+
+		File inviteFile = new File(notontoHomeDir + "/invite.txt");
+		inviteText = StringUtils.loadFileToString(inviteFile);
 
 	}
 
@@ -304,6 +318,10 @@ public class BrainSystem {
 
 	public String getRegisterText() {
 		return registerText;
+	}
+
+	public String getInviteText() {
+		return inviteText;
 	}
 
 	public String getReminderText() {

@@ -276,13 +276,13 @@ public class LibraryFilterView {
 			log.debug("confirm");
 
 			String emailSubjectTxt = brainSession.getCurrentUser().getNick() + " hat Sie zu einer Lektion bei notonto eingeladen.";
-			String emailMsgTxt = brainSystem.getRegisterText();
+			String emailMsgTxt = brainSystem.getInviteText();
 			String code = brainSession.getCurrentLesson().getCode();
-			emailMsgTxt = StringUtils.replaceSubstring(emailMsgTxt, "@CODE@", code);
+			emailMsgTxt = StringUtils.replaceSubstring(emailMsgTxt, "@USER@", brainSession.getCurrentUser().getNick());
 
 			String rcp = context.getExternalContext().getRequestContextPath();
 
-			String unlockLink = "http://www.notonto.de" + rcp + "/invite/" + inviteeEmail + "/" + code;
+			String unlockLink = "http://" + brainSystem.getServerName() + "/invite_add.jsf?lesson=" + code;
 			emailMsgTxt = StringUtils.replaceSubstring(emailMsgTxt, "@LINK@", unlockLink);
 
 			SendMailUsingAuthentication.sendConfirmationMail(inviteeEmail, emailSubjectTxt, emailMsgTxt);
