@@ -2652,6 +2652,26 @@ public class MySQLBrainDB implements BrainDB {
 		}
 	}
 
+	public void changeName(User cu, String name) throws DBException {
+		Connection conn = getConnection("change name");
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement("update users set name=?, unlocked=0 where id=?");
+			ps.setString(1, name);
+			ps.setLong(2, cu.getId());
+
+			ps.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(ps);
+			close(conn);
+		}
+	}
+
 	public void changePrefix(User cu, String prefix) throws DBException {
 		Connection conn = getConnection("change prefix");
 		PreparedStatement ps = null;
@@ -2698,6 +2718,33 @@ public class MySQLBrainDB implements BrainDB {
 		return ret;
 	}
 
+	public boolean checkName(User cu, String name) throws DBException {
+		Connection conn = getConnection("check name");
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		boolean ret = false;
+		try {
+			ps = conn.prepareStatement("select count(*) as cx from users where name=?");
+			ps.setString(1, name);
+			// ps.setLong(2, cu.getId());
+
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				int cx = rs.getInt("cx");
+				ret = (cx == 0);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(ps);
+			close(conn);
+		}
+		return ret;
+	}
+
+	
 	public boolean checkUserPrefix(User cu, String prefix) throws DBException {
 		Connection conn = getConnection("check prefix");
 		PreparedStatement ps = null;

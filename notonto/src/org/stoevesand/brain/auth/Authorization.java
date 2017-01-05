@@ -81,6 +81,7 @@ public class Authorization {
 	String nickMsg = "";
 
 	String nicknew = "";
+	String namenew = "";
 	String prefixnew = "";
 
 	public Authorization() {
@@ -219,7 +220,7 @@ public class Authorization {
 				brainSession.setInvitationPending(false);
 				currentUser.acceptInvitation(brainSession.getInviteeEmail(), brainSession.getInviteeCode());
 			}
-			
+
 			// Sonderfall direkteinstieg. Wenn eine Userlesson ID übergeben
 			// wurde
 			// dann wird sie geladen und gleich auf die lesson.jsf verzweigt.
@@ -296,7 +297,7 @@ public class Authorization {
 		}
 
 		confirm();
-		
+
 		return "welcome";
 	}
 
@@ -390,6 +391,33 @@ public class Authorization {
 		return null;
 	}
 
+	public String alterName() {
+
+		BrainDB db = brainSystem.getBrainDB();
+
+		if (namenew.equals(currentUser.getName())) {
+			setNickMsg("PWC_UNCHANGED");
+		} else {
+			try {
+				if (db.checkName(currentUser, namenew)) {
+					currentUser.setName(namenew);
+					currentUser.setUnlocked(false);
+					getBrainSession().resendUnlockEmail();
+					db.changeName(currentUser, namenew);
+					brainSystem.updateTop5(currentUser);
+					setStatusCode(PWC_OK);
+				} else {
+					setNickMsg("Diese emailadresse wird bereits verwendet.");
+				}
+			} catch (DBException e) {
+				setStatusCode(PWC_DBERROR);
+			}
+		}
+
+		namenew = "";
+		return null;
+	}
+
 	public String alterPrefix() {
 
 		if (prefixnew.length() == 0) {
@@ -426,8 +454,7 @@ public class Authorization {
 	// }
 
 	public String confirm() {
-		
-		
+
 		try {
 
 			log.debug("confirm");
@@ -618,6 +645,14 @@ public class Authorization {
 
 	public void setNicknew(String nicknew) {
 		this.nicknew = nicknew.trim();
+	}
+
+	public String getNamenew() {
+		return "";
+	}
+
+	public void setNamenew(String namenew) {
+		this.namenew = namenew.trim();
 	}
 
 	public String getNickMsg() {

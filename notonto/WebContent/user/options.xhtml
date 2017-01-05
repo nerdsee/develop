@@ -28,6 +28,21 @@
 							</h:panelGrid>
 						</h:form>
 					</p:tab>
+					<p:tab title="Ihre Emailadresse">
+						<h:outputText rendered="false" escape="false" value="#{bundle.name_text}" class="font1" />
+						<h:form>
+							<h:panelGrid id="nametab" columns="2" cellpadding="5">
+								<p:outputLabel for="email" value="Emailadresse" />
+								<h:outputText id="email" escape="false" value="#{brainSession.currentUser.name}" />
+								<p:outputLabel for="email1" value="Neue Emailadresse" />
+								<p:inputText id="email1" value="#{auth.namenew}">
+									<f:validator validatorId="custom.emailValidator" />
+								</p:inputText>
+								<p:outputLabel for="nameb1" />
+								<p:commandButton id="nameb1" update="nametab" class="btn btn_blue" action="#{auth.alterName}" partialSubmit="true" value="OK" />
+							</h:panelGrid>
+						</h:form>
+					</p:tab>
 					<p:tab title="#{bundle.nickname}">
 						<h:outputText rendered="false" escape="false" value="#{bundle.nickname_text}" class="font1" />
 						<h:form>

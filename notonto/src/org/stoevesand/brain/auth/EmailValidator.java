@@ -30,7 +30,7 @@ import org.apache.logging.log4j.Logger;
 import org.stoevesand.brain.BrainSession;
 import org.stoevesand.brain.BrainSystem;
 
-@FacesValidator("emailValidator")
+@FacesValidator("custom.emailValidator")
 public class EmailValidator implements javax.faces.validator.Validator {
 
 	private static Logger log = LogManager.getLogger(EmailValidator.class);

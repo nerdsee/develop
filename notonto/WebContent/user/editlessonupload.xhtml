@@ -12,13 +12,11 @@
 					<h:outputText value="#{brainSession.currentLesson.description}" />
 				</h2>
 				<h:outputText value="#{bundle.fileformat}" />
+				<p />
 				<h:form enctype="multipart/form-data">
-					<h:panelGrid columns="2" cellpadding="5">
-						<p:outputLabel for="f1" value="Datei" />
-						<p:fileUpload id="f1" label="Choose ..." value="#{lessonLoader.uploadedFile}" required="true" mode="simple" styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" />
-						<p:outputLabel for="f2" value="" />
-						<p:commandButton id="f2" value="Upload" action="#{lessonLoader.fileLessonUploaded}" ajax="false" />
-					</h:panelGrid>
+					<p:fileUpload label="Datei auswählen" value="#{lessonLoader.uploadedFile}" mode="simple" skinSimple="true" />
+					<p />
+					<p:commandButton value="Upload" ajax="false" action="#{lessonLoader.fileLessonUploaded}" />
 				</h:form>
 			</div>
 		</div>

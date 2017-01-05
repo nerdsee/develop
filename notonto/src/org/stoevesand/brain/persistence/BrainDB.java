@@ -142,7 +142,11 @@ public interface BrainDB {
 
 	void changeNickname(User cu, String nicknew) throws DBException;
 
+	void changeName(User cu, String namenew) throws DBException;
+
 	boolean checkNickname(User cu, String nicknew) throws DBException;
+
+	boolean checkName(User cu, String nicknew) throws DBException;
 
 	Vector<News> getNews(Locale locale) throws DBException;
 
