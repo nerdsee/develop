@@ -120,6 +120,10 @@
 			<to-view-id>/user/user.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>admin_user</from-outcome>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>editlesson</from-outcome>
 			<to-view-id>/user/editlesson.xhtml</to-view-id>
 		</navigation-case>

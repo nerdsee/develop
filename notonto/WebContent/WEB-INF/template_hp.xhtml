@@ -130,7 +130,7 @@
 				</div>
 			</div>
 			<div class="ui-g-12 text-center">
-				<p:commandButton styleClass="btn btn-xl" id="firelogin" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
+				<p:commandButton styleClass="btn btn-xl" id="firelogin" ajax="false" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
 			</div>
 		</div>
 		</section>
