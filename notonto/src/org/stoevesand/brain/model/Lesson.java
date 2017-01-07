@@ -113,7 +113,7 @@ public class Lesson {
 
 		this.qlang = DBUtil.getString(rs, "qlang");
 		this.alang = DBUtil.getString(rs, "alang");
-
+		
 		init();
 	}
 

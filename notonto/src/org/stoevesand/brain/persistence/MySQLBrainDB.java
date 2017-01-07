@@ -7,7 +7,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.Base64;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
@@ -32,9 +31,10 @@ import org.stoevesand.brain.model.Item;
 import org.stoevesand.brain.model.Lesson;
 import org.stoevesand.brain.model.UserItem;
 import org.stoevesand.brain.model.UserLesson;
-import org.stoevesand.util.CryptUtils;
 import org.stoevesand.util.DBUtil;
 import org.stoevesand.util.News;
+
+import org.stoevesand.util.StringUtils;
 
 public class MySQLBrainDB implements BrainDB {
 
@@ -363,7 +363,7 @@ public class MySQLBrainDB implements BrainDB {
 				lesson.setId(newId);
 
 				// Code erzeugen und speichern
-				String code = createCode(newId, lesson.getOwnerId());
+				String code = StringUtils.createCode(newId, lesson.getOwnerId());
 				lesson.setCode(code);
 				close(ps);
 				ps = conn.prepareStatement("update lessons set code=? where id=?");
@@ -388,15 +388,16 @@ public class MySQLBrainDB implements BrainDB {
 
 	}
 
-	private String createCode(long newId, long ownerId) {
-		String ret=""+newId+"-"+ownerId;
-		ret = Base64.getEncoder().encodeToString(ret.getBytes()).toUpperCase();
-		return ret;
-	}
+
 
 	public void updateLesson(Lesson lesson) throws DBException {
 		Connection conn = getConnection("updateLesson");
 		PreparedStatement ps = null;
+
+		if ((lesson.getCode() == null) || (lesson.getCode().length() == 0)) {
+			String code = StringUtils.createCode(lesson.getId(), lesson.getOwnerId());
+			lesson.setCode(code);
+		}
 
 		// title,description,abstract,type,keyboardLayout,icon,ownerID,ownergroupID,code,qlang,alang,public
 		try {
@@ -582,10 +583,10 @@ public class MySQLBrainDB implements BrainDB {
 
 			while (rs.next()) {
 				ResultSetMetaData meta = rs.getMetaData();
-				for (int i=1; i<=meta.getColumnCount(); i++) {
+				for (int i = 1; i <= meta.getColumnCount(); i++) {
 					String col = meta.getColumnLabel(i);
 					String nam = meta.getColumnName(i);
-					String a="";
+					String a = "";
 				}
 				lesson = new Lesson(rs);
 				ret.add(lesson);
@@ -2744,7 +2745,6 @@ public class MySQLBrainDB implements BrainDB {
 		return ret;
 	}
 
-	
 	public boolean checkUserPrefix(User cu, String prefix) throws DBException {
 		Connection conn = getConnection("check prefix");
 		PreparedStatement ps = null;

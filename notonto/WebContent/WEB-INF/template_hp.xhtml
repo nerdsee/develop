@@ -23,7 +23,8 @@
 </h:head>
 <h:body id="page-top" class="index" onkeydown="bodykeydown(event); return true;">
 	<!-- NAVBAR -->
-	<nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+	<h:form>
+		<nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
 		<div class="container">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header page-scroll">
@@ -61,7 +62,7 @@
 						<li><p:link outcome="options">
 								<span class="glyphicon glyphicon-user"></span> Einstellungen
 						</p:link></li>
-						<li><p:commandLink action="#{auth.logout}">
+						<li><p:commandLink ajax="false" action="#{auth.logout}">
 								<span class="glyphicon glyphicon-log-out"></span> Logout
 						</p:commandLink></li>
 					</ui:fragment>
@@ -69,69 +70,69 @@
 			</div>
 			<!-- /.navbar-collapse -->
 		</div>
-		<!-- /.container-fluid -->
-	</nav>
+		<!-- /.container-fluid --> </nav>
+	</h:form>
 	<!-- Header -->
 	<header>
-		<div class="container">
-			<div class="intro-text">
-				<div class="intro-heading">notonto</div>
-				<div class="intro-lead-in">Lernen. Nie wieder vergessen.</div>
-				<a href="#services" class="page-scroll btn btn-xl">Tell Me More</a>
-			</div>
+	<div class="container">
+		<div class="intro-text">
+			<div class="intro-heading">notonto</div>
+			<div class="intro-lead-in">Lernen. Nie wieder vergessen.</div>
+			<a href="#services" class="page-scroll btn btn-xl">Tell Me More</a>
 		</div>
+	</div>
 	</header>
 	<!--  -->
 	<!--  -->
 	<!-- Intro Grid Section -->
 	<section id="portfolio" class="bg-light-gray">
-		<div class="ui-g">
-			<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
-			<div class="ui-g-12 ui-md-8 ui-lg-8" style="margin: 0px; padding: 0px;">
-				<div class="ui-g">
-					<div id="content" class="ui-g-12 ui-md-12 ui-lg-8">
-						<h1>
-							<h:outputText value="#{bundle.welcome1}" />
-						</h1>
-						<h:outputText value="#{bundle.welcome2}" />
-						<h:panelGroup class="font1">
-							<h:outputText value="#{bundle.intro1}" escape="false" />
-							<p />
-							<h:outputText value="#{bundle.intro2}" escape="false" />
-						</h:panelGroup>
-					</div>
-					<div id="sidebar" class="ui-g-12 ui-md-12 ui-lg-4">
-						<ui:include src="/snippets/top5.xhtml" />
-					</div>
+	<div class="ui-g">
+		<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
+		<div class="ui-g-12 ui-md-8 ui-lg-8" style="margin: 0px; padding: 0px;">
+			<div class="ui-g">
+				<div id="content" class="ui-g-12 ui-md-12 ui-lg-8">
+					<h1>
+						<h:outputText value="#{bundle.welcome1}" />
+					</h1>
+					<h:outputText value="#{bundle.welcome2}" />
+					<h:panelGroup class="font1">
+						<h:outputText value="#{bundle.intro1}" escape="false" />
+						<p />
+						<h:outputText value="#{bundle.intro2}" escape="false" />
+					</h:panelGroup>
+				</div>
+				<div id="sidebar" class="ui-g-12 ui-md-12 ui-lg-4">
+					<ui:include src="/snippets/top5.xhtml" />
 				</div>
 			</div>
-			<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
 		</div>
+		<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
+	</div>
 	</section>
 	<!--  -->
 	<!--  -->
 	<!-- Login Grid Section -->
 	<h:form rendered="#{!auth.isLoggedIn}">
 		<section id="login">
-			<div class="container">
-				<div class="ui-g-12 text-center">
-					<h1 class="section-heading">
-						<h:outputText value="Login" />
-					</h1>
+		<div class="container">
+			<div class="ui-g-12 text-center">
+				<h1 class="section-heading">
+					<h:outputText value="Login" />
+				</h1>
+			</div>
+			<div class="ui-g-12 text-center">
+				<p:messages for="login_form" showDetail="true" autoUpdate="true" />
+				<div class="form-group text-center">
+					<p:inputText size="50" id="loginname" value="#{auth.username}" placeholder="Email / Nickname" class="form-control" required="true" />
 				</div>
-				<div class="ui-g-12 text-center">
-					<p:messages for="login_form" showDetail="true" autoUpdate="true" />
-					<div class="form-group text-center">
-						<p:inputText size="50" id="loginname" value="#{auth.username}" placeholder="Email / Nickname" class="form-control" required="true" />
-					</div>
-					<div class="form-group">
-						<p:password id="loginpass" value="#{auth.password}" placeholder="Password" class="form-control" required="true" requiredMessage="Bitte eingeben." />
-					</div>
-				</div>
-				<div class="ui-g-12 text-center">
-					<p:commandButton styleClass="btn btn-xl" id="firelogin" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
+				<div class="form-group">
+					<p:password id="loginpass" value="#{auth.password}" placeholder="Password" class="form-control" required="true" requiredMessage="Bitte eingeben." />
 				</div>
 			</div>
+			<div class="ui-g-12 text-center">
+				<p:commandButton styleClass="btn btn-xl" id="firelogin" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
+			</div>
+		</div>
 		</section>
 	</h:form>
 	<!--  -->
@@ -139,72 +140,72 @@
 	<!-- Register Grid Section -->
 	<h:form rendered="#{!auth.isLoggedIn}">
 		<section id="register" class="bg-light-gray">
-			<div class="container">
+		<div class="container">
+			<div class="ui-g-12 text-center">
+				<h1 class="section_heading">
+					<h:outputText value="#{bundle.register}" />
+				</h1>
 				<div class="ui-g-12 text-center">
-					<h1 class="section_heading">
-						<h:outputText value="#{bundle.register}" />
-					</h1>
-					<div class="ui-g-12 text-center">
-						<p:messages autoUpdate="true" showDetail="false" />
-						<p:message for="passinput" />
-						<p:message for="emailinput" />
-						<div class="form-group">
-							<p:inputText style="display:block;" placeholder="Email" id="emailinput" class="form-control" value="#{auth.email}" required="true" validatorMessage="Bitte geben Sie eine gültige Emailadresse ein.">
-								<f:validateRegex pattern=".+@.+" />
-							</p:inputText>
-						</div>
-						<div class="form-group">
-							<p:password id="passinput" placeholder="Passwort" value="#{auth.password}" required="true" class="form-control" />
-						</div>
-						<div class="form-group">
-							<p:password style="display:block;" placeholder="Passwort bestätigen" id="passconfinput" class="form-control" value="#{auth.passconfirm}" label="#{bundle.passconfirm}" required="true" />
-						</div>
+					<p:messages autoUpdate="true" showDetail="false" />
+					<p:message for="passinput" />
+					<p:message for="emailinput" />
+					<div class="form-group">
+						<p:inputText style="display:block;" placeholder="Email" id="emailinput" class="form-control" value="#{auth.email}" required="true" validatorMessage="Bitte geben Sie eine gültige Emailadresse ein.">
+							<f:validateRegex pattern=".+@.+" />
+						</p:inputText>
 					</div>
-					<div class="ui-g-12 text-center">
-						<p:commandButton styleClass="btn btn-xl" id="reg1" action="#{auth.register}" value="#{bundle.register}" />
+					<div class="form-group">
+						<p:password id="passinput" placeholder="Passwort" value="#{auth.password}" required="true" class="form-control" />
+					</div>
+					<div class="form-group">
+						<p:password style="display:block;" placeholder="Passwort bestätigen" id="passconfinput" class="form-control" value="#{auth.passconfirm}" label="#{bundle.passconfirm}" required="true" />
 					</div>
 				</div>
-				<div class="ui-g-2"></div>
-				<!-- ### CONTENT-END ### -->
+				<div class="ui-g-12 text-center">
+					<p:commandButton styleClass="btn btn-xl" id="reg1" action="#{auth.register}" value="#{bundle.register}" />
+				</div>
 			</div>
+			<div class="ui-g-2"></div>
+			<!-- ### CONTENT-END ### -->
+		</div>
 		</section>
 	</h:form>
 	<!--  -->
 	<!--  -->
 	<!-- Register Grid Section -->
 	<section id="impressum">
-		<div class="container">
-			<div id="content" class="ui-g-8">
-				<h1>
-					<h:outputText value="#{bundle.imprint}" />
-				</h1>
-				<h3>
-					Diese Webseite ist ein rein privates Projekt von:<br /> Jan Stövesand <br /> Kegelhofstr. 9 <br /> 20251 Hamburg <br /> <br /> email: info[at]notonto.de <br /> <br /> Inhaltlich Verantwortlicher gemäß 10 Absatz 3 MDStV <br /> <br /> Jan Stövesand (Anschrift wie oben) <br />
-				</h3>
-			</div>
+	<div class="container">
+		<div id="content" class="ui-g-8">
+			<h1>
+				<h:outputText value="#{bundle.imprint}" />
+			</h1>
+			<h3>
+				Diese Webseite ist ein rein privates Projekt von:<br /> Jan Stövesand <br /> Kegelhofstr. 9 <br /> 20251 Hamburg <br /> <br /> email: info[at]notonto.de <br /> <br /> Inhaltlich Verantwortlicher gemäß 10 Absatz 3 MDStV <br /> <br /> Jan Stövesand (Anschrift wie oben) <br />
+			</h3>
 		</div>
+	</div>
 	</section>
 	<footer>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4">
-					<span class="copyright">Copyright &copy; Your Website 2016</span>
-				</div>
-				<div class="col-md-4">
-					<ul class="list-inline social-buttons">
-						<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-						<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-					</ul>
-				</div>
-				<div class="col-md-4">
-					<ul class="list-inline quicklinks">
-						<li><a href="#">Privacy Policy</a></li>
-						<li><a href="#">Terms of Use</a></li>
-					</ul>
-				</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<span class="copyright">Copyright &copy; Your Website 2016</span>
+			</div>
+			<div class="col-md-4">
+				<ul class="list-inline social-buttons">
+					<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+					<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+					<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+				</ul>
+			</div>
+			<div class="col-md-4">
+				<ul class="list-inline quicklinks">
+					<li><a href="#">Privacy Policy</a></li>
+					<li><a href="#">Terms of Use</a></li>
+				</ul>
 			</div>
 		</div>
+	</div>
 	</footer>
 	<!-- jQuery 
 	<script src="/vendor/jquery/jquery.min.js"></script>

@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
+import java.util.Base64;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -88,6 +89,19 @@ public class StringUtils {
 		return ret;
 	}
 
+	/**
+	 * Erzeugt einen Code zur Freischaltung von Lektionen
+	 * 
+	 * @param newId
+	 * @param ownerId
+	 * @return
+	 */
+	public static String createCode(long newId, long ownerId) {
+		String ret = "" + newId + "-" + ownerId;
+		ret = Base64.getEncoder().encodeToString(ret.getBytes()).toUpperCase();
+		return ret;
+	}
+	
 	public double longestCommonStrings(String eingabe, String loesung, StringBuffer result) {
 		Vector<Tuple> hits = new Vector<Tuple>();
 
