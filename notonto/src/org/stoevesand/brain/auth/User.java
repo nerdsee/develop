@@ -48,6 +48,7 @@ public class User {
 	String name = "";
 	String nick = null;
 	String password = "";
+	String passtmp = "";
 	String unlockString = "";
 	String statusLang = "de";
 	String prefix = "";
@@ -125,6 +126,7 @@ public class User {
 		this.name = DBUtil.getString(rs, "name");
 		this.nick = DBUtil.getString(rs, "nick");
 		this.password = DBUtil.getString(rs, "password");
+		this.passtmp = DBUtil.getString(rs, "passtmp");
 		this.unlockString = DBUtil.getString(rs, "unlocktext");
 		this.setUnlocked(DBUtil.getBoolean(rs, "unlocked"));
 		this.registerDate = DBUtil.getTimestamp(rs, "register_date");
@@ -277,6 +279,14 @@ public class User {
 		this.password = password;
 	}
 
+	public String getPasstmp() {
+		return passtmp;
+	}
+
+	public void setPasstmp(String passtmp) {
+		this.passtmp = passtmp;
+	}
+
 	public String getUnlock() {
 		return unlockString;
 	}
@@ -359,6 +369,15 @@ public class User {
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Info", "Diese Lektion ist unbekannt."));
 			}
+		} catch (DBException e) {
+			e.printStackTrace();
+		}
+		return;
+	}
+
+	public void acceptPasstmp() {
+		try {
+			brainSystem.getBrainDB().acceptPasstmp(this);
 		} catch (DBException e) {
 			e.printStackTrace();
 		}

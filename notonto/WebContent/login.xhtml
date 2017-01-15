@@ -3,24 +3,23 @@
 		<title>Notonto - Vokabeln lernen und behalten</title>
 	</ui:define>
 	<ui:define name="content">
-		<div class="ui-g-2"></div>
-		<div id="content" class="ui-g-4">
-			<h1>
-				<h:outputText value="Login" />
-			</h1>
-			<h:form>
-				<p:focus />
-				<p:messages id="messages" showDetail="true" autoUpdate="true" />
-				<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
-					<h:outputLabel for="loginname" value="Username" />
-					<p:inputText id="loginname" value="#{auth.username}" label="Username" size="50" required="true" />
-					<h:outputLabel for="loginpass" value="Password" />
-					<p:password id="loginpass" value="#{auth.password}" label="Password" size="50" required="true" />
-				</h:panelGrid>
-				<p:commandButton id="firelogin" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
-			</h:form>
+		<div class="ui-g">
+			<div id="content" class="ui-g-12">
+				<h1>
+					<h:outputText value="Login" />
+				</h1>
+				<h:form>
+					<p:messages for="login_form" showDetail="true" autoUpdate="true" />
+					<div class="form-group text-center">
+						<p:inputText size="50" id="loginname" value="#{auth.username}" placeholder="Email / Nickname" class="form-control" required="true" />
+					</div>
+					<div class="form-group">
+						<p:password id="loginpass" value="#{auth.password}" placeholder="Password" class="form-control" required="true" requiredMessage="Bitte eingeben." />
+					</div>
+					<p:focus />
+						<p:commandButton id="firelogin" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
+				</h:form>
+			</div>
 		</div>
-		<div class="ui-g-2"></div>
-		<!-- ### CONTENT-END ### -->
 	</ui:define>
 </ui:composition>

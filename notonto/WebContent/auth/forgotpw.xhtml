@@ -1,46 +1,38 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
-<f:view locale="#{brainSession.currentLocale}">
-	<html>
-	<h:head>
-	<title>User</title>
-	<f:subview id="s_inc_head">
-		<ui:include src="/snippets/inc_head.jsp" />
-	</f:subview>
-	</h:head>
-	<h:body onLoad="document.getElementById('loginfrm:loginname').focus()">
-	<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
-	<f:subview id="s_headline">
-		<ui:include src="/snippets/headline.jsp" />
-	</f:subview>
-	<!-- LAYOUT-BLOCK 2-1 START -->
-	<div id="shade" forceId="true" class="outer">
-		<div class="block">
-			<div class="content_w">
-				<!-- ### CONTENT-START ### -->
-				<h1><h:outputText value="#{bundle.forgotpw}" /></h1>
-				<h:outputText value="#{bundle.reminder1}" class="font1" />
-				<h:form id="reminderform">
-					<h:panelGrid class="tstd" columnClasses="left" columns="2" style="margin-top: 20px;">
-						<h:outputText value="#{bundle.email}" class="font1 bold" />
-						<h:panelGroup>
-							<t:inputText style="display:block" id="emailinput" value="#{auth.email}" required="true" />
-							<h:message for="emailinput" class="font2 c2" />
-						</h:panelGroup>
-						<h:outputText value="" />
-						<h:commandLink class="btn btn_blue" action="#{auth.remind}" value="#{bundle.btn_remind}" />
-					</h:panelGrid>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+	<ui:define name="head">
+		<title>Edit Item</title>
+	</ui:define>
+	<ui:define name="content">
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-lg-8">
+				<h:form>
+					<section id="login">
+						<div class="container">
+							<div class="ui-g-12">
+								<h1 class="section-heading">
+									<h:outputText value="#{bundle.forgotpw}" />
+								</h1>
+								<p class="large">
+									<h:outputText value="#{bundle.reminder1}" class="font1" />
+								</p>
+							</div>
+							<div class="ui-g-12 text-center">
+								<p:messages showDetail="true" autoUpdate="true" />
+								<div class="form-group text-center">
+									<p:inputText size="50" id="forgotemailinput" value="#{auth.email}" placeholder="Email" class="form-control">
+										<f:validator validatorId="custom.emailValidator" />
+									</p:inputText>
+								</div>
+							</div>
+							<div class="ui-g-12 text-center">
+								<p:commandButton styleClass="btn btn-xl" id="fireremind" ajax="true" action="#{auth.remind}" value="#{bundle.btn_remind}" />
+							</div>
+						</div>
+					</section>
 				</h:form>
-				<!-- ### CONTENT-END ### -->
+				<!-- ### -->
 			</div>
+			<div class="ui-g-12 ui-lg-4"></div>
 		</div>
-	</div>
-	<!-- LAYOUT-BLOCK 2-1 END -->
-	</h:body>
-	</html>
-</f:view>
+	</ui:define>
 </ui:composition>

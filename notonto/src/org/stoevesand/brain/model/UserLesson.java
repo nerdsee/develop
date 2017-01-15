@@ -32,8 +32,8 @@ public class UserLesson {
 	 */
 
 	// private static final int TARGET_DATE = 1;
-	private static final int INTERVALL_STD = 0;
-	private static final int INTERVALL_TARGET_DATE = 1;
+	private static final boolean INTERVALL_STD = false;
+	private static final boolean INTERVALL_TARGET_DATE = true;
 
 	private static Logger log = LogManager.getLogger(UserLesson.class);
 
@@ -46,16 +46,16 @@ public class UserLesson {
 	// boolean dirty = false;
 
 	/**
-	 * 0=standard, 1=Zieltermin
+	 * false=standard, true1=Zieltermin
 	 */
-	short intervallType = 0; // 0=standard 1=Zieltermin
+	boolean intervallType = false; 
 
 	public boolean isIntervallType() {
 		return intervallType == INTERVALL_TARGET_DATE;
 	}
 
-	public void setIntervallType(short intervallType) {
-		this.intervallType = intervallType;
+	public void setIntervallType(boolean it) {
+		this.intervallType = it;
 		if (this.intervallType == INTERVALL_STD) {
 			setRealTargetDate(null);
 		}
@@ -101,7 +101,7 @@ public class UserLesson {
 		this.userId = DBUtil.getLong(rs, "userID");
 		this.intervallUnit = DBUtil.getLong(rs, "interval_unit");
 		this.realTargetDate = DBUtil.getDate(rs, "target_date");
-		this.intervallType = DBUtil.getShort(rs, "intervall_type");
+		this.intervallType = DBUtil.getBoolean(rs, "intervall_type");
 
 		this.lesson = lesson;
 

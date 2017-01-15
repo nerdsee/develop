@@ -2339,9 +2339,10 @@ public class MySQLBrainDB implements BrainDB {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = conn.prepareStatement("update users set password=? where id=?");
+			ps = conn.prepareStatement("update users set password=?, passtmp=? where id=?");
 			ps.setString(1, passnew);
-			ps.setLong(2, cu.getId());
+			ps.setString(2, passnew);
+			ps.setLong(3, cu.getId());
 
 			ps.execute();
 
@@ -2978,6 +2979,47 @@ public class MySQLBrainDB implements BrainDB {
 			close(conn);
 		}
 		return ret;
+	}
+
+	@Override
+	public void acceptPasstmp(User user) throws DBException {
+		Connection conn = getConnection("change name");
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement("update users set password=passtmp where id=?");
+			ps.setLong(1, user.getId());
+
+			ps.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(ps);
+			close(conn);
+		}
+	}
+
+	@Override
+	public void setPasstmp(String email, String pw) throws DBException {
+		Connection conn = getConnection("change name");
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement("update users set passtmp=? where name=?");
+			ps.setString(1, pw);
+			ps.setString(2, email);
+
+			ps.execute();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(ps);
+			close(conn);
+		}
 	}
 
 }

@@ -1,16 +1,19 @@
 /* notonto CSS*/
 @media screen and (max-width: 767px) {
 	h1 {
-		font-size: 30px;
+		font-size: 24px !important;
 		margin: 0px 0px 5px 0px;
 	}
 	h2 {
-		font-size: 18px;
+		font-size: 18px !important;
 		margin: 0px 0px 5px 0px;
 	}
 	h3 {
 		font-size: 12px;
 		margin: 0px 0px 3px 0px;
+	}
+	.mhide {
+		display: none;
 	}
 }
 
@@ -28,6 +31,41 @@
 		font-size: 20px;
 		margin: 0px 0px 5px 0px;
 	}
+	.statistic {
+		width: 100%;
+		text-align: right;
+		padding: 5px 0px;
+		margin: 1px 0px;
+		background-color: white;
+		border: 1px solid #fed136;
+		border-radius: 4px;
+	}
+}
+
+ol.numlist li {
+	font-size: 18px;
+	margin: 10px 0px;
+}
+
+.statistic {
+	width: 100%;
+	text-align: right;
+	padding: 10px 5px;
+	margin: 2px 0px;
+	background-color: white;
+	border: 1px solid;
+	border-color: #fed136;
+	border-radius: 4px;
+}
+
+.statistic_learn {
+	color: white;
+	border-color: #337AB7;
+	background-color: #337AB7;
+}
+
+.statistic_act {
+	background-color: #fed136;
 }
 
 h1 {
@@ -187,4 +225,3 @@ yellow bg #FCF8E3
 yellow border #FBEED5
 yellow #C09853
 */
-

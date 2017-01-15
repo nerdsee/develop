@@ -184,4 +184,8 @@ public interface BrainDB {
 
 	void resetUserLesson(UserLesson userLesson) throws DBException;
 
+	void acceptPasstmp(User user) throws DBException;
+
+	void setPasstmp(String email, String pw) throws DBException;
+
 }

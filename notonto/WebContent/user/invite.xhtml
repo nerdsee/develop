@@ -13,18 +13,25 @@
 				</h2>
 				<h3>Sie haben zwei Möglichkeiten, damit andere Benutzer diese Lektion verwenden können.</h3>
 				<h:form>
-					<p:panel>
-			Der Freischaltcode für diese Lektion lautet: #{brainSession.currentLesson.code}
-			</p:panel>
-					<p:panel>
-			Verschicken Sie eine Email, mit einem direkten Link als Einladung.
-				<h:panelGrid columns="2">
-							<p:outputLabel>Email Adresse</p:outputLabel>
-							<p:inputText value="#{libraryFilterView.inviteeEmail}" size="60" />
-							<p:outputLabel></p:outputLabel>
-							<p:commandButton value="OK" action="#{libraryFilterView.sendInvitation}" class="ui-btn-inline ui-btn-green" />
-						</h:panelGrid>
-					</p:panel>
+					<p:messages showDetail="true" autoUpdate="true" />
+					<ol class="numlist">
+						<li>Geben Sie einfach den Freischaltcode weiter: <b>#{brainSession.currentLesson.code}</b><br />Damit kann die Lektion direkt hinzugefügt werden.
+						</li>
+						<li>Verschicken Sie eine Email, mit einem direkten Link als Einladung.
+							<div class="ui-g">
+								<div class="ui-g-12 ui-lg-3">
+									<b>Emailadresse</b>
+								</div>
+								<div class="ui-g-12 ui-lg-9">
+									<p:inputText id="inviteeemail" value="#{libraryFilterView.inviteeEmail}" size="60">
+										<f:validator validatorId="custom.emailValidator" for="register_form" />
+									</p:inputText>
+									<p />
+									<p:commandLink value="Abschicken" action="#{libraryFilterView.sendInvitation}" class="btn btn-primary	" />
+								</div>
+							</div>
+						</li>
+					</ol>
 				</h:form>
 			</div>
 		</div>

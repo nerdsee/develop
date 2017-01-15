@@ -57,8 +57,11 @@ public class EmailValidator implements javax.faces.validator.Validator {
 
 		String email = value.toString();
 		if (email.indexOf('@') < 1) {
-			FacesMessage msg = new FacesMessage(" E-mail validation failed.", "Please provide E-mail address in this format: abcd@abc.com");
-			msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler", "Bitte geben Sie eine gültige Emailadresse im Format abcd@abc.com ein.");
+
+			if ("emailinput".equals(component.getId())) {
+				context.addMessage("register_form", msg);
+			}
 
 			throw new ValidatorException(msg);
 		}

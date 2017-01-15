@@ -13,7 +13,7 @@ body {
 
 .btn-primary, .btn-xl, h1, h2, h3, h4, h5, h6 {
 	font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
-	text-transform: uppercase;
+	/* text-transform: uppercase; */
 	font-weight: 700
 }
 
@@ -278,7 +278,7 @@ header .intro-text .intro-heading {
 }
 
 section {
-	padding: 100px 0
+	padding: 50px 0
 }
 
 section h2.section-heading {
@@ -296,7 +296,7 @@ section h3.section-subheading {
 
 @media ( min-width :768px) {
 	section {
-		padding: 150px 0
+		padding: 100px 0
 	}
 }
 

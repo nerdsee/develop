@@ -11,9 +11,6 @@
 				<h:form>
 					<div id="area_question" onclick="show_answer(0)">
 						<p:panel id="panel" rendered="#{not empty brainSession.currentUserLesson.currentUserItem}">
-							<f:facet name="header">
-								<h:outputText value="Level #{brainSession.currentUserItem.showLevel}" class="font5" />
-							</f:facet>
 							<!-- ### CONTENT-START ### -->
 							<div class="ui-g">
 								<div class="ui-g-1">
@@ -37,9 +34,6 @@
 				<h:form>
 					<div id="area_answer" onclick="show_question(1)" style="display: none;">
 						<p:panel rendered="#{not empty brainSession.currentUserLesson.currentUserItem}">
-							<f:facet name="header">
-								<h:outputText value="Level #{brainSession.currentUserItem.showLevel}" class="font5" />
-							</f:facet>
 							<div class="ui-grid ui-grid-responsive">
 								<div class="ui-g">
 									<div class="ui-g-1">
@@ -69,17 +63,26 @@
 						</p:panel>
 					</div>
 				</h:form>
+				<h:form rendered="#{empty brainSession.currentUserLesson.currentUserItem}" id="countdown">
+					<h:panelGrid columns="1" class="w100p">
+						<h1>
+							<h:outputText value="#{bundle.noitems}" />
+						</h1>
+						<h2>
+							<h:outputText value="#{brainSession.currentUserLesson.nextUserItemTimeDiff}" />
+							<p:commandButton class="btn btn-alert" ajax="false" update="countdown" action="#{brainSession.tryNextUserItem}" value="Refresh" rendered="#{auth.isLoggedIn}" />
+						</h2>
+					</h:panelGrid>
+				</h:form>
 			</div>
 		</div>
 	</ui:define>
-	<!-- ##################### 2 ################################ -->
-	<ui:define name="menu">
-		<h:form>
-			<p:menu>
-				<p:menuitem value="Lektion löschen" action="#{brainSession.unsubscribeLesson()}" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}" />
-				<p:menuitem value="Optionen" outcome="options" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
-				<p:menuitem value="Exit" outcome="exit" />
-			</p:menu>
-		</h:form>
+	<ui:define name="sidebar">
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<h3 class="mhide">&#160;</h3>
+				<ui:include src="/snippets/userlessonstat.xhtml"></ui:include>
+			</div>
+		</div>
 	</ui:define>
 </ui:composition>

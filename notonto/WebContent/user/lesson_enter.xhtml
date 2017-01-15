@@ -24,39 +24,43 @@
 				<h:form id="answerform">
 					<p:panel id="panel" rendered="#{not empty brainSession.currentUserLesson.currentUserItem}">
 						<p:focus context="panel" />
-						<f:facet name="header">
-							<h:outputText value="Level #{brainSession.currentUserItem.showLevel}" class="font5" />
-							<h:outputText value=" - ID #{brainSession.currentUserItem.id}" class="font5" />
-						</f:facet>
 						<h:outputText value="#{brainSession.currentUserItem.item.formattedText}" escape="false" class="font4" rendered="#{brainSession.currentUserLesson.lesson.lessonType==0}" />
 						<h:outputText value="#{brainSession.currentUserItem.item.formattedText}" escape="false" class="fontsym ta_center" rendered="#{brainSession.currentUserLesson.lesson.lessonType==1}" />
 						<h:outputText value="[#{brainSession.currentUserItem.item.comment}]" class="font4 ta_center" rendered="#{brainSession.currentUserLesson.lesson.lessonType==1 and brainSession.currentUserLesson.config.showPinyin }" />
-						<br/>
+						<br />
 						<h:inputText class="long-press" id="answerinput" onkeyup="parse(this)" autocomplete="off" />
 						<!-- onkeydown="return checkSpecialChar(event, this);"  -->
-						<br/>
+						<br />
 						<h:outputText id="pinyin2" value="-" rendered="#{brainSession.currentUserLesson.lesson.keyboardLayout=='PY'}" />
-						<br/>
+						<br />
 						<h:inputText id="pinyin" value="-" rendered="#{brainSession.currentUserLesson.lesson.keyboardLayout=='PY'}" disabled="true" />
-						<br/>
+						<br />
 						<p:commandButton id="submitlink" ajax="false" action="#{brainSession.checkAnswerText}" onclick="updateData(); return true;" value="#{bundle.btn_check}" />
 						<h:inputHidden id="keyboardLayout" value="#{brainSession.currentUserLesson.lesson.keyboardLayout}" />
 						<h:inputHidden id="answerin" value="#{brainSession.answerText}"></h:inputHidden>
 					</p:panel>
 				</h:form>
 				<p:messages id="messages" closable="false" showDetail="true" showIcon="false" />
-				<h:form rendered="#{empty brainSession.currentUserLesson.currentUserItem}">
+				<h:form rendered="#{empty brainSession.currentUserLesson.currentUserItem}" id="countdown" >
 					<h:panelGrid columns="1" class="w100p">
 						<h1>
 							<h:outputText value="#{bundle.noitems}" />
 						</h1>
 						<h2>
 							<h:outputText value="#{brainSession.currentUserLesson.nextUserItemTimeDiff}" />
+							<p:commandButton class="btn btn-alert" ajax="false" update="countdown" action="#{brainSession.tryNextUserItem}" value="Refresh" rendered="#{auth.isLoggedIn}" />
 						</h2>
-						<p:commandButton class="btn_blue" action="#{brainSession.tryNextUserItem}" value="Refresh" rendered="#{auth.isLoggedIn}" />
 					</h:panelGrid>
 				</h:form>
 				<!-- ### CONTENT-END ### -->
+			</div>
+		</div>
+	</ui:define>
+	<ui:define name="sidebar">
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<h3 class="mhide">&#160;</h3>
+				<ui:include src="/snippets/userlessonstat.xhtml"></ui:include>
 			</div>
 		</div>
 	</ui:define>

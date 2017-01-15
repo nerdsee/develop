@@ -3,6 +3,7 @@ package org.stoevesand.brain.auth;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -15,11 +16,13 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.stoevesand.brain.BrainSession;
 import org.stoevesand.brain.BrainSystem;
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.brain.model.UserLesson;
 import org.stoevesand.brain.persistence.BrainDB;
+import org.stoevesand.util.CryptUtils;
 import org.stoevesand.util.SendMailUsingAuthentication;
 import org.stoevesand.util.StringUtils;
 
@@ -158,9 +161,10 @@ public class Authorization {
 		// FacesContext context = FacesContext.getCurrentInstance();
 		BrainDB db = brainSystem.getBrainDB();
 
-		String pw = db.getUserPassword(getEmail());
+		String pw = CryptUtils.getRandomString(8);
+		try {
+			db.setPasstmp(getEmail(), pw);
 
-		if (pw != null) {
 			String emailSubjectTxt = "Your Request at notonto.";
 			String emailMsgTxt = brainSystem.getReminderText();
 			emailMsgTxt = StringUtils.replaceSubstring(emailMsgTxt, "@PASSWORD@", pw);
@@ -168,10 +172,12 @@ public class Authorization {
 			// SendMailUsingAuthentication.sendConfirmationMail(email, unlock);
 			SendMailUsingAuthentication.sendConfirmationMail(emailAddress, emailSubjectTxt, emailMsgTxt);
 			log.info("Reminder sent: " + getEmail());
-		} else
-			log.error("Reminder requested: " + getEmail());
 
-		emailAddress = "";
+			emailAddress = "";
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return "reminded";
 	}
@@ -183,12 +189,25 @@ public class Authorization {
 
 		String ret = "login";
 
+		if ((username==null) || (username.length()==0)) {
+			context.addMessage("login_form", new FacesMessage(FacesMessage.SEVERITY_INFO, "Fehler", "Bitte geben Sie ihre Emailadresse oder ihren Benutzernamen ein."));
+			return null;
+		}
+		
 		currentUser.loadUser(username);
-
+		
 		if (currentUser.isValid()) {
 
-			if (currentUser.getPassword().equals(password)) {
+			if ((currentUser.getPassword().equals(password)) || (currentUser.getPasstmp().equals(password))) {
+
+				// Sonderfall: User hat TMP Passwort genommen. Dieses wird damit
+				// als neues Passwort übernommen.
+				if (currentUser.getPasstmp().equals(password)) {
+					currentUser.acceptPasstmp();
+				}
+
 				ret = userLoggedIn();
+				RequestContext.getCurrentInstance().scrollTo("page-top");
 				return ret;
 			} else {
 				log.info("User wrong PW: " + currentUser.getName());
@@ -197,10 +216,10 @@ public class Authorization {
 			log.info("user " + username + " invalid.");
 		}
 
-		context.addMessage("login_form", new FacesMessage(bundle.getString("loginfailed")));
+		context.addMessage("login_form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fehler", bundle.getString("loginfailed")));
 		brainSession.incrementLoginCounter();
 
-		return "logout";
+		return null;
 	}
 
 	// alles was man erledigen muss, wenn ein user richtig ist.
@@ -283,13 +302,17 @@ public class Authorization {
 		BrainDB db = brainSystem.getBrainDB();
 		try {
 			FacesContext context = FacesContext.getCurrentInstance();
+			if (passwordsEmpty()) {
+				context.addMessage("register_form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Check", "Bitte geben Sie ein Passwort ein."));
+				return null;
+			}
 			if (!passwordsMatch()) {
 				context.addMessage("register_form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Check", "Passwörter stimmen nicht überein."));
-				return "register";
+				return null;
 			}
 			if (db.emailIsAlreadyUsed(emailAddress)) {
 				context.addMessage("register_form", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Check", "Mit dieser Emailadresse ist bereits ein Konto eröffnet."));
-				return "register";
+				return null;
 			}
 		} catch (DBException e) {
 			e.printStackTrace();
@@ -303,8 +326,8 @@ public class Authorization {
 
 	public String deleteAccount() {
 
-		String testpass = passnew;
-		passnew = "";
+		String testpass = passdelete;
+		passdelete = "";
 
 		String ret = null;
 		if (testpass.length() > 0) {
@@ -315,38 +338,16 @@ public class Authorization {
 					db.deleteAccount(currentUser);
 					ret = logout();
 				} else {
-					brainSession.getBrainMessage().setPwErrorText("Wrong password!");
+					setErrorMsg("Falsches Passwort.");
 					ret = null;
 				}
 			} catch (DBException e) {
 			}
 		} else {
-			brainSession.getBrainMessage().setPwErrorText("Please enter your password!");
+			setInfoMsg("Sie müssen zur Bestätigung ihr Passwort eingeben.");
 		}
 
 		return ret;
-	}
-
-	public String alterPassword() {
-
-		if (passnew.length() == 0) {
-			setStatusCode(PWC_EMPTY);
-		} else if (passnew.equals(passconfirm)) {
-			BrainDB db = brainSystem.getBrainDB();
-
-			try {
-				db.changePassword(currentUser, passnew);
-			} catch (DBException e) {
-				setStatusCode(PWC_DBERROR);
-			}
-			passnew = "";
-			passconfirm = "";
-			setStatusCode(PWC_OK);
-		} else {
-			setStatusCode(PWC_NOMATCH);
-		}
-
-		return null;
 	}
 
 	public String alterStatusMailFreq() {
@@ -362,28 +363,28 @@ public class Authorization {
 	public String alterNickname() {
 
 		if (nicknew.length() == 0) {
-			setNickMsg(brainSession.getResourceBundle().getString("msg_required"));
+			setErrorMsg("Bitte geben Sie einen Spitznamen ein.");
 		} else if ((nicknew.length() > 15) || (nicknew.length() < 5)) {
-			setNickMsg(brainSession.getResourceBundle().getString("msg_nicklong"));
+			setErrorMsg("Der Spitzname muss zwischen 5 und 15 Zeichen lang sein.");
 		} else if (!nicknew.matches("[a-zA-Z0-9]*")) {
-			setNickMsg(brainSession.getResourceBundle().getString("msg_nickregex"));
+			setErrorMsg("Der Spitzname darf nur aus den Zeichen a-z, A-Z und 0-9 bestehen.");
 		} else {
 			BrainDB db = brainSystem.getBrainDB();
 
 			if (nicknew.equals(currentUser.getNick())) {
-				setNickMsg("PWC_UNCHANGED");
+				setInfoMsg("Der Spitzname ist unverändert.");
 			} else {
 				try {
 					if (db.checkNickname(currentUser, nicknew)) {
 						currentUser.setNick(nicknew);
 						db.changeNickname(currentUser, nicknew);
 						brainSystem.updateTop5(currentUser);
-						setStatusCode(PWC_OK);
+						setInfoMsg("Ihr neue Spitzname ist jetzt " + nicknew + ".");
 					} else {
-						setNickMsg(brainSession.getResourceBundle().getString("msg_nickused"));
+						setErrorMsg("Dieser Spitzname wird bereits verwendet.");
 					}
 				} catch (DBException e) {
-					setStatusCode(PWC_DBERROR);
+					setErrorMsg("Ein Fehler ist aufgetreten.");
 				}
 			}
 		}
@@ -396,7 +397,7 @@ public class Authorization {
 		BrainDB db = brainSystem.getBrainDB();
 
 		if (namenew.equals(currentUser.getName())) {
-			setNickMsg("PWC_UNCHANGED");
+			setErrorMsg("Die Emailadresse hat sich nicht geändert.");
 		} else {
 			try {
 				if (db.checkName(currentUser, namenew)) {
@@ -405,53 +406,18 @@ public class Authorization {
 					getBrainSession().resendUnlockEmail();
 					db.changeName(currentUser, namenew);
 					brainSystem.updateTop5(currentUser);
-					setStatusCode(PWC_OK);
+					// setStatusCode(PWC_OK);
 				} else {
-					setNickMsg("Diese emailadresse wird bereits verwendet.");
+					setErrorMsg("Diese Emailadresse wird bereits verwendet.");
 				}
 			} catch (DBException e) {
-				setStatusCode(PWC_DBERROR);
+				setErrorMsg("Ein Fehler ist aufgetreten.");
 			}
 		}
 
 		namenew = "";
 		return null;
 	}
-
-	public String alterPrefix() {
-
-		if (prefixnew.length() == 0) {
-			brainSession.getBrainMessage().setPrefixErrorText(brainSession.getResourceBundle().getString("msg_required"));
-		} else if ((prefixnew.length() > 5) || (prefixnew.length() < 2)) {
-			brainSession.getBrainMessage().setPrefixErrorText(brainSession.getResourceBundle().getString("msg_prefixlong"));
-		} else if (!prefixnew.matches("[a-zA-Z0-9]*")) {
-			brainSession.getBrainMessage().setPrefixErrorText(brainSession.getResourceBundle().getString("msg_prefixregex"));
-		} else {
-			BrainDB db = brainSystem.getBrainDB();
-
-			if (!prefixnew.equals(currentUser.getPrefix())) {
-				try {
-					if (db.checkUserPrefix(currentUser, prefixnew)) {
-						currentUser.setPrefix(prefixnew);
-						db.changePrefix(currentUser, prefixnew);
-					} else {
-						brainSession.getBrainMessage().setPrefixErrorText(brainSession.getResourceBundle().getString("msg_prefixused"));
-					}
-				} catch (DBException e) {
-					setStatusCode(PWC_DBERROR);
-				}
-			}
-		}
-		prefixnew = "";
-		return null;
-	}
-
-	// public String prepareOptions() {
-	// passnew = "";
-	// passconfirm = "";
-	// setStatusCode(0);
-	// return "options";
-	// }
 
 	public String confirm() {
 
@@ -573,6 +539,14 @@ public class Authorization {
 		return password.equals(passconfirm);
 	}
 
+	public boolean passwordsEmpty() {
+
+		boolean pw = (password == null) || (password.length() == 0);
+		boolean pc = (passconfirm == null) || (passconfirm.length() == 0);
+
+		return pw && pc;
+	}
+
 	public void validateRights(FacesContext context, UIComponent toValidate, Object value) {
 		log.debug("VR");
 
@@ -607,30 +581,6 @@ public class Authorization {
 		return statusCode;
 	}
 
-	public void setStatusCode(int statusCode) {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-
-		switch (statusCode) {
-			case PWC_EMPTY:
-				facesContext.addMessage("Date", new FacesMessage(FacesMessage.SEVERITY_ERROR, "PWC_EMPTY", "PWC_EMPTY"));
-				break;
-			case PWC_NOMATCH:
-				facesContext.addMessage("Date", new FacesMessage(FacesMessage.SEVERITY_ERROR, "PWC_NOMATCH", "PWC_NOMATCH"));
-				break;
-			case PWC_OK:
-				facesContext.addMessage("Date", new FacesMessage(FacesMessage.SEVERITY_INFO, "PWC_OK", "PWC_OK"));
-				break;
-			case PWC_USED:
-				facesContext.addMessage("Date", new FacesMessage(FacesMessage.SEVERITY_ERROR, "PWC_USED", "PWC_USED"));
-				break;
-			case PWC_NONE:
-				facesContext.addMessage("Date", new FacesMessage(FacesMessage.SEVERITY_ERROR, "PWC_NONE", "PWC_NONE"));
-				break;
-		}
-
-		this.statusCode = statusCode;
-	}
-
 	public String getPassnew() {
 		return passnew;
 	}
@@ -659,10 +609,41 @@ public class Authorization {
 		return nickMsg;
 	}
 
-	public void setNickMsg(String nickMsg) {
+	public void setInfoMsg(String nickMsg) {
+		setMsgWithSeverity("Info", nickMsg, FacesMessage.SEVERITY_INFO);
+	}
+
+	public void setErrorMsg(String nickMsg) {
+		setMsgWithSeverity("Fehler", nickMsg, FacesMessage.SEVERITY_ERROR);
+	}
+
+	void setMsgWithSeverity(String summary, String nickMsg, Severity severity) {
 		this.nickMsg = nickMsg;
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		facesContext.addMessage("Date", new FacesMessage(FacesMessage.SEVERITY_ERROR, nickMsg, nickMsg));
+		facesContext.addMessage("Date", new FacesMessage(severity, summary, nickMsg));
 
 	}
+
+	public String alterPassword() {
+
+		if (passnew.length() == 0) {
+			setErrorMsg("Das Passwort darf nicht leer sein.");
+		} else if (passnew.equals(passconfirm)) {
+			BrainDB db = brainSystem.getBrainDB();
+
+			try {
+				db.changePassword(currentUser, passnew);
+			} catch (DBException e) {
+				setErrorMsg("Ein Fehler ist aufgetreten.");
+			}
+			passnew = "";
+			passconfirm = "";
+			setInfoMsg("Das Passwort wurde erfolgreich geändert.");
+		} else {
+			setErrorMsg("Die Passwörter stimmen nicht überein.");
+		}
+
+		return null;
+	}
+
 }

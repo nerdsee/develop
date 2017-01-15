@@ -36,7 +36,7 @@
 						<p:column filterBy="#{lw.lesson.description}" afilterStyle="width: 200px" headerText="Description" filterMatchMode="contains">
 							<h:outputText value="#{lw.lesson.description}" class="font1 bold" />
 							<br />
-							<h:outputText escape="false" value="#{lw.lesson.abstract}" class="font3" />
+							<h:outputText escape="false" value="#{lw.lesson.abstract}" class="font3 mhide" />
 						</p:column>
 						<p:column priority="2" visible="false" filterBy="#{lw.lesson.code}" filterMatchMode="contains" headerText="Code">
 							<h:outputText escape="false" value="#{lw.lesson.code}" class="font3" />
