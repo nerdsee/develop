@@ -1,3 +1,9 @@
+@media screen and (max-width: 767px) {
+	.mhide {
+		display: none;
+	}
+}
+
 .ui-selectbooleanbutton.ui-button.ui-state-active, .ui-selectonebutton .ui-button.ui-state-active, .ui-selectmanybutton .ui-button.ui-state-active {
     background: #186ba0 none repeat scroll 0 0;
     border: 1px solid #156090;
