@@ -77,7 +77,7 @@
 		<div class="intro-text">
 			<div class="intro-heading">notonto</div>
 			<div class="intro-lead-in">Lernen. Nie wieder vergessen.</div>
-			<a href="#services" class="page-scroll btn btn-xl">Tell Me More</a>
+			<a href="#more" class="page-scroll btn btn-xl">Tell Me More</a>
 		</div>
 	</div>
 	</header>
@@ -94,10 +94,13 @@
 						<h:outputText value="#{bundle.welcome1}" />
 					</h1>
 					<h:outputText value="#{bundle.welcome2}" />
-					<h:panelGroup class="font1">
-						<h:outputText value="#{bundle.intro1}" escape="false" />
-						<p />
-						<h:outputText value="#{bundle.intro2}" escape="false" />
+					<h:panelGroup>
+						<p class="large">
+							<h:outputText value="#{bundle.intro1}" escape="false" />
+						</p>
+						<p class="large">
+							<h:outputText value="#{bundle.intro2}" escape="false" />
+						</p>
 					</h:panelGroup>
 				</div>
 				<div id="sidebar" class="ui-g-12 ui-md-12 ui-lg-4">
@@ -129,7 +132,7 @@
 				</div>
 			</div>
 			<div class="ui-g-12 text-center">
-				<p:commandButton styleClass="btn btn-xl" id="firelogin" ajax="false" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
+				<p:commandButton styleClass="btn btn-xl" id="firelogin" ajax="true" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
 			</div>
 		</div>
 		</section>
@@ -171,8 +174,31 @@
 	</h:form>
 	<!--  -->
 	<!--  -->
-	<!-- Register Grid Section -->
-	<section id="impressum">
+	<!-- More Grid Section -->
+	<section id="more">
+	<div class="ui-g">
+		<div class="ui-g-12 ui-md-12 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
+		<div class="ui-g-12 ui-md-12 ui-lg-6">
+			<h1>
+				<h:outputText value="Wie funktioniert das?" />
+			</h1>
+			<h:outputText value="#{bundle.welcome2}" />
+			<h:panelGroup class="font1">
+				<p class="large">
+					Eine erfolgreiche Methode der Lerntechnik ist die <a class="font1" href="http://de.wikipedia.org/wiki/Lernkartei" target="_new">Lernkartei</a>. Dabei werden Lernkarten in einem Karteikasten mit 5 (oder mehr) Fächern aufbewahrt. Mit dem Lernfortschritt wandern die Karten durch diese Fächer und
+					mit jeder Wiederholung verfestigt sich das Wissen.
+				</p>
+				<p class="large">Dieser Mechanismus wird auf notonto optimal umgesetzt, indem jede einzelne Lernkarte nachverfolgt wird. Dadurch werden die Karten genau zu dem Zeitpunkt wieder angezeigt, der für den Lernfortschritt optimal ist. Probieren Sie es aus!</p>
+				<p class="large">Natürlich können Sie einfach eigene Lektionen erstellen und diese auch mit anderen Benutzern teilen.</p>
+			</h:panelGroup>
+		</div>
+		<div class="ui-g-12 ui-md-12 ui-lg-4" style="margin: 0px; padding: 0px;"></div>
+	</div>
+	</section>
+	<!--  -->
+	<!--  -->
+	<!-- Impressum Grid Section -->
+	<section id="impressum" class="bg-light-gray">
 	<div class="container">
 		<div id="content" class="ui-g-8">
 			<h1>
