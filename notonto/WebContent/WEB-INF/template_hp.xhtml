@@ -77,8 +77,12 @@
 		<div class="intro-text">
 			<div class="intro-heading">notonto</div>
 			<div class="intro-lead-in">Lernen. Nie wieder vergessen.</div>
-			<p:link rendered="#{!auth.isLoggedIn}" href="#login" class="btn btn-xl" style="margin-right: 20px; background-color: #fec503"> <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> LOGIN
-			</p:link> <p:link rendered="#{!auth.isLoggedIn}" href="#register" class="btn btn-xl mhide"> <span class="glyphicon glyphicon-user"></span> <h:outputText value=" REGISTER" />
+			<p:link rendered="#{!auth.isLoggedIn}" href="#login" class="btn btn-xl" style="margin-right: 20px; background-color: #fec503">
+				<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> LOGIN
+			</p:link>
+			<p:link rendered="#{!auth.isLoggedIn}" href="#register" class="btn btn-xl mhide">
+				<span class="glyphicon glyphicon-user"></span>
+				<h:outputText value=" REGISTER" />
 			</p:link>
 		</div>
 	</div>
@@ -137,7 +141,7 @@
 				<p:commandButton styleClass="btn btn-xl" id="firelogin" ajax="true" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
 			</div>
 			<div class="ui-g-12">
-				<p:link href="/auth/forgotpw.jsf" value="Passwort vergessen ..."/>
+				<p:link href="/auth/forgotpw.jsf" value="Passwort vergessen ..." />
 			</div>
 		</div>
 		</section>
@@ -156,7 +160,7 @@
 					<p:messages for="register_form" autoUpdate="true" showDetail="true" />
 					<div class="form-group">
 						<p:inputText style="display:block;" placeholder="Email" id="emailinput" class="form-control" value="#{auth.email}">
-							<f:validator validatorId="custom.emailValidator" for="register_form"/>
+							<f:validator validatorId="custom.emailValidator" for="register_form" />
 						</p:inputText>
 					</div>
 					<div class="form-group">
@@ -187,6 +191,9 @@
 			<h3>
 				Diese Webseite ist ein rein privates Projekt von:<br /> Jan Stövesand <br /> Kegelhofstr. 9 <br /> 20251 Hamburg <br /> <br /> email: info[at]notonto.de <br /> <br /> Inhaltlich Verantwortlicher gemäß 10 Absatz 3 MDStV <br /> <br /> Jan Stövesand (Anschrift wie oben) <br />
 			</h3>
+			<h3>
+				<a href="/disclaimer.jsf">Haftungsauschluss</a>
+			</h3>
 		</div>
 	</div>
 	</section>
@@ -194,19 +201,20 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4">
-				<span class="copyright">Copyright &copy; Your Website 2016</span>
+				<span class="copyright">Copyright &copy; Notonto 2017</span>
 			</div>
 			<div class="col-md-4">
+				<!-- 
 				<ul class="list-inline social-buttons">
 					<li><a href="#"><i class="fa fa-twitter"></i></a></li>
 					<li><a href="#"><i class="fa fa-facebook"></i></a></li>
 					<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
 				</ul>
+				 -->
 			</div>
 			<div class="col-md-4">
 				<ul class="list-inline quicklinks">
-					<li><a href="#">Privacy Policy</a></li>
-					<li><a href="#">Terms of Use</a></li>
+					<li><a href="/disclaimer.jsf">Haftungsauschluss</a></li>
 				</ul>
 			</div>
 		</div>
