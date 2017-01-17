@@ -155,6 +155,10 @@
 			<from-outcome>unlock</from-outcome>
 			<to-view-id>/user/unlock.xhtml</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>admin-userstat</from-outcome>
+			<to-view-id>/user/admin_userstat.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 
 </faces-config>

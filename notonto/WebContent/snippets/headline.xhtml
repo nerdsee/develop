@@ -30,6 +30,11 @@
 									<span class="glyphicon glyphicon-log-in"></span> Login
 						</p:link></li>
 						</ui:fragment>
+						<ui:fragment rendered="#{auth.isLoggedIn and brainSession.currentUser.isAdmin}">
+							<li><p:link outcome="admin-userstat">
+									<span class="glyphicon glyphicon-king"></span> Admin
+						</p:link></li>
+						</ui:fragment>
 						<ui:fragment rendered="#{auth.isLoggedIn}">
 							<li><p:link outcome="options">
 									<span class="glyphicon glyphicon-user"></span> Einstellungen
