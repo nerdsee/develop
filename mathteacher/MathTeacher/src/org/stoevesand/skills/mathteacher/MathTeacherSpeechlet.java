@@ -131,6 +131,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 		getNext();
 
 		session.setAttribute("aufgaben", aufgaben);
+		session.setAttribute("sa", Integer.toString(aufgabe_a));
+		session.setAttribute("sb", Integer.toString(aufgabe_b));
 
 		String speechText = String.format("Ok wir können anfangen. Wir lernen alle Zahlen. Was ist %d mal %d?", aufgabe_a, aufgabe_b);
 		String repromptText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
