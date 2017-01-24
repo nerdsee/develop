@@ -73,6 +73,9 @@ public class MathTeacherSpeechlet implements Speechlet {
 			return setAllNumbers(intent, session);
 		} else if ("SingleNumberIntent".equals(intentName)) {
 			return setSingleNumber(intent, session);
+		} else if ("AMAZON.StopIntent".equals(intent.getName())) {
+			String speech ="Bis zum nächsten Mal.";
+			return getSpeechletResponse(speech, speech, false);
 		} else {
 			throw new SpeechletException("Invalid Intent");
 		}
@@ -83,19 +86,19 @@ public class MathTeacherSpeechlet implements Speechlet {
 		generateNumbers();
 		getNext();
 
-		int zahl = 0;
-		try {
-			zahl = Integer.parseInt(intent.getSlot(SLOT_ZAHL).getValue());
-		} catch (NumberFormatException e) {
-			String speechText = "Es tut mir leid, ich habe die Zahl nicht verstanden.";
-			return getAskSpeechletResponse(speechText, speechText);
-		}
-
 		String sa = (String) session.getAttribute("sa");
 		String sb = (String) session.getAttribute("sb");
 		aufgabe_a = Integer.parseInt(sa);
 		aufgabe_b = Integer.parseInt(sb);
 		int erg = aufgabe_a * aufgabe_b;
+
+		int zahl = 0;
+		try {
+			zahl = Integer.parseInt(intent.getSlot(SLOT_ZAHL).getValue());
+		} catch (NumberFormatException e) {
+			String speechText = String.format("Es tut mir leid, ich habe die Zahl nicht verstanden. Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+			return getAskSpeechletResponse(speechText, speechText);
+		}
 
 		if (erg == zahl) {
 			aufgaben = (String) session.getAttribute("aufgaben");
@@ -145,8 +148,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 
 		StringBuffer bufa = new StringBuffer();
 
-		for (int a = 0; a <= 2; a++)
-			for (int b = 0; b <= 2; b++) {
+		for (int a = 0; a < 10; a++)
+			for (int b = 0; b < 10; b++) {
 				bufa.append(a);
 				bufa.append(b);
 			}
