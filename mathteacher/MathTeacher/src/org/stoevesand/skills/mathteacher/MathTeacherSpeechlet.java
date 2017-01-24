@@ -39,8 +39,7 @@ import com.amazon.speech.ui.SimpleCard;
 public class MathTeacherSpeechlet implements Speechlet {
 	private static final Logger log = LoggerFactory.getLogger(MathTeacherSpeechlet.class);
 
-	private static final String COLOR_KEY = "COLOR";
-	private static final String COLOR_SLOT = "Color";
+	private static final String SLOT_ZAHL = "zahl";
 
 	private String aufgaben;
 
@@ -74,8 +73,6 @@ public class MathTeacherSpeechlet implements Speechlet {
 			return setAllNumbers(intent, session);
 		} else if ("SingleNumberIntent".equals(intentName)) {
 			return setSingleNumber(intent, session);
-		} else if ("WhatsMyColorIntent".equals(intentName)) {
-			return getColorFromSession(intent, session);
 		} else {
 			throw new SpeechletException("Invalid Intent");
 		}
@@ -86,15 +83,46 @@ public class MathTeacherSpeechlet implements Speechlet {
 		generateNumbers();
 		getNext();
 
-		aufgaben = (String)session.getAttribute("aufgaben");
-		getNext();
-		session.setAttribute("aufgaben", aufgaben);
+		int zahl = 0;
+		try {
+			zahl = Integer.parseInt(intent.getSlot(SLOT_ZAHL).getValue());
+		} catch (NumberFormatException e) {
+			String speechText = "Es tut mir leid, ich habe die Zahl nicht verstanden.";
+			return getAskSpeechletResponse(speechText, speechText);
+		}
 
-		String speechText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
-		String repromptText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+		String sa = (String) session.getAttribute("sa");
+		String sb = (String) session.getAttribute("sb");
+		aufgabe_a = Integer.parseInt(sa);
+		aufgabe_b = Integer.parseInt(sb);
+		int erg = aufgabe_a * aufgabe_b;
 
-		boolean isAskResponse = true;
-		return getSpeechletResponse(speechText, repromptText, isAskResponse);
+		if (erg == zahl) {
+			aufgaben = (String) session.getAttribute("aufgaben");
+
+			if (getNext()) {
+				session.setAttribute("aufgaben", aufgaben);
+				session.setAttribute("sa", Integer.toString(aufgabe_a));
+				session.setAttribute("sb", Integer.toString(aufgabe_b));
+
+				String speechText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+				String repromptText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+
+				boolean isAskResponse = true;
+				return getSpeechletResponse(speechText, repromptText, isAskResponse);
+			} else {
+				String speechText = String.format("Super. Du hast alle Aufgaben gelöst");
+				boolean isAskResponse = true;
+				return getSpeechletResponse(speechText, speechText, isAskResponse);
+			}
+		} else {
+			String speechText = String.format("Das war leider falsch. Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+			String repromptText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+
+			boolean isAskResponse = true;
+			return getSpeechletResponse(speechText, repromptText, isAskResponse);
+		}
+
 	}
 
 	private SpeechletResponse setAllNumbers(Intent intent, Session session) {
@@ -113,36 +141,36 @@ public class MathTeacherSpeechlet implements Speechlet {
 
 	private void generateNumbers() {
 
-		StringBuffer bufa=new StringBuffer();
-		
-		for(int a=0; a<=2; a++)
-			for(int b=0; b<=2; b++) {
+		StringBuffer bufa = new StringBuffer();
+
+		for (int a = 0; a <= 2; a++)
+			for (int b = 0; b <= 2; b++) {
 				bufa.append(a);
 				bufa.append(b);
 			}
 
 		aufgaben = bufa.toString();
-		
+
 	}
 
 	private boolean getNext() {
-		
+
 		Random rnd = new Random();
-		
-		if (aufgaben.length()>0) {
-			int pos = rnd.nextInt(aufgaben.length()/2)*2;
-			String a = aufgaben.substring(pos, pos+1);
-			String b = aufgaben.substring(pos+1, pos+2);
-			aufgaben = aufgaben.substring(0,pos) + aufgaben.substring(pos+2);
+
+		if (aufgaben.length() > 0) {
+			int pos = rnd.nextInt(aufgaben.length() / 2) * 2;
+			String a = aufgaben.substring(pos, pos + 1);
+			String b = aufgaben.substring(pos + 1, pos + 2);
+			aufgaben = aufgaben.substring(0, pos) + aufgaben.substring(pos + 2);
 			aufgabe_a = Integer.parseInt(a) + 1;
 			aufgabe_b = Integer.parseInt(b) + 1;
 			return true;
 		} else {
 			return false;
 		}
-		
+
 	}
-	
+
 	@Override
 	public void onSessionEnded(final SessionEndedRequest request, final Session session) throws SpeechletException {
 		log.info("onSessionEnded requestId={}, sessionId={}", request.getRequestId(), session.getSessionId());
@@ -160,69 +188,6 @@ public class MathTeacherSpeechlet implements Speechlet {
 		String repromptText = "Willst Du alle Zahlen lernen oder nur eine bestimmte?";
 
 		return getSpeechletResponse(speechText, repromptText, true);
-	}
-
-	/**
-	 * Creates a {@code SpeechletResponse} for the intent and stores the
-	 * extracted color in the Session.
-	 *
-	 * @param intent
-	 *            intent for the request
-	 * @return SpeechletResponse spoken and visual response the given intent
-	 */
-	private SpeechletResponse setExcercisesInSession(final Intent intent, final Session session) {
-		// Get the slots from the intent.
-		Map<String, Slot> slots = intent.getSlots();
-
-		// Get the color slot from the list of slots.
-		Slot favoriteColorSlot = slots.get(COLOR_SLOT);
-		String speechText, repromptText;
-
-		// Check for favorite color and create output to user.
-		if (favoriteColorSlot != null) {
-			// Store the user's favorite color in the Session and create
-			// response.
-			String favoriteColor = favoriteColorSlot.getValue();
-			session.setAttribute(COLOR_KEY, favoriteColor);
-			speechText = String.format("I now know that your favorite color is %s. You can ask me your " + "favorite color by saying, what's my favorite color?", favoriteColor);
-			repromptText = "You can ask me your favorite color by saying, what's my favorite color?";
-
-		} else {
-			// Render an error since we don't know what the users favorite color
-			// is.
-			speechText = "I'm not sure what your favorite color is, please try again";
-			repromptText = "I'm not sure what your favorite color is. You can tell me your favorite " + "color by saying, my favorite color is red";
-		}
-
-		return getSpeechletResponse(speechText, repromptText, true);
-	}
-
-	/**
-	 * Creates a {@code SpeechletResponse} for the intent and get the user's
-	 * favorite color from the Session.
-	 *
-	 * @param intent
-	 *            intent for the request
-	 * @return SpeechletResponse spoken and visual response for the intent
-	 */
-	private SpeechletResponse getColorFromSession(final Intent intent, final Session session) {
-		String speechText;
-		boolean isAskResponse = false;
-
-		// Get the user's favorite color from the session.
-		String favoriteColor = (String) session.getAttribute(COLOR_KEY);
-
-		// Check to make sure user's favorite color is set in the session.
-		if (StringUtils.isNotEmpty(favoriteColor)) {
-			speechText = String.format("Your favorite color is %s. Goodbye.", favoriteColor);
-		} else {
-			// Since the user's favorite color is not set render an error
-			// message.
-			speechText = "I'm not sure what your favorite color is. You can say, my favorite color is " + "red";
-			isAskResponse = true;
-		}
-
-		return getSpeechletResponse(speechText, speechText, isAskResponse);
 	}
 
 	/**
@@ -250,5 +215,24 @@ public class MathTeacherSpeechlet implements Speechlet {
 		} else {
 			return SpeechletResponse.newTellResponse(speech, card);
 		}
+	}
+
+	private SpeechletResponse getAskSpeechletResponse(String speechText, String repromptText) {
+		// Create the Simple card content.
+		SimpleCard card = new SimpleCard();
+		card.setTitle("Session");
+		card.setContent(speechText);
+
+		// Create the plain text output.
+		PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+		speech.setText(speechText);
+
+		// Create reprompt
+		PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
+		repromptSpeech.setText(repromptText);
+		Reprompt reprompt = new Reprompt();
+		reprompt.setOutputSpeech(repromptSpeech);
+
+		return SpeechletResponse.newAskResponse(speech, reprompt, card);
 	}
 }
