@@ -75,8 +75,22 @@ public class MathTeacherSpeechlet implements Speechlet {
 	}
 
 	private SpeechletResponse setSingleNumber(Intent intent, Session session) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Exercise> exercises = new Vector<Exercise>();
+
+		int a = 5;
+		for (int b = 1; b <= 10; b++) {
+			exercises.add(new Exercise(a, b));
+		}
+
+		session.setAttribute("exercises", exercises);
+
+		String speechText = String.format("Ok wir können anfangen. Wir lernen die Zahl 5. Was ist 3 mal 5?");
+		String repromptText = "Was ist 3 mal 5?";
+
+		boolean isAskResponse = true;
+		return
+
+		getSpeechletResponse(speechText, repromptText, isAskResponse);
 	}
 
 	private SpeechletResponse setAllNumbers(Intent intent, Session session) {
@@ -93,8 +107,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 		String speechText = String.format("Ok wir können anfangen. Wir lernen alle Zahlen. Was ist 3 mal 4?");
 		String repromptText = "Was ist 3 mal 4?";
 
-		boolean isAskResponse=true;
-		return getSpeechletResponse(speechText, speechText, isAskResponse);
+		boolean isAskResponse = true;
+		return getSpeechletResponse(speechText, repromptText, isAskResponse);
 	}
 
 	@Override

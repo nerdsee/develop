@@ -30,7 +30,7 @@ public class MathTeacherSpeechletRequestStreamHandler extends SpeechletRequestSt
          * Alexa Skill and put the relevant Application Ids in this Set.
          */
         supportedApplicationIds = new HashSet<String>();
-        // supportedApplicationIds.add("amzn1.echo-sdk-ams.app.[unique-value-here]");
+        supportedApplicationIds.add("amzn1.ask.skill.8638936c-0168-4e2f-ba1d-9a1eaf655f22");
     }
 
     public MathTeacherSpeechletRequestStreamHandler() {
