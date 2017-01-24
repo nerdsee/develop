@@ -77,10 +77,10 @@ public class MathTeacherSpeechlet implements Speechlet {
 	private SpeechletResponse setSingleNumber(Intent intent, Session session) {
 		List<Exercise> exercises = new Vector<Exercise>();
 
-		int a = 5;
-		for (int b = 1; b <= 10; b++) {
-			exercises.add(new Exercise(a, b));
-		}
+//		int a = 5;
+//		for (int b = 1; b <= 10; b++) {
+//			exercises.add(new Exercise(a, b));
+//		}
 
 		session.setAttribute("exercises", exercises);
 
@@ -96,11 +96,11 @@ public class MathTeacherSpeechlet implements Speechlet {
 	private SpeechletResponse setAllNumbers(Intent intent, Session session) {
 		List<Exercise> exercises = new Vector<Exercise>();
 
-		for (int a = 1; a <= 10; a++) {
-			for (int b = 1; b <= 10; b++) {
-				exercises.add(new Exercise(a, b));
-			}
-		}
+//		for (int a = 1; a <= 10; a++) {
+//			for (int b = 1; b <= 10; b++) {
+//				exercises.add(new Exercise(a, b));
+//			}
+//		}
 
 		session.setAttribute("exercises", exercises);
 
