@@ -108,7 +108,7 @@ public class MathTeacherSpeechlet implements Speechlet {
 				session.setAttribute("sa", Integer.toString(aufgabe_a));
 				session.setAttribute("sb", Integer.toString(aufgabe_b));
 
-				String speechText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+				String speechText = String.format("Richtig. Was ist %d mal %d?", aufgabe_a, aufgabe_b);
 				String repromptText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
 
 				boolean isAskResponse = true;
