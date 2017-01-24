@@ -1,11 +1,6 @@
-MyColorIsIntent  my color is {Color}
-MyColorIsIntent  my favorite color is {Color}
-WhatsMyColorIntent whats my color
-WhatsMyColorIntent what is my color
-WhatsMyColorIntent say my color
-WhatsMyColorIntent tell me my color
-WhatsMyColorIntent whats my favorite color
-WhatsMyColorIntent what is my favorite color
-WhatsMyColorIntent say my favorite color
-WhatsMyColorIntent tell me my favorite color
-WhatsMyColorIntent tell me what my favorite color is
+SingleNumberIntent ich möchte die Zahl {zahl} lernen
+SingleNumberIntent {zahl}
+AllNumbersIntent alle zahlen
+AllNumbersIntent ich möchte alle zahlen
+AllNumbersIntent ich möchte gerne alle zahlen lernen 
+AllNumbersIntent alle
