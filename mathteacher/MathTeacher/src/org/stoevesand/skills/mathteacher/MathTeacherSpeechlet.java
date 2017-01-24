@@ -11,6 +11,7 @@ package org.stoevesand.skills.mathteacher;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Vector;
 
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +41,12 @@ public class MathTeacherSpeechlet implements Speechlet {
 
 	private static final String COLOR_KEY = "COLOR";
 	private static final String COLOR_SLOT = "Color";
+
+	private String aufgaben;
+
+	private int aufgabe_a;
+
+	private int aufgabe_b;
 
 	@Override
 	public void onSessionStarted(final SessionStartedRequest request, final Session session) throws SpeechletException {
@@ -75,42 +82,67 @@ public class MathTeacherSpeechlet implements Speechlet {
 	}
 
 	private SpeechletResponse setSingleNumber(Intent intent, Session session) {
-		List<Exercise> exercises = new Vector<Exercise>();
 
-//		int a = 5;
-//		for (int b = 1; b <= 10; b++) {
-//			exercises.add(new Exercise(a, b));
-//		}
+		generateNumbers();
+		getNext();
 
-		session.setAttribute("exercises", exercises);
+		aufgaben = (String)session.getAttribute("aufgaben");
+		getNext();
+		session.setAttribute("aufgaben", aufgaben);
 
-		String speechText = String.format("Ok wir können anfangen. Wir lernen die Zahl 5. Was ist 3 mal 5?");
-		String repromptText = "Was ist 3 mal 5?";
-
-		boolean isAskResponse = true;
-		return
-
-		getSpeechletResponse(speechText, repromptText, isAskResponse);
-	}
-
-	private SpeechletResponse setAllNumbers(Intent intent, Session session) {
-		List<Exercise> exercises = new Vector<Exercise>();
-
-//		for (int a = 1; a <= 10; a++) {
-//			for (int b = 1; b <= 10; b++) {
-//				exercises.add(new Exercise(a, b));
-//			}
-//		}
-
-		session.setAttribute("exercises", exercises);
-
-		String speechText = String.format("Ok wir können anfangen. Wir lernen alle Zahlen. Was ist 3 mal 4?");
-		String repromptText = "Was ist 3 mal 4?";
+		String speechText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+		String repromptText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
 
 		boolean isAskResponse = true;
 		return getSpeechletResponse(speechText, repromptText, isAskResponse);
 	}
 
+	private SpeechletResponse setAllNumbers(Intent intent, Session session) {
+
+		generateNumbers();
+		getNext();
+
+		session.setAttribute("aufgaben", aufgaben);
+
+		String speechText = String.format("Ok wir können anfangen. Wir lernen alle Zahlen. Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+		String repromptText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+
+		boolean isAskResponse = true;
+		return getSpeechletResponse(speechText, repromptText, isAskResponse);
+	}
+
+	private void generateNumbers() {
+
+		StringBuffer bufa=new StringBuffer();
+		
+		for(int a=0; a<=2; a++)
+			for(int b=0; b<=2; b++) {
+				bufa.append(a);
+				bufa.append(b);
+			}
+
+		aufgaben = bufa.toString();
+		
+	}
+
+	private boolean getNext() {
+		
+		Random rnd = new Random();
+		
+		if (aufgaben.length()>0) {
+			int pos = rnd.nextInt(aufgaben.length()/2)*2;
+			String a = aufgaben.substring(pos, pos+1);
+			String b = aufgaben.substring(pos+1, pos+2);
+			aufgaben = aufgaben.substring(0,pos) + aufgaben.substring(pos+2);
+			aufgabe_a = Integer.parseInt(a) + 1;
+			aufgabe_b = Integer.parseInt(b) + 1;
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
 	@Override
 	public void onSessionEnded(final SessionEndedRequest request, final Session session) throws SpeechletException {
 		log.info("onSessionEnded requestId={}, sessionId={}", request.getRequestId(), session.getSessionId());
