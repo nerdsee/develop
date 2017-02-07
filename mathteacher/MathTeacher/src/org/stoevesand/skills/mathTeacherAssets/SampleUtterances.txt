@@ -1,6 +1,20 @@
-SingleNumberIntent ich möchte die Zahl {zahl} lernen
-SingleNumberIntent {zahl}
-AllNumbersIntent alle zahlen
-AllNumbersIntent ich möchte alle zahlen
-AllNumbersIntent ich möchte gerne alle zahlen lernen 
-AllNumbersIntent alle
+AnswerIntent {zahl}
+
+SingleNumberIntent ich möchte das ein mal {zahl} lernen
+SingleNumberIntent ein mal {zahl}
+SingleNumberIntent ein mal {zahl} lernen
+
+AllNumbersIntent ein mal eins
+AllNumbersIntent ich möchte ein mal eins
+AllNumbersIntent ich möchte das ein mal eins 
+AllNumbersIntent ein mal eins lernen
+AllNumbersIntent ich möchte ein mal eins lernen
+AllNumbersIntent ich möchte das ein mal eins lernen
+
+MinusIntent minus
+MinusIntent ich möchte minus lernen
+MinusIntent minus lernen
+
+PlusIntent plus
+PlusIntent ich möchte plus lernen
+PlusIntent plus lernen

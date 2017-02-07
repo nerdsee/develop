@@ -9,17 +9,12 @@
  */
 package org.stoevesand.skills.mathteacher;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.Vector;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.amazon.speech.slu.Intent;
-import com.amazon.speech.slu.Slot;
 import com.amazon.speech.speechlet.IntentRequest;
 import com.amazon.speech.speechlet.LaunchRequest;
 import com.amazon.speech.speechlet.Session;
@@ -72,31 +67,123 @@ public class MathTeacherSpeechlet implements Speechlet {
 		if ("AllNumbersIntent".equals(intentName)) {
 			return setAllNumbers(intent, session);
 		} else if ("SingleNumberIntent".equals(intentName)) {
-			return setSingleNumber(intent, session);
+			return prepareSingleNumber(intent, session);
+		} else if ("AnswerIntent".equals(intentName)) {
+			return answer(intent, session);
+		} else if ("PlusIntent".equals(intentName)) {
+			return preparePlus(intent, session);
+		} else if ("MinusIntent".equals(intentName)) {
+			return prepareMinus(intent, session);
 		} else if ("AMAZON.StopIntent".equals(intent.getName())) {
-			String speech ="Bis zum nächsten Mal.";
+			String speech = "Bis zum nächsten Mal.";
 			return getSpeechletResponse(speech, speech, false);
 		} else {
 			throw new SpeechletException("Invalid Intent");
 		}
 	}
 
-	private SpeechletResponse setSingleNumber(Intent intent, Session session) {
+	private SpeechletResponse prepareMinus(Intent intent, Session session) {
 
-		generateNumbers();
+		generateMinus();
 		getNext();
 
+		session.setAttribute("mode", "MINUS");
+		session.setAttribute("aufgaben", aufgaben);
+		session.setAttribute("sa", Integer.toString(aufgabe_a));
+		session.setAttribute("sb", Integer.toString(aufgabe_b));
+
+		String speechText = String.format("Ok wir können anfangen. Wir lernen minus rechnen. %s", getAufgabeText("MINUS"));
+		String repromptText = String.format("Was ist %d minus %d?", aufgabe_a, aufgabe_b);
+
+		boolean isAskResponse = true;
+		return getSpeechletResponse(speechText, repromptText, isAskResponse);
+	}
+
+	private SpeechletResponse preparePlus(Intent intent, Session session) {
+
+		generatePlus();
+		getNext();
+
+		session.setAttribute("mode", "PLUS");
+		session.setAttribute("aufgaben", aufgaben);
+		session.setAttribute("sa", Integer.toString(aufgabe_a));
+		session.setAttribute("sb", Integer.toString(aufgabe_b));
+
+		String speechText = String.format("Ok wir können anfangen. Wir lernen plus rechnen. %s", getAufgabeText("PLUS"));
+		String repromptText = String.format("Was ist %d plus %d?", aufgabe_a, aufgabe_b);
+
+		boolean isAskResponse = true;
+		return getSpeechletResponse(speechText, repromptText, isAskResponse);
+	}
+
+	private SpeechletResponse prepareSingleNumber(Intent intent, Session session) {
+
+		int mult = 5;
+
+		try {
+			mult = Integer.parseInt(intent.getSlot(SLOT_ZAHL).getValue());
+		} catch (NumberFormatException e) {
+			String speechText = "Es tut mir leid, ich habe die Zahl nicht verstanden.";
+			return getAskSpeechletResponse(speechText, speechText);
+		}
+
+		generateSingleMultiplikation(mult);
+		getNext();
+
+		session.setAttribute("mode", "EINMALEINS");
+		session.setAttribute("aufgaben", aufgaben);
+		session.setAttribute("sa", Integer.toString(aufgabe_a));
+		session.setAttribute("sb", Integer.toString(aufgabe_b));
+
+		String speechText = String.format("Ok wir können anfangen. Wir lernen das ein mal %d. %s", mult, getAufgabeText("EINMALEINS"));
+		String repromptText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+
+		boolean isAskResponse = true;
+		return getSpeechletResponse(speechText, repromptText, isAskResponse);
+	}
+
+	private String getAufgabeText(String mode) {
+		String aufgabeText = "";
+		switch (mode) {
+			case "EINMALEINS":
+				aufgabeText = String.format("Was ist %d mal %d?", aufgabe_a == 1 ? "ein" : "eins", aufgabe_b);
+				break;
+			case "MINUS":
+				aufgabeText = String.format("Was ist %d minus %d?", aufgabe_a, aufgabe_b);
+				break;
+			case "PLUS":
+				aufgabeText = String.format("Was ist %d plus %d?", aufgabe_a, aufgabe_b);
+				break;
+		}
+		return aufgabeText;
+	}
+
+	private SpeechletResponse answer(Intent intent, Session session) {
+
+		String mode = (String) session.getAttribute("mode");
 		String sa = (String) session.getAttribute("sa");
 		String sb = (String) session.getAttribute("sb");
 		aufgabe_a = Integer.parseInt(sa);
 		aufgabe_b = Integer.parseInt(sb);
-		int erg = aufgabe_a * aufgabe_b;
+		int erg = 0;
+
+		switch (mode) {
+			case "EINMALEINS":
+				erg = aufgabe_a * aufgabe_b;
+				break;
+			case "MINUS":
+				erg = aufgabe_a - aufgabe_b;
+				break;
+			case "PLUS":
+				erg = aufgabe_a + aufgabe_b;
+				break;
+		}
 
 		int zahl = 0;
 		try {
 			zahl = Integer.parseInt(intent.getSlot(SLOT_ZAHL).getValue());
 		} catch (NumberFormatException e) {
-			String speechText = String.format("Es tut mir leid, ich habe die Zahl nicht verstanden. Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+			String speechText = String.format("Es tut mir leid, ich habe die Zahl nicht verstanden. %s", getAufgabeText(mode));
 			return getAskSpeechletResponse(speechText, speechText);
 		}
 
@@ -108,8 +195,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 				session.setAttribute("sa", Integer.toString(aufgabe_a));
 				session.setAttribute("sb", Integer.toString(aufgabe_b));
 
-				String speechText = String.format("Richtig. Was ist %d mal %d?", aufgabe_a, aufgabe_b);
-				String repromptText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+				String speechText = String.format("Richtig. %s", getAufgabeText(mode));
+				String repromptText = String.format("%s", getAufgabeText(mode));
 
 				boolean isAskResponse = true;
 				return getSpeechletResponse(speechText, repromptText, isAskResponse);
@@ -119,8 +206,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 				return getSpeechletResponse(speechText, speechText, isAskResponse);
 			}
 		} else {
-			String speechText = String.format("Das war leider falsch. Was ist %d mal %d?", aufgabe_a, aufgabe_b);
-			String repromptText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+			String speechText = String.format("Das war leider falsch. %s", getAufgabeText(mode));
+			String repromptText = String.format("%s", getAufgabeText(mode));
 
 			boolean isAskResponse = true;
 			return getSpeechletResponse(speechText, repromptText, isAskResponse);
@@ -130,26 +217,69 @@ public class MathTeacherSpeechlet implements Speechlet {
 
 	private SpeechletResponse setAllNumbers(Intent intent, Session session) {
 
-		generateNumbers();
+		generateAllMultiplikation();
 		getNext();
 
+		String mode = "EINMALEINS";
+		session.setAttribute("mode", mode);
 		session.setAttribute("aufgaben", aufgaben);
 		session.setAttribute("sa", Integer.toString(aufgabe_a));
 		session.setAttribute("sb", Integer.toString(aufgabe_b));
 
-		String speechText = String.format("Ok wir können anfangen. Wir lernen alle Zahlen. Was ist %d mal %d?", aufgabe_a, aufgabe_b);
-		String repromptText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+		String speechText = String.format("Ok wir können anfangen. Wir lernen das ganze ein mal eins. %s", getAufgabeText(mode));
+		String repromptText = String.format("%s", getAufgabeText(mode));
 
 		boolean isAskResponse = true;
 		return getSpeechletResponse(speechText, repromptText, isAskResponse);
 	}
 
-	private void generateNumbers() {
+	private void generateAllMultiplikation() {
 
 		StringBuffer bufa = new StringBuffer();
 
 		for (int a = 0; a < 10; a++)
 			for (int b = 0; b < 10; b++) {
+				bufa.append(a);
+				bufa.append(b);
+			}
+
+		aufgaben = bufa.toString();
+
+	}
+
+	private void generateSingleMultiplikation(int b) {
+
+		StringBuffer bufa = new StringBuffer();
+
+		for (int a = 0; a < 10; a++) {
+			bufa.append(a);
+			bufa.append(b);
+		}
+
+		aufgaben = bufa.toString();
+
+	}
+
+	private void generatePlus() {
+
+		StringBuffer bufa = new StringBuffer();
+
+		for (int a = 0; a < 21; a++)
+			for (int b = 0; b < 21 - a; b++) {
+				bufa.append(a);
+				bufa.append(b);
+			}
+
+		aufgaben = bufa.toString();
+
+	}
+
+	private void generateMinus() {
+
+		StringBuffer bufa = new StringBuffer();
+
+		for (int a = 0; a < 21; a++)
+			for (int b = 0; b <= a; b++) {
 				bufa.append(a);
 				bufa.append(b);
 			}
@@ -189,8 +319,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 	 */
 	private SpeechletResponse getWelcomeResponse() {
 		// Create the welcome message.
-		String speechText = "Willkommen beim ein mal eins Mathe Trainer. Willst Du alle Zahlen lernen oder nur eine bestimmte?";
-		String repromptText = "Willst Du alle Zahlen lernen oder nur eine bestimmte?";
+		String speechText = "Willkommen beim Mathe Trainer. Was möchtest Du lernen?";
+		String repromptText = "Möchtest Du das ein mal eins lernen oder plus oder minus";
 
 		return getSpeechletResponse(speechText, repromptText, true);
 	}
