@@ -240,8 +240,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 
 		StringBuffer bufa = new StringBuffer();
 
-		for (int a = 0; a < 10; a++)
-			for (int b = 0; b < 10; b++) {
+		for (int a = 1; a < 11; a++)
+			for (int b = 1; b < 11; b++) {
 				append(bufa, a);
 				append(bufa, b);
 			}
@@ -254,7 +254,7 @@ public class MathTeacherSpeechlet implements Speechlet {
 
 		StringBuffer bufa = new StringBuffer();
 
-		for (int a = 0; a < 10; a++) {
+		for (int a = 1; a < 11; a++) {
 			append(bufa, a);
 			append(bufa, b);
 		}
@@ -306,8 +306,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 			String a = aufgaben.substring(pos, pos + 2);
 			String b = aufgaben.substring(pos + 2, pos + 4);
 			aufgaben = aufgaben.substring(0, pos) + aufgaben.substring(pos + 4);
-			aufgabe_a = Integer.parseInt(a) + 1;
-			aufgabe_b = Integer.parseInt(b) + 1;
+			aufgabe_a = Integer.parseInt(a);
+			aufgabe_b = Integer.parseInt(b);
 			return true;
 		} else {
 			return false;
