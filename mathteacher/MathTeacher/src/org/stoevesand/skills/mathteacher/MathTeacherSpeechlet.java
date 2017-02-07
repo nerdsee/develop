@@ -146,7 +146,10 @@ public class MathTeacherSpeechlet implements Speechlet {
 		String aufgabeText = "";
 		switch (mode) {
 			case "EINMALEINS":
-				aufgabeText = String.format("Was ist %d mal %d?", aufgabe_a == 1 ? "ein" : "eins", aufgabe_b);
+				if (aufgabe_a == 1)
+					aufgabeText = String.format("Was ist ein mal %d?", aufgabe_b);
+				else
+					aufgabeText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
 				break;
 			case "MINUS":
 				aufgabeText = String.format("Was ist %d minus %d?", aufgabe_a, aufgabe_b);
@@ -239,8 +242,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 
 		for (int a = 0; a < 10; a++)
 			for (int b = 0; b < 10; b++) {
-				bufa.append(a);
-				bufa.append(b);
+				append(bufa, a);
+				append(bufa, b);
 			}
 
 		aufgaben = bufa.toString();
@@ -252,8 +255,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 		StringBuffer bufa = new StringBuffer();
 
 		for (int a = 0; a < 10; a++) {
-			bufa.append(a);
-			bufa.append(b);
+			append(bufa, a);
+			append(bufa, b);
 		}
 
 		aufgaben = bufa.toString();
@@ -266,8 +269,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 
 		for (int a = 0; a < 21; a++)
 			for (int b = 0; b < 21 - a; b++) {
-				bufa.append(a);
-				bufa.append(b);
+				append(bufa, a);
+				append(bufa, b);
 			}
 
 		aufgaben = bufa.toString();
@@ -280,12 +283,18 @@ public class MathTeacherSpeechlet implements Speechlet {
 
 		for (int a = 0; a < 21; a++)
 			for (int b = 0; b <= a; b++) {
-				bufa.append(a);
-				bufa.append(b);
+				append(bufa, a);
+				append(bufa, b);
 			}
 
 		aufgaben = bufa.toString();
 
+	}
+
+	void append(StringBuffer buf, int n) {
+		if (n < 10)
+			buf.append(0);
+		buf.append(n);
 	}
 
 	private boolean getNext() {
@@ -293,10 +302,10 @@ public class MathTeacherSpeechlet implements Speechlet {
 		Random rnd = new Random();
 
 		if (aufgaben.length() > 0) {
-			int pos = rnd.nextInt(aufgaben.length() / 2) * 2;
-			String a = aufgaben.substring(pos, pos + 1);
-			String b = aufgaben.substring(pos + 1, pos + 2);
-			aufgaben = aufgaben.substring(0, pos) + aufgaben.substring(pos + 2);
+			int pos = rnd.nextInt(aufgaben.length() / 4) * 4;
+			String a = aufgaben.substring(pos, pos + 2);
+			String b = aufgaben.substring(pos + 2, pos + 4);
+			aufgaben = aufgaben.substring(0, pos) + aufgaben.substring(pos + 4);
 			aufgabe_a = Integer.parseInt(a) + 1;
 			aufgabe_b = Integer.parseInt(b) + 1;
 			return true;
