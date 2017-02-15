@@ -148,15 +148,15 @@ public class MathTeacherSpeechlet implements Speechlet {
 		switch (mode) {
 			case "EINMALEINS":
 				if (aufgabe_a == 1)
-					aufgabeText = String.format("<speak>Was ist ein mal %d?</speak>", aufgabe_b);
+					aufgabeText = String.format("Was ist ein mal %d?", aufgabe_b);
 				else
-					aufgabeText = String.format("<speak>Was ist %d mal %d?</speak>", aufgabe_a, aufgabe_b);
+					aufgabeText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
 				break;
 			case "MINUS":
-				aufgabeText = String.format("<speak>Was ist %d minus %d?</speak>", aufgabe_a, aufgabe_b);
+				aufgabeText = String.format("Was ist %d minus %d?", aufgabe_a, aufgabe_b);
 				break;
 			case "PLUS":
-				aufgabeText = String.format("<speak>Was ist %d plus %d?</speak>", aufgabe_a, aufgabe_b);
+				aufgabeText = String.format("Was ist %d plus %d?", aufgabe_a, aufgabe_b);
 				break;
 		}
 		return aufgabeText;
