@@ -93,8 +93,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 		session.setAttribute("sa", Integer.toString(aufgabe_a));
 		session.setAttribute("sb", Integer.toString(aufgabe_b));
 
-		String speechText = String.format("Ok wir können anfangen. Wir lernen minus rechnen. %s", getAufgabeText("MINUS"));
-		String repromptText = String.format("Was ist %d minus %d?", aufgabe_a, aufgabe_b);
+		String speechText = String.format("<speak>Ok wir können anfangen. Wir lernen minus rechnen. %s</speak>", getAufgabeText("MINUS"));
+		String repromptText = String.format("<speak>%s</speak>", getAufgabeText("MINUS"));
 
 		boolean isAskResponse = true;
 		return getSpeechletResponse(speechText, repromptText, isAskResponse);
@@ -110,8 +110,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 		session.setAttribute("sa", Integer.toString(aufgabe_a));
 		session.setAttribute("sb", Integer.toString(aufgabe_b));
 
-		String speechText = String.format("Ok wir können anfangen. Wir lernen plus rechnen. %s", getAufgabeText("PLUS"));
-		String repromptText = String.format("Was ist %d plus %d?", aufgabe_a, aufgabe_b);
+		String speechText = String.format("<speak>Ok wir können anfangen. Wir lernen plus rechnen. %s</speak>", getAufgabeText("PLUS"));
+		String repromptText = String.format("<speak>%s</speak>", getAufgabeText("PLUS"));
 
 		boolean isAskResponse = true;
 		return getSpeechletResponse(speechText, repromptText, isAskResponse);
@@ -124,7 +124,7 @@ public class MathTeacherSpeechlet implements Speechlet {
 		try {
 			mult = Integer.parseInt(intent.getSlot(SLOT_ZAHL).getValue());
 		} catch (NumberFormatException e) {
-			String speechText = "Es tut mir leid, ich habe die Zahl nicht verstanden.";
+			String speechText = "<speak>Es tut mir leid, ich habe die Zahl nicht verstanden.</speak>";
 			return getAskSpeechletResponse(speechText, speechText);
 		}
 
@@ -137,7 +137,7 @@ public class MathTeacherSpeechlet implements Speechlet {
 		session.setAttribute("sb", Integer.toString(aufgabe_b));
 
 		String speechText = String.format("<speak>Ok wir können anfangen. Wir lernen das ein mal %d <break time='1s'/>. %s</speak>", mult, getAufgabeText("EINMALEINS"));
-		String repromptText = String.format("<speak>Was ist %d mal %d?</speak>", aufgabe_a, aufgabe_b);
+		String repromptText = String.format("<speak>%s</speak>", getAufgabeText("EINMALEINS"));
 
 		boolean isAskResponse = true;
 		return getSpeechletResponse(speechText, repromptText, isAskResponse);
