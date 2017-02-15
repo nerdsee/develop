@@ -26,6 +26,7 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
+import com.amazon.speech.ui.SsmlOutputSpeech;
 
 /**
  * This sample shows how to create a simple speechlet for handling intent
@@ -135,8 +136,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 		session.setAttribute("sa", Integer.toString(aufgabe_a));
 		session.setAttribute("sb", Integer.toString(aufgabe_b));
 
-		String speechText = String.format("Ok wir können anfangen. Wir lernen das ein mal %d. %s", mult, getAufgabeText("EINMALEINS"));
-		String repromptText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+		String speechText = String.format("<speak>Ok wir können anfangen. Wir lernen das ein mal %d <break time='1s'/>. %s</speak>", mult, getAufgabeText("EINMALEINS"));
+		String repromptText = String.format("<speak>Was ist %d mal %d?</speak>", aufgabe_a, aufgabe_b);
 
 		boolean isAskResponse = true;
 		return getSpeechletResponse(speechText, repromptText, isAskResponse);
@@ -147,15 +148,15 @@ public class MathTeacherSpeechlet implements Speechlet {
 		switch (mode) {
 			case "EINMALEINS":
 				if (aufgabe_a == 1)
-					aufgabeText = String.format("Was ist ein mal %d?", aufgabe_b);
+					aufgabeText = String.format("<speak>Was ist ein mal %d?</speak>", aufgabe_b);
 				else
-					aufgabeText = String.format("Was ist %d mal %d?", aufgabe_a, aufgabe_b);
+					aufgabeText = String.format("<speak>Was ist %d mal %d?</speak>", aufgabe_a, aufgabe_b);
 				break;
 			case "MINUS":
-				aufgabeText = String.format("Was ist %d minus %d?", aufgabe_a, aufgabe_b);
+				aufgabeText = String.format("<speak>Was ist %d minus %d?</speak>", aufgabe_a, aufgabe_b);
 				break;
 			case "PLUS":
-				aufgabeText = String.format("Was ist %d plus %d?", aufgabe_a, aufgabe_b);
+				aufgabeText = String.format("<speak>Was ist %d plus %d?</speak>", aufgabe_a, aufgabe_b);
 				break;
 		}
 		return aufgabeText;
@@ -186,7 +187,7 @@ public class MathTeacherSpeechlet implements Speechlet {
 		try {
 			zahl = Integer.parseInt(intent.getSlot(SLOT_ZAHL).getValue());
 		} catch (NumberFormatException e) {
-			String speechText = String.format("Es tut mir leid, ich habe die Zahl nicht verstanden. %s", getAufgabeText(mode));
+			String speechText = String.format("<speak>Es tut mir leid, ich habe die Zahl nicht verstanden. %s</speak>", getAufgabeText(mode));
 			return getAskSpeechletResponse(speechText, speechText);
 		}
 
@@ -198,18 +199,18 @@ public class MathTeacherSpeechlet implements Speechlet {
 				session.setAttribute("sa", Integer.toString(aufgabe_a));
 				session.setAttribute("sb", Integer.toString(aufgabe_b));
 
-				String speechText = String.format("Richtig. %s", getAufgabeText(mode));
-				String repromptText = String.format("%s", getAufgabeText(mode));
+				String speechText = String.format("<speak>Richtig. %s</speak>", getAufgabeText(mode));
+				String repromptText = String.format("<speak>%s</speak>", getAufgabeText(mode));
 
 				boolean isAskResponse = true;
 				return getSpeechletResponse(speechText, repromptText, isAskResponse);
 			} else {
-				String speechText = String.format("Super. Du hast alle Aufgaben gelöst");
+				String speechText = String.format("<speak>Super. Du hast alle Aufgaben gelöst</speak>");
 				boolean isAskResponse = true;
 				return getSpeechletResponse(speechText, speechText, isAskResponse);
 			}
 		} else {
-			String speechText = String.format("Das war leider falsch. %s", getAufgabeText(mode));
+			String speechText = String.format("<speak>Das war leider falsch. %s</speak>", getAufgabeText(mode));
 			String repromptText = String.format("%s", getAufgabeText(mode));
 
 			boolean isAskResponse = true;
@@ -229,8 +230,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 		session.setAttribute("sa", Integer.toString(aufgabe_a));
 		session.setAttribute("sb", Integer.toString(aufgabe_b));
 
-		String speechText = String.format("Ok wir können anfangen. Wir lernen das ganze ein mal eins. %s", getAufgabeText(mode));
-		String repromptText = String.format("%s", getAufgabeText(mode));
+		String speechText = String.format("<speak>Ok wir können anfangen. Wir lernen das ganze ein mal eins. %s</speak>", getAufgabeText(mode));
+		String repromptText = String.format("<speak>%s</speak>", getAufgabeText(mode));
 
 		boolean isAskResponse = true;
 		return getSpeechletResponse(speechText, repromptText, isAskResponse);
@@ -328,8 +329,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 	 */
 	private SpeechletResponse getWelcomeResponse() {
 		// Create the welcome message.
-		String speechText = "Willkommen beim Mathe Trainer. Was möchtest Du lernen?";
-		String repromptText = "Möchtest Du das ein mal eins lernen oder plus oder minus";
+		String speechText = "<speak>Willkommen beim Mathe Trainer. Was möchtest Du lernen?</speak>";
+		String repromptText = "<speak>Möchtest Du das ein mal eins lernen oder plus oder minus</speak>";
 
 		return getSpeechletResponse(speechText, repromptText, true);
 	}
@@ -344,13 +345,13 @@ public class MathTeacherSpeechlet implements Speechlet {
 		card.setContent(speechText);
 
 		// Create the plain text output.
-		PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-		speech.setText(speechText);
+		SsmlOutputSpeech speech = new SsmlOutputSpeech();
+		speech.setSsml(speechText);
 
 		if (isAskResponse) {
 			// Create reprompt
-			PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
-			repromptSpeech.setText(repromptText);
+			SsmlOutputSpeech repromptSpeech = new SsmlOutputSpeech();
+			repromptSpeech.setSsml(repromptText);
 			Reprompt reprompt = new Reprompt();
 			reprompt.setOutputSpeech(repromptSpeech);
 
@@ -368,12 +369,12 @@ public class MathTeacherSpeechlet implements Speechlet {
 		card.setContent(speechText);
 
 		// Create the plain text output.
-		PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
-		speech.setText(speechText);
+		SsmlOutputSpeech speech = new SsmlOutputSpeech();
+		speech.setSsml(speechText);
 
 		// Create reprompt
-		PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
-		repromptSpeech.setText(repromptText);
+		SsmlOutputSpeech repromptSpeech = new SsmlOutputSpeech();
+		repromptSpeech.setSsml(repromptText);
 		Reprompt reprompt = new Reprompt();
 		reprompt.setOutputSpeech(repromptSpeech);
 
