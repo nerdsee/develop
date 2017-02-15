@@ -340,8 +340,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 	 */
 	private SpeechletResponse getSpeechletResponse(String speechText, String repromptText, boolean isAskResponse) {
 
-		log.info("Speech: " + speechText);
-		log.info("Reprompt: " + repromptText);
+		System.out.println("Speech: " + speechText);
+		System.out.println("Reprompt: " + repromptText);
 		// Create the Simple card content.
 		SimpleCard card = new SimpleCard();
 		card.setTitle("Session");
@@ -367,8 +367,8 @@ public class MathTeacherSpeechlet implements Speechlet {
 
 	private SpeechletResponse getAskSpeechletResponse(String speechText, String repromptText) {
 
-		log.info("Speech: " + speechText);
-		log.info("Reprompt: " + repromptText);
+		System.out.println("Speech: " + speechText);
+		System.out.println("Reprompt: " + repromptText);
 
 		// Create the Simple card content.
 		SimpleCard card = new SimpleCard();
