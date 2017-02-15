@@ -76,7 +76,7 @@ public class MathTeacherSpeechlet implements Speechlet {
 		} else if ("MinusIntent".equals(intentName)) {
 			return prepareMinus(intent, session);
 		} else if ("AMAZON.StopIntent".equals(intent.getName())) {
-			String speech = "Bis zum nächsten Mal.";
+			String speech = "<speak>Bis zum nächsten Mal.</speak>";
 			return getSpeechletResponse(speech, speech, false);
 		} else {
 			throw new SpeechletException("Invalid Intent");
@@ -340,8 +340,10 @@ public class MathTeacherSpeechlet implements Speechlet {
 	 */
 	private SpeechletResponse getSpeechletResponse(String speechText, String repromptText, boolean isAskResponse) {
 
-		System.out.println("Speech: " + speechText);
-		System.out.println("Reprompt: " + repromptText);
+		if (!speechText.startsWith("<speach>")) {
+			System.out.println("Speech: " + speechText);
+			System.out.println("Reprompt: " + repromptText);
+		}
 		// Create the Simple card content.
 		SimpleCard card = new SimpleCard();
 		card.setTitle("Session");
@@ -367,9 +369,11 @@ public class MathTeacherSpeechlet implements Speechlet {
 
 	private SpeechletResponse getAskSpeechletResponse(String speechText, String repromptText) {
 
-		System.out.println("Speech: " + speechText);
-		System.out.println("Reprompt: " + repromptText);
-
+		if (!speechText.startsWith("<speach>")) {
+			System.out.println("Speech: " + speechText);
+			System.out.println("Reprompt: " + repromptText);
+		}
+		
 		// Create the Simple card content.
 		SimpleCard card = new SimpleCard();
 		card.setTitle("Session");
