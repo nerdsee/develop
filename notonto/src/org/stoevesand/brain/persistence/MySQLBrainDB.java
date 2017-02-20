@@ -111,7 +111,7 @@ public class MySQLBrainDB implements BrainDB {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = conn.prepareStatement("insert into users (name,nick,password,unlocktext,unlocked,register_date,lastlogin_date,laststatus_date,nextstatus_date) values (?,?,?,?,?,?,?,?,?)");
+			ps = conn.prepareStatement("insert into users (name,nick,password,unlocktext,unlocked,register_date,lastlogin_date,laststatus_date,nextstatus_date) values (?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, user.getName());
 			ps.setString(2, user.getNick());
 			ps.setString(3, user.getPassword());
@@ -240,7 +240,7 @@ public class MySQLBrainDB implements BrainDB {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = conn.prepareStatement("insert into items (lessonID,text,comment,extID,chapter) values (?,?,?,?,?)");
+			ps = conn.prepareStatement("insert into items (lessonID,text,comment,extID,chapter) values (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			ps.setLong(1, item.getLessonId());
 			ps.setString(2, item.getText());
 			ps.setString(3, item.getComment());
@@ -335,7 +335,7 @@ public class MySQLBrainDB implements BrainDB {
 		ResultSet rs = null;
 
 		try {
-			ps = conn.prepareStatement("insert into lessons (title,description,abstract,type,keyboardLayout,icon,ownerID,ownergroupID,code,qlang,alang,public) values (?,?,?,?,?,?,?,?,?,?,?,?)");
+			ps = conn.prepareStatement("insert into lessons (title,description,abstract,type,keyboardLayout,icon,ownerID,ownergroupID,code,qlang,alang,public) values (?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, lesson.getTitle());
 			ps.setString(2, lesson.getDescription());
 			ps.setString(3, lesson.getAbstract());
@@ -2467,7 +2467,7 @@ public class MySQLBrainDB implements BrainDB {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = conn.prepareStatement("insert into news (title,text,type,locale,date) values (?,?,?,?,?)");
+			ps = conn.prepareStatement("insert into news (title,text,type,locale,date) values (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, news.getTitle());
 			ps.setString(2, news.getText());
 			ps.setInt(3, news.getType());
