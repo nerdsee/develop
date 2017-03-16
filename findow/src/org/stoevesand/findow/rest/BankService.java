@@ -33,15 +33,28 @@ public class BankService {
 	@GET
 	@Produces("application/json")
 	public String getBank(@PathParam("search") String search) {
+
+		validateToken();
+
 		List<Bank> banks = BanksService.searchBanks(clientToken, search);
 
-		String result="";
+		String result = "";
 		try {
 			result = new ObjectMapper().writeValueAsString(banks);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		
+
 		return result;
+	}
+
+	private void validateToken() {
+		if (!clientToken.isValid()) {
+			System.out.println("Refresh Token.");
+			clientToken = TokenService.requestClientToken(client_id, client_secret);
+		} else {
+			System.out.println("Token still valid.");
+		}
+
 	}
 }
