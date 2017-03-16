@@ -7,13 +7,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import org.stoevesand.finapi.AccountsService_Old;
+import org.stoevesand.finapi.AccountsService;
 import org.stoevesand.finapi.BankConnectionsService;
 import org.stoevesand.finapi.BanksService;
 import org.stoevesand.finapi.ErrorHandler;
 import org.stoevesand.finapi.TokenService;
 import org.stoevesand.finapi.TransactionsService;
-import org.stoevesand.finapi.client.FinbookClient;
 import org.stoevesand.finapi.model.Account;
 import org.stoevesand.finapi.model.Bank;
 import org.stoevesand.finapi.model.BankConnection;
@@ -195,7 +194,7 @@ public class FindowSession {
 		System.out.println("ACCOUNTS:");
 		List<Transaction> transactions = null;
 
-		List<Account> accounts = AccountsService_Old.searchAccounts(userToken, connectionId);
+		List<Account> accounts = AccountsService.searchAccounts(userToken, connectionId);
 		for (Account account : accounts) {
 			System.out.println("**");
 			System.out.println(account);
