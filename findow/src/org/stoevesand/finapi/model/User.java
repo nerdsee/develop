@@ -2,6 +2,7 @@ package org.stoevesand.finapi.model;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.stoevesand.finapi.ErrorHandler;
 import org.stoevesand.finapi.TokenService;
 
 public class User {
@@ -32,7 +33,7 @@ public class User {
 		return String.format("\"%s\", \"%s\"", id, password);
 	}
 
-	public Token getToken(Token clientToken) {
+	public Token getToken(Token clientToken) throws ErrorHandler {
 		return TokenService.requestUserToken(clientToken, id, password);
 	}
 

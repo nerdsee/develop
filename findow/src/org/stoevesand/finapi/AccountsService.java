@@ -19,14 +19,14 @@ public class AccountsService {
 
 	static final String URL = "https://sandbox.finapi.io/api/v1/accounts";
 
-	public static List<Account> searchAccounts(Token userToken, int connectionId) {
+	public static List<Account> searchAccounts(String userToken, int connectionId) throws ErrorHandler {
 
 		Vector<Account> accounts = new Vector<Account>();
 
 		Client client = ClientBuilder.newClient();
 
 		WebTarget webTarget = client.target(URL);
-		webTarget = webTarget.queryParam("access_token", userToken.getToken());
+		webTarget = webTarget.queryParam("access_token", userToken);
 		if (connectionId > 0) {
 			webTarget = webTarget.queryParam("bankConnectionIds", "" + connectionId);
 		}
@@ -35,33 +35,12 @@ public class AccountsService {
 		Response response = invocationBuilder.get();
 		String output = response.readEntity(String.class);
 
-		// webTarget.register(FilterForExampleCom.class);
-		// WebTarget resourceWebTarget = webTarget.path("resource");
-
-		// WebTarget helloworldWebTarget = resourceWebTarget.path("helloworld");
-		// WebTarget helloworldWebTargetWithQueryParam =
-		// helloworldWebTarget.queryParam("greeting", "Hi World!");
-		// helloworldWebTargetWithQueryParam.request(MediaType.TEXT_PLAIN_TYPE);
-		// invocationBuilder.header("some-header", "true");
-		// System.out.println(response.getStatus());
-		// System.out.println(response.readEntity(String.class));
-
-		// Create Jersey client
-		// ClientConfig clientConfig = new DefaultClientConfig();
-		// Client client = Client.create(clientConfig);
-		// WebResource webResourcePost = client.resource(URL);
-		// webResourcePost = webResourcePost.queryParam("access_token",
-		// userToken.getToken());
-		// if (connectionId > 0) {
-		// webResourcePost = webResourcePost.queryParam("bankConnectionIds", ""
-		// + connectionId);
-		// }
-		// ClientResponse response =
-		// webResourcePost.accept("application/json").get(ClientResponse.class);
-
-		// String output = response.getEntity(String.class);
-		// System.out.println(output);
-
+		int status = response.getStatus();
+		if (status != 200) {
+			ErrorHandler eh = new ErrorHandler(output);
+			throw eh;
+		}
+		
 		try {
 			JSONObject jo = new JSONObject(output);
 			JSONArray json_accounts = jo.getJSONArray("accounts");
@@ -80,7 +59,7 @@ public class AccountsService {
 
 	}
 
-	public static Account getAccount(Token userToken, int accountId) {
+	public static Account getAccount(Token userToken, int accountId) throws ErrorHandler {
 
 		Account account = null;
 
@@ -93,16 +72,11 @@ public class AccountsService {
 		Response response = invocationBuilder.get();
 		String output = response.readEntity(String.class);
 
-		// Create Jersey client
-		// ClientConfig clientConfig = new DefaultClientConfig();
-		// Client client = Client.create(clientConfig);
-
-		// WebResource webResourcePost = client.resource(URL + "/" + accountId);
-		// ClientResponse response = webResourcePost.queryParam("access_token",
-		// userToken.getToken()).accept("application/json").get(ClientResponse.class);
-
-		// String output = response.getEntity(String.class);
-		// System.out.println(output);
+		int status = response.getStatus();
+		if (status != 200) {
+			ErrorHandler eh = new ErrorHandler(output);
+			throw eh;
+		}
 
 		try {
 			JSONObject jo = new JSONObject(output);

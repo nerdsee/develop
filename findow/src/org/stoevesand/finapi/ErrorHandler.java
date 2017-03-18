@@ -3,34 +3,46 @@ package org.stoevesand.finapi;
 import java.util.List;
 import java.util.Vector;
 
-import javax.ws.rs.core.Response;
-
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.stoevesand.finapi.model.CallError;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+@JsonIgnoreProperties({ "stackTrace", "localizedMessage", "message", "cause", "suppressed" })
+@JsonRootName(value = "error")
 public class ErrorHandler extends Exception {
-	
+
 	List<CallError> errors = new Vector<CallError>();
-	
-	public ErrorHandler(Response response) {
-		String output = response.readEntity(String.class);
+	String response;
+
+	public ErrorHandler(String response) {
+		this.response = response;
 		try {
-			JSONObject jo = new JSONObject(output);
-			
+			JSONObject jo = new JSONObject(response);
 			JSONArray json_errors = jo.getJSONArray("errors");
 			for (int i = 0; i < json_errors.length(); i++) {
 				JSONObject json_account = json_errors.getJSONObject(i);
 				CallError error = new CallError(json_account);
 				errors.add(error);
 			}
-
-			
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 
+	}
+
+	@JsonIgnore
+	public String getResponse() {
+		return response;
+	}
+
+	@JsonGetter
+	public List<CallError> getErrors() {
+		return errors;
 	}
 
 	public void printErrors() {

@@ -3,6 +3,10 @@ package org.stoevesand.finapi.model;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+@JsonRootName(value = "token")
 public class Token {
 
 	static final long VALIDITY_BUFFER_SECONDS = 200;
@@ -39,6 +43,7 @@ public class Token {
 		return secret;
 	}
 
+	@JsonGetter
 	public String getToken() {
 		return access_token;
 	}
