@@ -5,7 +5,31 @@ import org.codehaus.jettison.json.JSONObject;
 
 public class Account {
 
-	JSONObject jo = null;
+	public int getBankConnectionId() {
+		return bankConnectionId;
+	}
+
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public String getSubAccountNumber() {
+		return subAccountNumber;
+	}
+
+	public String getIban() {
+		return iban;
+	}
+
+	public String getAccountHolderName() {
+		return accountHolderName;
+	}
+
+	private JSONObject jo = null;
 
 	private int id = 0;
 	private int bankConnectionId;

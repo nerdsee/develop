@@ -35,7 +35,7 @@ public class BanksService {
 
 		int status = response.getStatus();
 		if (status != 200) {
-			ErrorHandler eh = new ErrorHandler(response);
+			ErrorHandler eh = new ErrorHandler(output);
 			System.out.println("searchBanks failed: " + status);
 			eh.printErrors();
 			return null;
@@ -74,7 +74,7 @@ public class BanksService {
 
 		int status = response.getStatus();
 		if (status != 200) {
-			ErrorHandler eh = new ErrorHandler(response);
+			ErrorHandler eh = new ErrorHandler(output);
 			System.out.println("getBank failed: " + status);
 			eh.printErrors();
 			return null;

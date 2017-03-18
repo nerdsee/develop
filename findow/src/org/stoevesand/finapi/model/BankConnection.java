@@ -4,6 +4,8 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.stoevesand.finapi.BankConnectionsService;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class BankConnection {
 
 	private static final int MAXTRIES = 5;
@@ -60,6 +62,7 @@ public class BankConnection {
 		return bank;
 	}
 
+	@JsonIgnore
 	public boolean waitUntilReady(Token userToken) {
 		int tries = 0;
 		while (!"READY".equals(updateStatus) && tries < MAXTRIES) {

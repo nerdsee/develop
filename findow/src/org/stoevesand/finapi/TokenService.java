@@ -18,7 +18,7 @@ public class TokenService {
 	static final String POST_URL = "https://sandbox.finapi.io/oauth/token";
 	static final long VALIDITY_BUFFER_SECONDS = 200;
 
-	public static Token requestUserToken(Token clientToken, String username, String password) {
+	public static Token requestUserToken(Token clientToken, String username, String password) throws ErrorHandler {
 		//System.out.println("Request User Token.");
 
 		Token user_token = null;
@@ -41,10 +41,10 @@ public class TokenService {
 
 		int status = response.getStatus();
 		if (status != 200) {
-			ErrorHandler eh = new ErrorHandler(response);
+			ErrorHandler eh = new ErrorHandler(output);
 			System.out.println("requestUserToken failed: " + status);
 			eh.printErrors();
-			return null;
+			throw eh;
 		}
 
 		try {
@@ -58,7 +58,7 @@ public class TokenService {
 
 	}
 
-	public static Token requestClientToken(String client_id, String client_secret) {
+	public static Token requestClientToken(String client_id, String client_secret) throws ErrorHandler {
 		//System.out.println("Request Token.");
 
 		Token client_token = null;
@@ -79,10 +79,10 @@ public class TokenService {
 
 		int status = response.getStatus();
 		if (status != 200) {
-			ErrorHandler eh = new ErrorHandler(response);
+			ErrorHandler eh = new ErrorHandler(output);
 			System.out.println("requestClientToken failed: " + status);
 			eh.printErrors();
-			return null;
+			throw eh;
 		}
 
 		try {

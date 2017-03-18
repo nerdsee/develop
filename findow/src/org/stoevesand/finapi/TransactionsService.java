@@ -22,7 +22,10 @@ public class TransactionsService {
 
 	static final String URL = "https://sandbox.finapi.io/api/v1/transactions";
 
-	public static List<Transaction> searchTransactions(Token userToken, Account account, int days) {
+	public static List<Transaction> searchTransactions(String userToken, Account account, int days) throws ErrorHandler {
+		return searchTransactions(userToken, account.getId(), days);
+	}
+	public static List<Transaction> searchTransactions(String userToken, int accountId, int days) throws ErrorHandler {
 
 		Vector<Transaction> transactions = new Vector<Transaction>();
 
@@ -35,9 +38,9 @@ public class TransactionsService {
 		Client client = ClientBuilder.newClient();
 
 		WebTarget webTarget = client.target(URL);
-		webTarget = webTarget.queryParam("access_token", userToken.getToken());
+		webTarget = webTarget.queryParam("access_token", userToken);
 		webTarget = webTarget.queryParam("minBankBookingDate", minBankBookingDate);
-		webTarget = webTarget.queryParam("accountIds", new Integer(account.getId()).toString());
+		webTarget = webTarget.queryParam("accountIds", new Integer(accountId).toString());
 		webTarget = webTarget.queryParam("view", "userView");
 		//webTarget = webTarget.queryParam("isNew", "false");
 
@@ -48,10 +51,10 @@ public class TransactionsService {
 
 		int status = response.getStatus();
 		if (status != 200) {
-			ErrorHandler eh = new ErrorHandler(response);
+			ErrorHandler eh = new ErrorHandler(output);
 			System.out.println("searchTransactions failed: " + status);
 			eh.printErrors();
-			return null;
+			throw eh;
 		}
 
 		try {

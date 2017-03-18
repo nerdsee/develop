@@ -24,7 +24,7 @@ public class BankConnectionsService {
 
 	static final String URL = "https://sandbox.finapi.io/api/v1/bankConnections";
 
-	public static BankConnection importConnection(Token token, int bankId, String bankingUserId, String bankingPin) throws ErrorHandler {
+	public static BankConnection importConnection(String userToken, int bankId, String bankingUserId, String bankingPin) throws ErrorHandler {
 		BankConnection bc = null;
 		
 		
@@ -33,22 +33,15 @@ public class BankConnectionsService {
 		String message = generateImportConnectionMessage(bankId, bankingUserId, bankingPin);
 
 		WebTarget webTarget = client.target(URL + "/import");
-		webTarget = webTarget.queryParam("access_token", token.getToken());
+		webTarget = webTarget.queryParam("access_token", userToken);
 		Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
 		invocationBuilder = invocationBuilder.accept("application/json");
 		Response response = invocationBuilder.post(Entity.json(message), Response.class);
 		String output = response.readEntity(String.class);
-		
-		// Create Jersey client
-
-		//String message = generateImportConnectionMessage(bankId, bankingUserId, bankingPin);
-
-		//WebResource webResourcePost = client.resource(URL + "/import");
-		//ClientResponse response = webResourcePost.queryParam("access_token", token.getToken()).accept("application/json").type("application/json").post(ClientResponse.class, message);
 
 		int status = response.getStatus();
 		if (status != 201) {
-			ErrorHandler eh = new ErrorHandler(response);
+			ErrorHandler eh = new ErrorHandler(output);
 			throw eh;
 		}
 
@@ -73,16 +66,9 @@ public class BankConnectionsService {
 		Response response = invocationBuilder.delete();
 		String output = response.readEntity(String.class);
 		
-		// Create Jersey client
-
-		//WebResource webResourcePost = client.resource(URL + "/" + id);
-		//webResourcePost = webResourcePost.queryParam("access_token", userToken.getToken());
-
-		//ClientResponse response = webResourcePost.accept("application/json").delete(ClientResponse.class);
-
 		int status = response.getStatus();
 		if (status != 200) {
-			ErrorHandler eh = new ErrorHandler(response);
+			ErrorHandler eh = new ErrorHandler(output);
 			System.out.println("getBankConnections failed: " + status);
 			throw eh;
 		}
@@ -91,37 +77,25 @@ public class BankConnectionsService {
 
 	}
 
-	public static List<BankConnection> getBankConnections(Token userToken) {
+	public static List<BankConnection> getBankConnections(String userToken) throws ErrorHandler {
 
 		Vector<BankConnection> connections = new Vector<BankConnection>();
 
 		Client client = ClientBuilder.newClient();
 
 		WebTarget webTarget = client.target(URL);
-		webTarget = webTarget.queryParam("access_token", userToken.getToken());
+		webTarget = webTarget.queryParam("access_token", userToken);
 		Invocation.Builder invocationBuilder = webTarget.request();
 		invocationBuilder.accept("application/json");
 		Response response = invocationBuilder.get();
 		String output = response.readEntity(String.class);
 		
-		// Create Jersey client
-
-		//WebResource webResourcePost = client.resource(URL);
-		// webResourcePost = webResourcePost.queryParam("minBankBookingDate",
-		// "2017-02-20");
-		// webResourcePost = webResourcePost.queryParam("ids", new
-		// Integer(account.getId()).toString());
-		// webResourcePost = webResourcePost.queryParam("view", "bankView");
-		// webResourcePost = webResourcePost.queryParam("isNew", "false");
-		//webResourcePost = webResourcePost.queryParam("access_token", userToken.getToken());
-		//ClientResponse response = webResourcePost.accept("application/json").get(ClientResponse.class);
-
 		int status = response.getStatus();
 		if (status != 200) {
-			ErrorHandler eh = new ErrorHandler(response);
+			ErrorHandler eh = new ErrorHandler(output);
 			System.out.println("getBankConnections failed: " + status);
 			eh.printErrors();
-			return null;
+			throw eh;
 		}
 
 		System.out.println("Status: " + response.getStatus());
@@ -167,7 +141,7 @@ public class BankConnectionsService {
 
 		int status = response.getStatus();
 		if (status != 200) {
-			ErrorHandler eh = new ErrorHandler(response);
+			ErrorHandler eh = new ErrorHandler(output);
 			System.out.println("getBankConnection failed: " + status);
 			eh.printErrors();
 			return null;
@@ -226,7 +200,7 @@ public class BankConnectionsService {
 
 		int status = response.getStatus();
 		if (status != 200) {
-			ErrorHandler eh = new ErrorHandler(response);
+			ErrorHandler eh = new ErrorHandler(output);
 			throw eh;
 		}
 
