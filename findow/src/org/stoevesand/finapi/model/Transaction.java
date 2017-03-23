@@ -3,6 +3,8 @@ package org.stoevesand.finapi.model;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Transaction {
 
 	JSONObject jo = null;
@@ -15,6 +17,9 @@ public class Transaction {
 	private String finapiBookingDate;
 	private String purpose;
 	private String counterpartName;
+	private Category category;
+
+	private String type;
 	
 	public int getAmount() {
 		return amount;
@@ -35,6 +40,10 @@ public class Transaction {
 	public String getCounterpartName() {
 		return counterpartName;
 	}
+	
+	public Category getCategory() {
+		return category;
+	}
 
 	public Transaction(JSONObject jo) {
 		this.jo = jo;
@@ -47,11 +56,20 @@ public class Transaction {
 			finapiBookingDate = jo.getString("finapiBookingDate");
 			purpose = jo.getString("purpose");
 			counterpartName = jo.getString("counterpartName");
+			type = jo.getString("type");
+			category = new Category();
+			
+			JSONObject jocat = jo.getJSONObject("category");
+			if (jocat!=null) {
+				category = new Category(jocat);
+			}
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
 
+	@JsonIgnore
 	public String toString() {
 		return String.format("** %d # %s # %d # %s", id, purpose, amount, counterpartName);
 	}
