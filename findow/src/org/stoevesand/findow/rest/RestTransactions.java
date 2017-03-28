@@ -40,7 +40,7 @@ public class RestTransactions {
 		try {
 			TransactionList transactions = TransactionsService.searchTransactions(userToken, accountId, days);
 			CategorySummary cs = new CategorySummary(transactions);
-			result = RestUtils.generateJsonResponse(cs, "categorySummary");
+			result = RestUtils.generateJsonResponse(cs.getSummary(), "categorySummary");
 		} catch (ErrorHandler e) {
 			result = e.getResponse();
 		}
