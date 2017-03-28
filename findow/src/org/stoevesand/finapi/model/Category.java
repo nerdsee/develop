@@ -26,6 +26,12 @@ public class Category {
 		}
 	}
 
+	public Category(String name, String parentName) {
+		id=0;
+		this.name=name;
+		this.parentName=parentName;
+	}
+
 	public int getId() {
 		return id;
 	}

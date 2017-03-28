@@ -8,6 +8,7 @@ import javax.ws.rs.Produces;
 import org.stoevesand.finapi.ErrorHandler;
 import org.stoevesand.finapi.TransactionsService;
 import org.stoevesand.finapi.model.TransactionList;
+import org.stoevesand.findow.rest.model.CategorySummary;
 
 import io.swagger.annotations.Api;
 
@@ -24,6 +25,22 @@ public class RestTransactions {
 		try {
 			TransactionList transactions = TransactionsService.searchTransactions(userToken, accountId, days);
 			result = RestUtils.generateJsonResponse(transactions, "transactionList");
+		} catch (ErrorHandler e) {
+			result = e.getResponse();
+		}
+		return result;
+	}
+
+	@Path("/categorized")
+	@GET
+	@Produces("application/json")
+	public String getTransactionsCat(@HeaderParam("userToken") String userToken, @HeaderParam("accountId") int accountId, @HeaderParam("days") int days) {
+		String result = "";
+
+		try {
+			TransactionList transactions = TransactionsService.searchTransactions(userToken, accountId, days);
+			CategorySummary cs = new CategorySummary(transactions);
+			result = RestUtils.generateJsonResponse(cs, "categorySummary");
 		} catch (ErrorHandler e) {
 			result = e.getResponse();
 		}
