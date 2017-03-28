@@ -14,7 +14,7 @@ public class Transaction {
 	private int accountId;
 	private int amount;
 	private String valueDate;
-	private String finapiBookingDate;
+	private String bookingDate;
 	private String purpose;
 	private String counterpartName;
 	private Category category;
@@ -25,12 +25,28 @@ public class Transaction {
 		return amount;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public int getParentId() {
+		return parentId;
+	}
+
+	public int getAccountId() {
+		return accountId;
+	}
+
+	public String getType() {
+		return type;
+	}
+
 	public String getValueDate() {
 		return valueDate;
 	}
 
-	public String getFinapiBookingDate() {
-		return finapiBookingDate;
+	public String getBookingDate() {
+		return bookingDate;
 	}
 
 	public String getPurpose() {
@@ -53,11 +69,10 @@ public class Transaction {
 			accountId = jo.getInt("accountId");
 			amount = jo.getInt("amount");
 			valueDate = jo.getString("valueDate");
-			finapiBookingDate = jo.getString("finapiBookingDate");
+			bookingDate = jo.getString("finapiBookingDate");
 			purpose = jo.getString("purpose");
 			counterpartName = jo.getString("counterpartName");
 			type = jo.getString("type");
-			category = new Category();
 			
 			JSONObject jocat = jo.getJSONObject("category");
 			if (jocat!=null) {

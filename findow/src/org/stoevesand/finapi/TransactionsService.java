@@ -2,8 +2,6 @@ package org.stoevesand.finapi;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Vector;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -11,26 +9,25 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
-import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.stoevesand.finapi.model.Account;
-import org.stoevesand.finapi.model.Token;
-import org.stoevesand.finapi.model.Transaction;
+import org.stoevesand.finapi.model.TransactionList;
 
 public class TransactionsService {
 
 	static final String URL = "https://sandbox.finapi.io/api/v1/transactions";
 
-	public static List<Transaction> searchTransactions(String userToken, Account account, int days) throws ErrorHandler {
+	public static TransactionList searchTransactions(String userToken, Account account, int days) throws ErrorHandler {
 		return searchTransactions(userToken, account.getId(), days);
 	}
-	public static List<Transaction> searchTransactions(String userToken, int accountId, int days) throws ErrorHandler {
 
-		Vector<Transaction> transactions = new Vector<Transaction>();
+	public static TransactionList searchTransactions(String userToken, int accountId, int days) throws ErrorHandler {
+
+		TransactionList ret = null;
 
 		long minDateMillis = System.currentTimeMillis();
-		minDateMillis = minDateMillis - (days*24*60*60*1000);
+		minDateMillis = minDateMillis - (days * 24 * 60 * 60 * 1000);
 		Date minDate = new Date(minDateMillis);
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		String minBankBookingDate = formatter.format(minDate);
@@ -40,9 +37,14 @@ public class TransactionsService {
 		WebTarget webTarget = client.target(URL);
 		webTarget = webTarget.queryParam("access_token", userToken);
 		webTarget = webTarget.queryParam("minBankBookingDate", minBankBookingDate);
-		webTarget = webTarget.queryParam("accountIds", new Integer(accountId).toString());
+		
+		// only use valid accountId
+		if (accountId > 0) {
+			webTarget = webTarget.queryParam("accountIds", new Integer(accountId).toString());
+		}
+		
 		webTarget = webTarget.queryParam("view", "userView");
-		//webTarget = webTarget.queryParam("isNew", "false");
+		// webTarget = webTarget.queryParam("isNew", "false");
 
 		Invocation.Builder invocationBuilder = webTarget.request();
 		invocationBuilder.accept("application/json");
@@ -59,19 +61,12 @@ public class TransactionsService {
 
 		try {
 			JSONObject jo = new JSONObject(output);
-			JSONArray json_txs = jo.getJSONArray("transactions");
-
-			for (int i = 0; i < json_txs.length(); i++) {
-				JSONObject json_account = json_txs.getJSONObject(i);
-				Transaction transaction = new Transaction(json_account);
-				transactions.add(transaction);
-			}
-
+			ret = new TransactionList(jo);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
-		return transactions;
+		return ret;
 
 	}
 
