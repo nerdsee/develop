@@ -52,6 +52,20 @@ public class RestConnections {
 		return result;
 	}
 
+	@Path("/{connectionId}")
+	@DELETE
+	@Produces("application/json")
+	public String deleteConnection(@HeaderParam("userToken") String userToken, @PathParam("connectionId") int connectionId) {
+		String result = "";
+		try {
+			result = BankConnectionsService.deleteBankConnection(userToken, connectionId);
+		} catch (ErrorHandler e) {
+			result = e.getResponse();
+		}
+
+		return result;
+	}
+
 	@Path("/")
 	@POST
 	@Produces("application/json")

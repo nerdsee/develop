@@ -1,12 +1,11 @@
 package org.stoevesand.finapi.model;
 
 import java.util.List;
+import java.util.Vector;
 
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class TransactionList {
 
@@ -18,6 +17,8 @@ public class TransactionList {
 	public TransactionList(JSONObject jo) {
 		try {
 
+			transactions = new Vector<Transaction>();
+			
 			JSONArray json_txs = jo.getJSONArray("transactions");
 
 			for (int i = 0; i < json_txs.length(); i++) {

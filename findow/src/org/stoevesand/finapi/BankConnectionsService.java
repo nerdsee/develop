@@ -162,6 +162,28 @@ public class BankConnectionsService {
 
 	}
 
+	public static String deleteBankConnection(String userToken, int connectionId) throws ErrorHandler {
+		Client client = ClientBuilder.newClient();
+
+		WebTarget webTarget = client.target(URL + "/" + connectionId);
+		webTarget = webTarget.queryParam("access_token", userToken);
+		Invocation.Builder invocationBuilder = webTarget.request();
+		invocationBuilder.accept("application/json");
+		Response response = invocationBuilder.delete();
+		String output = response.readEntity(String.class);
+
+		int status = response.getStatus();
+		if (status != 200) {
+			ErrorHandler eh = new ErrorHandler(output);
+			System.out.println("getBankConnection failed: " + status);
+			throw eh;
+		}
+
+		return output;
+
+	}
+
+	
 	private static String generateImportConnectionMessage(int bankId, String bankingUserId, String bankingPin) {
 
 		String ret = "";
