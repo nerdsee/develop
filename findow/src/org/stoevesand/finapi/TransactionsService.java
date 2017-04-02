@@ -18,11 +18,7 @@ public class TransactionsService {
 
 	static final String URL = "https://sandbox.finapi.io/api/v1/transactions";
 
-	public static TransactionList searchTransactions(String userToken, Account account, int days) throws ErrorHandler {
-		return searchTransactions(userToken, account.getId(), days);
-	}
-
-	public static TransactionList searchTransactions(String userToken, int accountId, int days) throws ErrorHandler {
+	public static TransactionList searchTransactions(String userToken, Long accountId, int days) throws ErrorHandler {
 
 		TransactionList ret = null;
 
@@ -39,8 +35,8 @@ public class TransactionsService {
 		webTarget = webTarget.queryParam("minBankBookingDate", minBankBookingDate);
 		
 		// only use valid accountId
-		if (accountId > 0) {
-			webTarget = webTarget.queryParam("accountIds", new Integer(accountId).toString());
+		if (accountId != null) {
+			webTarget = webTarget.queryParam("accountIds", accountId.toString());
 		}
 		
 		webTarget = webTarget.queryParam("view", "userView");

@@ -23,7 +23,7 @@ import org.stoevesand.finapi.model.Bank;
 import org.stoevesand.finapi.model.BankConnection;
 import org.stoevesand.finapi.model.Token;
 import org.stoevesand.finapi.model.Transaction;
-import org.stoevesand.finapi.model.User;
+import org.stoevesand.finapi.model.FinapiUser;
 import org.stoevesand.finapi.model.UserInfo;
 
 import com.fasterxml.jackson.core.JsonProcessingException;

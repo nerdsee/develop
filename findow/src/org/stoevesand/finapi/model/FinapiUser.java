@@ -5,7 +5,7 @@ import org.codehaus.jettison.json.JSONObject;
 import org.stoevesand.finapi.ErrorHandler;
 import org.stoevesand.finapi.TokenService;
 
-public class User {
+public class FinapiUser {
 	String id = "";
 
 	public String getId() {
@@ -14,7 +14,7 @@ public class User {
 
 	String password = "";
 
-	public User(JSONObject json_user) {
+	public FinapiUser(JSONObject json_user) {
 		try {
 			id = json_user.getString("id");
 			password = json_user.getString("password");
@@ -24,7 +24,7 @@ public class User {
 		}
 	}
 
-	public User(String id, String password) {
+	public FinapiUser(String id, String password) {
 		this.id = id;
 		this.password = password;
 	}
@@ -35,6 +35,10 @@ public class User {
 
 	public Token getToken(Token clientToken) throws ErrorHandler {
 		return TokenService.requestUserToken(clientToken, id, password);
+	}
+
+	public String getPassword() {
+		return password;
 	}
 
 }

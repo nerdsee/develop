@@ -28,6 +28,7 @@ public class RestUtils {
 			}
 		} catch (JsonProcessingException e) {
 			result = "{\"error\" : \"Something went wrong: " + e + "\"}";
+			e.printStackTrace();
 		}
 		return result;
 	}

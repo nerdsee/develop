@@ -1,0 +1,186 @@
+package org.stoevesand.findow.persistence;
+
+import java.util.List;
+import java.util.Set;
+import java.util.Vector;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
+import org.stoevesand.finapi.model.Account;
+import org.stoevesand.finapi.model.Category;
+import org.stoevesand.finapi.model.Transaction;
+import org.stoevesand.findow.model.CategorySum;
+import org.stoevesand.findow.model.User;
+
+public class PersistanceManager {
+	private EntityManagerFactory entityManagerFactory;
+
+	private static PersistanceManager _instance = null;
+
+	// private EntityManager entityManager;
+
+	public static PersistanceManager getInstance() {
+		if (_instance == null) {
+			_instance = new PersistanceManager();
+		}
+		return _instance;
+	}
+
+	private PersistanceManager() {
+		entityManagerFactory = Persistence.createEntityManagerFactory("org.stoevesand.finapi.persistence");
+	}
+
+	public void storeTx(List<Transaction> transactionList) {
+		// create a couple of events...
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+
+		for (Transaction t : transactionList) {
+			System.out.println(t);
+			entityManager.persist(t);
+		}
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+
+	public void storeAccounts(List<Account> accountList) {
+		// create a couple of events...
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+
+		for (Account t : accountList) {
+			System.out.println(t);
+			entityManager.persist(t);
+		}
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+
+	public List<Transaction> getTx(User user, int days) {
+
+		// create a couple of events...
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+
+		List<Transaction> result = new Vector<Transaction>();
+	
+		// TODO: wieder heil machen
+		// Set<Account> accounts = user.getAccounts();
+		
+		List<Account> accounts = entityManager.createQuery("select a from Account a where user=:id").setParameter("id", user).getResultList();
+
+		if (accounts != null) {
+			for (Account account : accounts) {
+				List<Transaction> subResult = entityManager.createQuery("select t from Transaction t where t.accountId=:aid and t.bookingDate > current_date - :daydelta", Transaction.class).setParameter("daydelta", days).setParameter("aid", account.getSourceId()).getResultList();
+				result.addAll(subResult);
+			}
+		}
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+
+		return result;
+	}
+
+	public User getUserByName(String id) {
+		User ret = null;
+		// create a couple of events...
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		List<User> result = entityManager.createQuery("select t from User t where t.name = :username").setParameter("username", id).getResultList();
+		if (result.size() > 0) {
+			ret = (User) result.get(0);
+		}
+		entityManager.getTransaction().commit();
+		entityManager.close();
+
+		return ret;
+	}
+
+	public User getUserByExternalName(String id) {
+		User ret = null;
+		// create a couple of events...
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		List<User> result = entityManager.createQuery("select t from User t where t.backendName = :username").setParameter("username", id).getResultList();
+		if (result.size() > 0) {
+			ret = (User) result.get(0);
+		}
+		entityManager.getTransaction().commit();
+		entityManager.close();
+
+		return ret;
+	}
+
+	public void store(Object obj) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		entityManager.persist(obj);
+		entityManager.getTransaction().commit();
+	}
+
+	public Transaction getTxByExternalId(Long sourceId) {
+		Transaction ret = null;
+
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+
+		List<Transaction> result = entityManager.createQuery("select t from Transaction t where t.sourceId=:sourceid").setParameter("sourceid", sourceId).getResultList();
+		if (result.size() > 0) {
+			ret = (Transaction) result.get(0);
+		}
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+
+		return ret;
+	}
+
+	public Category getCategory(Category category) {
+
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+
+		Category ret = entityManager.find(Category.class, category.getId());
+
+		if (ret == null) {
+			entityManager.persist(category);
+			ret = category;
+		}
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+
+		return ret;
+	}
+
+	public Category getCategory(long categoryId) {
+
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+
+		Category ret = entityManager.find(Category.class, categoryId);
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+
+		return ret;
+	}
+
+	public List<CategorySum> getCategorySummary() {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+		// Query q = entityManager.createNamedQuery("sumQuery",
+		// CategorySum.class);
+		Query q = entityManager.createNativeQuery("select coalesce(category_id,0) as category_id, count(*) as count, sum(amount) as sum from transactions t group by t.category_id", CategorySum.class);
+		List<CategorySum> catsum = q.getResultList();
+
+		entityManager.close();
+		return catsum;
+	}
+}

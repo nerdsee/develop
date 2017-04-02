@@ -23,8 +23,11 @@ import org.stoevesand.finapi.model.Bank;
 import org.stoevesand.finapi.model.BankConnection;
 import org.stoevesand.finapi.model.Token;
 import org.stoevesand.finapi.model.Transaction;
-import org.stoevesand.finapi.model.User;
+import org.stoevesand.finapi.model.FinapiUser;
 import org.stoevesand.finapi.model.UserInfo;
+import org.stoevesand.findow.loader.DataLoader;
+import org.stoevesand.findow.model.User;
+import org.stoevesand.findow.persistence.PersistanceManager;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -74,6 +77,24 @@ public class RestConnections {
 		try {
 			BankConnection connection = BankConnectionsService.importConnection(userToken, bankId, bankingUserId, bankingPin);
 			result = RestUtils.generateJsonResponse(connection);
+			// initial die Umsätze laden
+			DataLoader.updateTransactions(userToken, 60);
+
+			// User laden
+			FinapiUser finapiUser = UsersService.getUser(userToken);
+			User user = PersistanceManager.getInstance().getUserByExternalName(finapiUser.getId());
+			
+			// Accounts laden
+			List<Account> accounts = AccountsService.searchAccounts(userToken, 0);
+			
+			// Den aktuellen User zuweisen
+			for (Account account : accounts) {
+				account.setUser(user);
+			}
+			
+			// Accounts persistieren
+			PersistanceManager.getInstance().storeAccounts(accounts);
+
 		} catch (ErrorHandler e) {
 			result = e.getResponse();
 		}

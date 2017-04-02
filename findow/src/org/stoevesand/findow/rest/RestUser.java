@@ -12,16 +12,19 @@ import javax.ws.rs.Produces;
 
 import org.stoevesand.finapi.ErrorHandler;
 import org.stoevesand.finapi.MandatorAdminService;
+import org.stoevesand.finapi.TokenService;
 import org.stoevesand.finapi.UsersService;
 import org.stoevesand.finapi.model.Token;
-import org.stoevesand.finapi.model.User;
+import org.stoevesand.finapi.model.FinapiUser;
 import org.stoevesand.finapi.model.UserInfo;
+import org.stoevesand.findow.model.User;
+import org.stoevesand.findow.persistence.PersistanceManager;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Path("/user")
-@Api(value="user")
+@Api(value = "user")
 public class RestUser {
 
 	@Path("/{id}")
@@ -31,12 +34,19 @@ public class RestUser {
 
 		String result = "";
 
-		User user = new User(id, password);
-		try {
-			Token userToken = user.getToken(RestUtils.getClientToken());
-			result = RestUtils.generateJsonResponse(userToken);
-		} catch (ErrorHandler e) {
-			result = e.getResponse();
+		User user = PersistanceManager.getInstance().getUserByName(id);
+		if ((user != null) && (user.getPassword().equals(password))) {
+
+			try {
+				Token userToken = TokenService.requestUserToken(RestUtils.getClientToken(), user.getBackendName(), user.getBackendSecret());
+				user.setToken(userToken);
+				result = RestUtils.generateJsonResponse(user, "user");
+			} catch (ErrorHandler e) {
+				result = e.getResponse();
+			}
+
+		} else {
+			result = RestUtils.generateJsonResponse(Response.USER_OR_PASSWORD_INVALID);
 		}
 
 		return result;
@@ -49,10 +59,17 @@ public class RestUser {
 
 		String result = "";
 		try {
-			User user = UsersService.createUser(RestUtils.getClientToken(), id, password);
-			Token userToken = user.getToken(RestUtils.getClientToken());
+			User user = PersistanceManager.getInstance().getUserByName(id);
 
-			result = RestUtils.generateJsonResponse(userToken);
+			if (user == null) {
+				FinapiUser finapiUser = UsersService.createUser(RestUtils.getClientToken(), null, null);
+				user = new User(id, password, finapiUser.getId(), finapiUser.getPassword());
+				PersistanceManager.getInstance().store(user);
+				result = RestUtils.generateJsonResponse(Response.OK);
+			} else {
+				result = RestUtils.generateJsonResponse(Response.USER_ALREADY_USED);
+			}
+
 		} catch (ErrorHandler e) {
 			result = e.getResponse();
 		}
@@ -74,11 +91,11 @@ public class RestUser {
 
 		return result;
 	}
-	
+
 	@Path("/")
 	@GET
 	@Produces("application/json")
-	@ApiOperation(value="Get UserInfos of all available users.")
+	@ApiOperation(value = "Get UserInfos of all available users.")
 	public String getUserInfos() {
 		List<UserInfo> userInfos = MandatorAdminService.getUsers(RestUtils.getAdminToken());
 

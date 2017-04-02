@@ -18,7 +18,7 @@ public class TransactionList {
 		try {
 
 			transactions = new Vector<Transaction>();
-			
+
 			JSONArray json_txs = jo.getJSONArray("transactions");
 
 			for (int i = 0; i < json_txs.length(); i++) {
@@ -34,6 +34,10 @@ public class TransactionList {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public TransactionList(List<Transaction> list) {
+		this.transactions = list;
 	}
 
 	public List<Transaction> getTransactions() {

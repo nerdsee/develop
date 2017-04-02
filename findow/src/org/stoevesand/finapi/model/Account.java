@@ -1,9 +1,76 @@
 package org.stoevesand.finapi.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.hibernate.annotations.GenericGenerator;
+import org.stoevesand.findow.model.User;
 
+@Entity
+@Table(name = "ACCOUNTS")
 public class Account {
+
+	// internal id used for persistance
+	private Long id;
+
+	// id coming from a source system
+	private Long sourceId;
+	private String sourceSystem = "FINAPI";
+
+	private User user = null;
+
+	public Account() {
+
+	}
+
+	public Long getSourceId() {
+		return sourceId;
+	}
+
+	public void setSourceId(Long sourceId) {
+		this.sourceId = sourceId;
+	}
+
+	public String getSourceSystem() {
+		return sourceSystem;
+	}
+
+	public void setSourceSystem(String sourceSystem) {
+		this.sourceSystem = sourceSystem;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "USER_ID", nullable = false)
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+	@Id
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "increment")
+	@Column(name = "ACCOUNT_ID")
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public int getBankConnectionId() {
 		return bankConnectionId;
@@ -29,9 +96,6 @@ public class Account {
 		return accountHolderName;
 	}
 
-	private JSONObject jo = null;
-
-	private int id = 0;
 	private int bankConnectionId;
 	private String accountName;
 	private String accountNumber;
@@ -45,7 +109,7 @@ public class Account {
 
 	private String accountTypeName;
 
-	private int balance;
+	private double balance;
 
 	private int overdraft;
 
@@ -54,9 +118,8 @@ public class Account {
 	private int availableFunds;
 
 	public Account(JSONObject jo) {
-		this.jo = jo;
 		try {
-			id = jo.getInt("id");
+			sourceId = jo.getLong("id");
 			bankConnectionId = jo.getInt("bankConnectionId");
 			accountName = jo.getString("accountName");
 			accountNumber = jo.getString("accountNumber");
@@ -67,7 +130,7 @@ public class Account {
 			accountCurrency = jo.getString("accountCurrency");
 			accountTypeId = jo.getInt("accountTypeId");
 			accountTypeName = jo.getString("accountTypeName");
-			balance = jo.getInt("balance");
+			balance = jo.getDouble("balance");
 			overdraft = jo.getInt("overdraft");
 			overdraftLimit = jo.getInt("overdraftLimit");
 			availableFunds = jo.getInt("availableFunds");
@@ -101,7 +164,7 @@ public class Account {
 		this.accountTypeName = accountTypeName;
 	}
 
-	public int getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
@@ -133,10 +196,6 @@ public class Account {
 		this.availableFunds = availableFunds;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public void setBankConnectionId(int bankConnectionId) {
 		this.bankConnectionId = bankConnectionId;
 	}
@@ -159,10 +218,6 @@ public class Account {
 
 	public void setAccountHolderName(String accountHolderName) {
 		this.accountHolderName = accountHolderName;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String toString() {
