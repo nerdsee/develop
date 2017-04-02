@@ -4,7 +4,7 @@
 	<artifactId>findow-server</artifactId>
 	<packaging>war</packaging>
 	<name>findow</name>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 
 	<licenses>
 		<license>
