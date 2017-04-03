@@ -82,14 +82,8 @@ public class RestUser {
 	@Produces("application/json")
 	public String deleteUser(@PathParam("id") String id) {
 
-		String result = "";
-		try {
-			result = MandatorAdminService.deleteUser(RestUtils.getAdminToken(), id);
-		} catch (ErrorHandler e) {
-			result = e.getResponse();
-		}
-
-		return result;
+		PersistanceManager.getInstance().deleteUserByName(id);
+		return RestUtils.generateJsonResponse(Response.OK);
 	}
 
 	@Path("/")
@@ -97,9 +91,10 @@ public class RestUser {
 	@Produces("application/json")
 	@ApiOperation(value = "Get UserInfos of all available users.")
 	public String getUserInfos() {
-		List<UserInfo> userInfos = MandatorAdminService.getUsers(RestUtils.getAdminToken());
+		List<User> userInfos = PersistanceManager.getInstance().getUsers();
+		// MandatorAdminService.getUsers(RestUtils.getAdminToken());
 
-		String result = RestUtils.generateJsonResponse(userInfos, "userinfos");
+		String result = RestUtils.generateJsonResponse(userInfos, "users");
 
 		return result;
 	}

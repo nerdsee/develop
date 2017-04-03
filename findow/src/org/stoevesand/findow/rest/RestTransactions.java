@@ -31,13 +31,13 @@ public class RestTransactions {
 		String result = "";
 
 		try {
-			DataLoader.updateTransactions(userToken, 7);
+			DataLoader.updateTransactions(userToken, days);
 
 			// User laden
 			FinapiUser finapiUser = UsersService.getUser(userToken);
 			User user = PersistanceManager.getInstance().getUserByExternalName(finapiUser.getId());
 			
-			List<Transaction> transactions = PersistanceManager.getInstance().getTx(user, days);
+			List<Transaction> transactions = PersistanceManager.getInstance().getTx(user, accountId, days);
 			result = RestUtils.generateJsonResponse(transactions, "transactions");
 		} catch (ErrorHandler e) {
 			result = e.getResponse();

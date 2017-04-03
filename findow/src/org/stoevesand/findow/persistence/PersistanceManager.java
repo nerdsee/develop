@@ -61,7 +61,7 @@ public class PersistanceManager {
 		entityManager.close();
 	}
 
-	public List<Transaction> getTx(User user, int days) {
+	public List<Transaction> getTx(User user, int accountId, int days) {
 
 		// create a couple of events...
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -72,7 +72,7 @@ public class PersistanceManager {
 		// TODO: wieder heil machen
 		// Set<Account> accounts = user.getAccounts();
 		
-		List<Account> accounts = entityManager.createQuery("select a from Account a where user=:id").setParameter("id", user).getResultList();
+		List<Account> accounts = entityManager.createQuery("select a from Account a where user=:id", Account.class).setParameter("id", user).getResultList();
 
 		if (accounts != null) {
 			for (Account account : accounts) {
@@ -182,5 +182,44 @@ public class PersistanceManager {
 
 		entityManager.close();
 		return catsum;
+	}
+
+	public void deleteUserByName(String id) {
+		User ret = null;
+		// create a couple of events...
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		List<User> result = entityManager.createQuery("select t from User t where t.name = :username", User.class).setParameter("username", id).getResultList();
+		if (result.size() > 0) {
+			ret = (User) result.get(0);
+		}
+		entityManager.remove(ret);
+		entityManager.getTransaction().commit();
+		entityManager.close();
+	}
+
+	public List<User> getUsers() {
+
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+
+		List<User> users = entityManager.createQuery("select u from User u", User.class).getResultList();
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+
+		return users;
+	}
+
+	public List<Account> getAccounts(User user) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+
+		List<Account> accounts = entityManager.createQuery("select a from Account a where a.user=:user", Account.class).setParameter("user", user).getResultList();
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+
+		return accounts;
 	}
 }

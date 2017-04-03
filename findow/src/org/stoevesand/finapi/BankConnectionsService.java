@@ -26,8 +26,7 @@ public class BankConnectionsService {
 
 	public static BankConnection importConnection(String userToken, int bankId, String bankingUserId, String bankingPin) throws ErrorHandler {
 		BankConnection bc = null;
-		
-		
+
 		Client client = ClientBuilder.newClient();
 
 		String message = generateImportConnectionMessage(bankId, bankingUserId, bankingPin);
@@ -65,7 +64,7 @@ public class BankConnectionsService {
 		invocationBuilder.accept("application/json");
 		Response response = invocationBuilder.delete();
 		String output = response.readEntity(String.class);
-		
+
 		int status = response.getStatus();
 		if (status != 200) {
 			ErrorHandler eh = new ErrorHandler(output);
@@ -89,7 +88,7 @@ public class BankConnectionsService {
 		invocationBuilder.accept("application/json");
 		Response response = invocationBuilder.get();
 		String output = response.readEntity(String.class);
-		
+
 		int status = response.getStatus();
 		if (status != 200) {
 			ErrorHandler eh = new ErrorHandler(output);
@@ -129,7 +128,6 @@ public class BankConnectionsService {
 	 */
 	public static BankConnection getBankConnection(Token userToken, int id, BankConnection bankConnection) {
 
-		
 		Client client = ClientBuilder.newClient();
 
 		WebTarget webTarget = client.target(URL + "/" + id);
@@ -183,7 +181,6 @@ public class BankConnectionsService {
 
 	}
 
-	
 	private static String generateImportConnectionMessage(int bankId, String bankingUserId, String bankingPin) {
 
 		String ret = "";
@@ -193,6 +190,7 @@ public class BankConnectionsService {
 			jo.put("bankId", bankId);
 			jo.put("bankingUserId", bankingUserId);
 			jo.put("bankingPin", bankingPin);
+			jo.put("storePin", true);
 			ret = jo.toString();
 			// System.out.println("JO: " + jo.toString(4));
 		} catch (JSONException e) {
@@ -215,10 +213,12 @@ public class BankConnectionsService {
 		invocationBuilder = invocationBuilder.accept("application/json");
 		Response response = invocationBuilder.post(Entity.json(message), Response.class);
 		String output = response.readEntity(String.class);
-		
+
 		// Create Jersey client
-		//WebResource webResourcePost = client.resource(URL + "/update");
-		//ClientResponse response = webResourcePost.queryParam("access_token", userToken.getToken()).accept("application/json").type("application/json").post(ClientResponse.class, message);
+		// WebResource webResourcePost = client.resource(URL + "/update");
+		// ClientResponse response = webResourcePost.queryParam("access_token",
+		// userToken.getToken()).accept("application/json").type("application/json").post(ClientResponse.class,
+		// message);
 
 		int status = response.getStatus();
 		if (status != 200) {
@@ -245,7 +245,9 @@ public class BankConnectionsService {
 		try {
 			JSONObject jo = new JSONObject();
 			jo.put("bankConnectionId", bankConnectionId);
-			jo.put("bankingPin", bankingPin);
+			if (bankingPin != null) {
+				jo.put("bankingPin", bankingPin);
+			}
 			ret = jo.toString();
 			// System.out.println("JO: " + jo.toString(4));
 		} catch (JSONException e) {

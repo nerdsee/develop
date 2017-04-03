@@ -25,6 +25,7 @@ import org.stoevesand.finapi.model.Token;
 import org.stoevesand.finapi.model.Transaction;
 import org.stoevesand.finapi.model.FinapiUser;
 import org.stoevesand.finapi.model.UserInfo;
+import org.stoevesand.findow.model.User;
 import org.stoevesand.findow.persistence.PersistanceManager;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -45,8 +46,11 @@ public class RestAccounts {
 		String result = "";
 
 		try {
-			List<Account> accounts = AccountsService.searchAccounts(userToken, 0);
-			//PersistanceManager.getInstance().storeAccounts(accounts);
+			// User laden
+			FinapiUser finapiUser = UsersService.getUser(userToken);
+			User user = PersistanceManager.getInstance().getUserByExternalName(finapiUser.getId());
+			
+			List<Account> accounts = PersistanceManager.getInstance().getAccounts(user);
 			result = RestUtils.generateJsonResponse(accounts, "accounts");
 		} catch (ErrorHandler e) {
 			result = e.getResponse();

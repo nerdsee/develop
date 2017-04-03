@@ -13,6 +13,8 @@ import org.codehaus.jettison.json.JSONObject;
 import org.hibernate.annotations.GenericGenerator;
 import org.stoevesand.findow.model.User;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "ACCOUNTS")
 public class Account {
@@ -30,6 +32,7 @@ public class Account {
 
 	}
 
+	@JsonIgnore
 	public Long getSourceId() {
 		return sourceId;
 	}
@@ -38,6 +41,7 @@ public class Account {
 		this.sourceId = sourceId;
 	}
 
+	@JsonIgnore
 	public String getSourceSystem() {
 		return sourceSystem;
 	}
@@ -48,6 +52,7 @@ public class Account {
 
 	@ManyToOne
 	@JoinColumn(name = "USER_ID", nullable = false)
+	@JsonIgnore
 	public User getUser() {
 		return user;
 	}
@@ -72,6 +77,7 @@ public class Account {
 		this.id = id;
 	}
 
+	@JsonIgnore
 	public int getBankConnectionId() {
 		return bankConnectionId;
 	}

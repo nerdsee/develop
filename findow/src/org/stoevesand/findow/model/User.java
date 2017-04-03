@@ -12,8 +12,11 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.stoevesand.finapi.ErrorHandler;
+import org.stoevesand.finapi.TokenService;
 import org.stoevesand.finapi.model.Account;
 import org.stoevesand.finapi.model.Token;
+import org.stoevesand.findow.rest.RestUtils;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -84,8 +87,9 @@ public class User {
 		this.id = id;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") // 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //
 	@Transient
+	@JsonIgnore
 	public Set<Account> getAccounts() {
 		return account;
 	}
@@ -103,6 +107,14 @@ public class User {
 	@Transient
 	@JsonGetter
 	public String getToken() {
+		if ((token == null) || (!token.isValid())) {
+			try {
+				token = TokenService.requestUserToken(RestUtils.getClientToken(), backendName, backendSecret);
+			} catch (ErrorHandler e) {
+				token = null;
+				e.printStackTrace();
+			}
+		}
 		return token.getToken();
 	}
 
