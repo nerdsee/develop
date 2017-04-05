@@ -68,10 +68,10 @@ public class PersistanceManager {
 		entityManager.getTransaction().begin();
 
 		List<Transaction> result = new Vector<Transaction>();
-	
+
 		// TODO: wieder heil machen
 		// Set<Account> accounts = user.getAccounts();
-		
+
 		List<Account> accounts = entityManager.createQuery("select a from Account a where user=:id", Account.class).setParameter("id", user).getResultList();
 
 		if (accounts != null) {
@@ -211,15 +211,38 @@ public class PersistanceManager {
 		return users;
 	}
 
-	public List<Account> getAccounts(User user) {
+	public List<Account> getAccounts(User user, String userToken) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
 
 		List<Account> accounts = entityManager.createQuery("select a from Account a where a.user=:user", Account.class).setParameter("user", user).getResultList();
 
+		for (Account account : accounts) {
+			int ret = account.refresh(userToken);
+			if (ret == 404) {
+				entityManager.remove(account);
+			} else {
+				entityManager.persist(account);
+			}
+		}
+
 		entityManager.getTransaction().commit();
 		entityManager.close();
 
 		return accounts;
+	}
+
+	public void deleteAccounts(int connectionId) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+
+		List<Account> accounts = entityManager.createQuery("select a from Account a where a.bankConnectionId=:bcid", Account.class).setParameter("bcid", connectionId).getResultList();
+
+		for (Account account : accounts) {
+			entityManager.remove(account);
+		}
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
 	}
 }

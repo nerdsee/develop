@@ -49,6 +49,25 @@ public class UsersService {
 
 	}
 
+	public static void deleteUser(String userToken) throws ErrorHandler {
+		Client client = ClientBuilder.newClient();
+
+		WebTarget webTarget = client.target(URL);
+		webTarget = webTarget.queryParam("access_token", userToken);
+		Invocation.Builder invocationBuilder = webTarget.request();
+		invocationBuilder.accept("application/json");
+		Response response = invocationBuilder.delete();
+		String output = response.readEntity(String.class);
+		
+		int status = response.getStatus();
+		if (status != 200) {
+			ErrorHandler eh = new ErrorHandler(output);
+			System.out.println("delete user failed: " + status);
+			eh.printErrors();
+			throw eh;
+		}
+	}
+
 	public static FinapiUser createUser(Token clientToken, String id, String password) throws ErrorHandler {
 		FinapiUser user = null;
 

@@ -19,6 +19,7 @@ public class ErrorHandler extends Exception {
 
 	List<CallError> errors = new Vector<CallError>();
 	String response;
+	private int status;
 
 	public ErrorHandler(String response) {
 		this.response = response;
@@ -33,6 +34,25 @@ public class ErrorHandler extends Exception {
 		} catch (JSONException e) {
 		}
 
+	}
+
+	public ErrorHandler(int status, String response) {
+		this.status = status;
+		this.response = response;
+		try {
+			JSONObject jo = new JSONObject(response);
+			JSONArray json_errors = jo.getJSONArray("errors");
+			for (int i = 0; i < json_errors.length(); i++) {
+				JSONObject json_account = json_errors.getJSONObject(i);
+				CallError error = new CallError(json_account);
+				errors.add(error);
+			}
+		} catch (JSONException e) {
+		}
+	}
+
+	public int getStatus() {
+		return status;
 	}
 
 	@JsonIgnore

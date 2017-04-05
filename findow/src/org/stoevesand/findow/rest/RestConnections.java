@@ -62,6 +62,7 @@ public class RestConnections {
 		String result = "";
 		try {
 			result = BankConnectionsService.deleteBankConnection(userToken, connectionId);
+			PersistanceManager.getInstance().deleteAccounts(connectionId);
 		} catch (ErrorHandler e) {
 			result = e.getResponse();
 		}

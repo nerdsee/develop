@@ -11,6 +11,9 @@ import javax.persistence.Table;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.hibernate.annotations.GenericGenerator;
+import org.stoevesand.finapi.AccountsService;
+import org.stoevesand.finapi.ErrorHandler;
+import org.stoevesand.finapi.TokenService;
 import org.stoevesand.findow.model.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,7 +35,6 @@ public class Account {
 
 	}
 
-	@JsonIgnore
 	public Long getSourceId() {
 		return sourceId;
 	}
@@ -117,33 +119,55 @@ public class Account {
 
 	private double balance;
 
-	private int overdraft;
+	private double overdraft;
 
-	private int overdraftLimit;
+	private double overdraftLimit;
 
-	private int availableFunds;
+	private double availableFunds;
+
+	private String lastSuccessfulUpdate;
+
+	private String lastUpdateAttempt;
 
 	public Account(JSONObject jo) {
-		try {
-			sourceId = jo.getLong("id");
-			bankConnectionId = jo.getInt("bankConnectionId");
-			accountName = jo.getString("accountName");
-			accountNumber = jo.getString("accountNumber");
-			subAccountNumber = jo.getString("subAccountNumber");
-			iban = jo.getString("iban");
-			accountHolderName = jo.getString("accountHolderName");
+		update(jo);
+	}
 
-			accountCurrency = jo.getString("accountCurrency");
-			accountTypeId = jo.getInt("accountTypeId");
-			accountTypeName = jo.getString("accountTypeName");
-			balance = jo.getDouble("balance");
-			overdraft = jo.getInt("overdraft");
-			overdraftLimit = jo.getInt("overdraftLimit");
-			availableFunds = jo.getInt("availableFunds");
+	public void update(JSONObject jo) {
+		sourceId = JSONUtils.getLong(jo, "id");
+		bankConnectionId = JSONUtils.getInt(jo, "bankConnectionId");
+		accountName = JSONUtils.getString(jo, "accountName");
+		accountNumber = JSONUtils.getString(jo, "accountNumber");
+		subAccountNumber = JSONUtils.getString(jo, "subAccountNumber");
+		iban = JSONUtils.getString(jo, "iban");
+		accountHolderName = JSONUtils.getString(jo, "accountHolderName");
 
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+		accountCurrency = JSONUtils.getString(jo, "accountCurrency");
+		accountTypeId = JSONUtils.getInt(jo, "accountTypeId");
+		accountTypeName = JSONUtils.getString(jo, "accountTypeName");
+		balance = JSONUtils.getDouble(jo, "balance");
+		overdraft = JSONUtils.getDouble(jo, "overdraft");
+		overdraftLimit = JSONUtils.getDouble(jo, "overdraftLimit");
+		availableFunds = JSONUtils.getDouble(jo, "availableFunds");
+
+		lastSuccessfulUpdate = JSONUtils.getString(jo, "lastSuccessfulUpdate");
+		lastUpdateAttempt = JSONUtils.getString(jo, "lastUpdateAttempt");
+	}
+
+	public String getLastSuccessfulUpdate() {
+		return lastSuccessfulUpdate;
+	}
+
+	public void setLastSuccessfulUpdate(String lastSuccessfulUpdate) {
+		this.lastSuccessfulUpdate = lastSuccessfulUpdate;
+	}
+
+	public String getLastUpdateAttempt() {
+		return lastUpdateAttempt;
+	}
+
+	public void setLastUpdateAttempt(String lastUpdateAttempt) {
+		this.lastUpdateAttempt = lastUpdateAttempt;
 	}
 
 	public String getAccountCurrency() {
@@ -174,31 +198,27 @@ public class Account {
 		return balance;
 	}
 
-	public void setBalance(int balance) {
-		this.balance = balance;
-	}
-
-	public int getOverdraft() {
+	public double getOverdraft() {
 		return overdraft;
 	}
 
-	public void setOverdraft(int overdraft) {
+	public void setOverdraft(double overdraft) {
 		this.overdraft = overdraft;
 	}
 
-	public int getOverdraftLimit() {
+	public double getOverdraftLimit() {
 		return overdraftLimit;
 	}
 
-	public void setOverdraftLimit(int overdraftLimit) {
+	public void setOverdraftLimit(double overdraftLimit) {
 		this.overdraftLimit = overdraftLimit;
 	}
 
-	public int getAvailableFunds() {
+	public double getAvailableFunds() {
 		return availableFunds;
 	}
 
-	public void setAvailableFunds(int availableFunds) {
+	public void setAvailableFunds(double availableFunds) {
 		this.availableFunds = availableFunds;
 	}
 
@@ -228,6 +248,16 @@ public class Account {
 
 	public String toString() {
 		return String.format("%s (%d)", accountName, id);
+	}
+
+	public int refresh(String userToken) {
+		try {
+			AccountsService.refreshAccount(userToken, this);
+		} catch (ErrorHandler e) {
+			e.printStackTrace();
+			return e.getStatus();
+		}
+		return 0;
 	}
 
 }

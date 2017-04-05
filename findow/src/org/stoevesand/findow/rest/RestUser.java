@@ -11,12 +11,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import org.stoevesand.finapi.ErrorHandler;
-import org.stoevesand.finapi.MandatorAdminService;
 import org.stoevesand.finapi.TokenService;
 import org.stoevesand.finapi.UsersService;
-import org.stoevesand.finapi.model.Token;
 import org.stoevesand.finapi.model.FinapiUser;
-import org.stoevesand.finapi.model.UserInfo;
+import org.stoevesand.finapi.model.Token;
 import org.stoevesand.findow.model.User;
 import org.stoevesand.findow.persistence.PersistanceManager;
 
@@ -80,9 +78,21 @@ public class RestUser {
 	@Path("/{id}")
 	@DELETE
 	@Produces("application/json")
-	public String deleteUser(@PathParam("id") String id) {
+	public String deleteUser(@PathParam("id") String id, @HeaderParam("userToken") String userToken) {
 
-		PersistanceManager.getInstance().deleteUserByName(id);
+		try {
+			User user = PersistanceManager.getInstance().getUserByName(id);
+			if (user != null) {
+				UsersService.deleteUser(userToken);
+			} else {
+				return RestUtils.generateJsonResponse(Response.USER_UNKNOWN);
+			}
+
+			PersistanceManager.getInstance().deleteUserByName(id);
+		} catch (ErrorHandler e) {
+			System.out.println(e);
+			return e.getResponse();
+		}
 		return RestUtils.generateJsonResponse(Response.OK);
 	}
 

@@ -40,7 +40,7 @@ public class AccountsService {
 			ErrorHandler eh = new ErrorHandler(output);
 			throw eh;
 		}
-		
+
 		try {
 			JSONObject jo = new JSONObject(output);
 			JSONArray json_accounts = jo.getJSONArray("accounts");
@@ -59,34 +59,31 @@ public class AccountsService {
 
 	}
 
-//	public static Account getAccount(Token userToken, int accountId) throws ErrorHandler {
-//
-//		Account account = null;
-//
-//		Client client = ClientBuilder.newClient();
-//
-//		WebTarget webTarget = client.target(URL + "/" + accountId);
-//		webTarget = webTarget.queryParam("access_token", userToken.getToken());
-//		Invocation.Builder invocationBuilder = webTarget.request();
-//		invocationBuilder.accept("application/json");
-//		Response response = invocationBuilder.get();
-//		String output = response.readEntity(String.class);
-//
-//		int status = response.getStatus();
-//		if (status != 200) {
-//			ErrorHandler eh = new ErrorHandler(output);
-//			throw eh;
-//		}
-//
-//		try {
-//			JSONObject jo = new JSONObject(output);
-//			account = new Account(jo);
-//		} catch (JSONException e) {
-//			e.printStackTrace();
-//		}
-//
-//		return account;
-//
-//	}
+	public static void refreshAccount(String userToken, Account account) throws ErrorHandler {
+
+		Vector<Account> accounts = new Vector<Account>();
+
+		Client client = ClientBuilder.newClient();
+
+		WebTarget webTarget = client.target(URL + "/" + account.getSourceId());
+		webTarget = webTarget.queryParam("access_token", userToken);
+		Invocation.Builder invocationBuilder = webTarget.request();
+		invocationBuilder.accept("application/json");
+		Response response = invocationBuilder.get();
+		String output = response.readEntity(String.class);
+
+		int status = response.getStatus();
+		if (status != 200) {
+			ErrorHandler eh = new ErrorHandler(status, output);
+			throw eh;
+		}
+
+		try {
+			JSONObject jo = new JSONObject(output);
+			account.update(jo);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

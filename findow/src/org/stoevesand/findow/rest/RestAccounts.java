@@ -50,7 +50,7 @@ public class RestAccounts {
 			FinapiUser finapiUser = UsersService.getUser(userToken);
 			User user = PersistanceManager.getInstance().getUserByExternalName(finapiUser.getId());
 			
-			List<Account> accounts = PersistanceManager.getInstance().getAccounts(user);
+			List<Account> accounts = PersistanceManager.getInstance().getAccounts(user, userToken);
 			result = RestUtils.generateJsonResponse(accounts, "accounts");
 		} catch (ErrorHandler e) {
 			result = e.getResponse();

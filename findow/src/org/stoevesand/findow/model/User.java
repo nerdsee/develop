@@ -5,8 +5,10 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -33,7 +35,7 @@ public class User {
 	private String backendSecret = "";
 
 	private transient Token token = null;
-	private Set<Account> account;
+	private Set<Account> accounts;
 
 	@Column(name = "NAME")
 	@JsonGetter
@@ -87,11 +89,13 @@ public class User {
 		this.id = id;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user") //
-	@Transient
-	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER) //
 	public Set<Account> getAccounts() {
-		return account;
+		return accounts;
+	}
+
+	public void setAccounts(Set<Account> a) {
+		this.accounts = a;
 	}
 
 	@Column(name = "PASSWORD")
