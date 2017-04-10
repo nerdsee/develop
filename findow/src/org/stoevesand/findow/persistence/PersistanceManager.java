@@ -232,6 +232,28 @@ public class PersistanceManager {
 		return accounts;
 	}
 
+	public Account getAccount(User user, long accountId, String userToken) {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+		Account retAccount = null;
+
+		Account account = entityManager.find(Account.class, accountId);
+		if (account != null) {
+			int ret = account.refresh(userToken);
+			if (ret == 404) {
+				entityManager.remove(account);
+			} else {
+				entityManager.persist(account);
+				retAccount = account;
+			}
+		}
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
+
+		return retAccount;
+	}
+
 	public void deleteAccounts(int connectionId) {
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
