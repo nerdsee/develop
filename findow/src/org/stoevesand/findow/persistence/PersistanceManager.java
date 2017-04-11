@@ -61,7 +61,7 @@ public class PersistanceManager {
 		entityManager.close();
 	}
 
-	public List<Transaction> getTx(User user, int accountId, int days) {
+	public List<Transaction> getTx(User user, long accountId, int days) {
 
 		// create a couple of events...
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -72,12 +72,23 @@ public class PersistanceManager {
 		// TODO: wieder heil machen
 		// Set<Account> accounts = user.getAccounts();
 
-		List<Account> accounts = entityManager.createQuery("select a from Account a where user=:id", Account.class).setParameter("id", user).getResultList();
-
-		if (accounts != null) {
-			for (Account account : accounts) {
+		if (accountId > 0) {
+			// Standardfall mit echter accountId
+			Account account = entityManager.find(Account.class, accountId);
+			if (account != null) {
 				List<Transaction> subResult = entityManager.createQuery("select t from Transaction t where t.accountId=:aid and t.bookingDate > current_date - :daydelta", Transaction.class).setParameter("daydelta", days).setParameter("aid", account.getSourceId()).getResultList();
 				result.addAll(subResult);
+			}
+
+		} else {
+			// wenn keine accountId angegeben ist, dann werden die Tx von allen
+			// Accounts geladen
+			List<Account> accounts = entityManager.createQuery("select a from Account a where user=:id", Account.class).setParameter("id", user).getResultList();
+			if (accounts != null) {
+				for (Account account : accounts) {
+					List<Transaction> subResult = entityManager.createQuery("select t from Transaction t where t.accountId=:aid and t.bookingDate > current_date - :daydelta", Transaction.class).setParameter("daydelta", days).setParameter("aid", account.getSourceId()).getResultList();
+					result.addAll(subResult);
+				}
 			}
 		}
 

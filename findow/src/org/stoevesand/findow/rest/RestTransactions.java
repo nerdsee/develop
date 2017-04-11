@@ -27,7 +27,7 @@ public class RestTransactions {
 	@Path("/")
 	@GET
 	@Produces("application/json")
-	public String getTransactions(@HeaderParam("userToken") String userToken, @HeaderParam("accountId") int accountId, @HeaderParam("days") int days) {
+	public String getTransactions(@HeaderParam("userToken") String userToken, @HeaderParam("accountId") long accountId, @HeaderParam("days") int days) {
 		String result = "";
 
 		try {

@@ -85,6 +85,7 @@ public class Transaction {
 	}
 
 	@Column(name = "ACCOUNT_ID")
+	@JsonIgnore
 	public Long getAccountId() {
 		return accountId;
 	}
