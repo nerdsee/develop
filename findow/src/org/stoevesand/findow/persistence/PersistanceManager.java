@@ -9,10 +9,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import org.stoevesand.finapi.ErrorHandler;
-import org.stoevesand.finapi.model.Account;
+import org.stoevesand.findow.model.ErrorHandler;
+import org.stoevesand.findow.model.Account;
 import org.stoevesand.finapi.model.Category;
-import org.stoevesand.finapi.model.Transaction;
+import org.stoevesand.findow.model.Transaction;
 import org.stoevesand.findow.model.CategorySum;
 import org.stoevesand.findow.model.User;
 

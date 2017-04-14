@@ -8,9 +8,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.stoevesand.finapi.ErrorHandler;
+import org.stoevesand.findow.model.ErrorHandler;
 import org.stoevesand.finapi.UsersService;
-import org.stoevesand.finapi.model.Account;
+import org.stoevesand.findow.model.Account;
 import org.stoevesand.finapi.model.FinapiUser;
 import org.stoevesand.findow.model.User;
 import org.stoevesand.findow.persistence.PersistanceManager;

@@ -14,9 +14,9 @@
             Persistence unit for the JPA tutorial of the Hibernate Getting Started Guide
         </description>
 
-        <class>org.stoevesand.finapi.model.Transaction</class>
+        <class>org.stoevesand.findow.model.Transaction</class>
         <class>org.stoevesand.finapi.model.Category</class>
-        <class>org.stoevesand.finapi.model.Account</class>
+        <class>org.stoevesand.findow.model.Account</class>
         <class>org.stoevesand.findow.model.User</class>
         <class>org.stoevesand.findow.model.CategorySum</class>
 

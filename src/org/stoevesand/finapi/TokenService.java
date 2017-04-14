@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.stoevesand.finapi.model.Token;
+import org.stoevesand.findow.model.ErrorHandler;
 
 public class TokenService {
 

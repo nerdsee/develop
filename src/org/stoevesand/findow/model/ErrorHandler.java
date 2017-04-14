@@ -1,4 +1,4 @@
-package org.stoevesand.finapi;
+package org.stoevesand.findow.model;
 
 import java.util.List;
 import java.util.Vector;
@@ -17,6 +17,11 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 @JsonRootName(value = "error")
 public class ErrorHandler extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7996550252908124993L;
+	
 	List<CallError> errors = new Vector<CallError>();
 	String response;
 	private int status;

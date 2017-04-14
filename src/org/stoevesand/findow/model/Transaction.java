@@ -1,4 +1,4 @@
-package org.stoevesand.finapi.model;
+package org.stoevesand.findow.model;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -20,6 +20,7 @@ import javax.persistence.Transient;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.hibernate.annotations.GenericGenerator;
+import org.stoevesand.finapi.model.Category;
 import org.stoevesand.findow.persistence.PersistanceManager;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

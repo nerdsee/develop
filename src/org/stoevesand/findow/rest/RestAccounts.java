@@ -4,16 +4,18 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.stoevesand.finapi.ErrorHandler;
-import org.stoevesand.finapi.UsersService;
-import org.stoevesand.finapi.model.Account;
-import org.stoevesand.finapi.model.FinapiUser;
+import org.stoevesand.findow.auth.Authenticator;
+import org.stoevesand.findow.bankingapi.BankingAPI;
+import org.stoevesand.findow.model.Account;
+import org.stoevesand.findow.model.ErrorHandler;
 import org.stoevesand.findow.model.User;
 import org.stoevesand.findow.persistence.PersistanceManager;
+import org.stoevesand.findow.server.FindowSystem;
 
 import io.swagger.annotations.Api;
 
@@ -28,10 +30,8 @@ public class RestAccounts {
 		String result = "";
 
 		try {
-			// User laden
-			FinapiUser finapiUser = UsersService.getUser(userToken);
-			User user = PersistanceManager.getInstance().getUserByExternalName(finapiUser.getId());
-
+			User user = Authenticator.getUser(userToken);
+			
 			long accountId = Long.parseLong(id);
 
 			Account account = PersistanceManager.getInstance().getAccount(user, accountId, userToken);
@@ -52,8 +52,7 @@ public class RestAccounts {
 
 		try {
 			// User laden
-			FinapiUser finapiUser = UsersService.getUser(userToken);
-			User user = PersistanceManager.getInstance().getUserByExternalName(finapiUser.getId());
+			User user = Authenticator.getUser(userToken);
 
 			List<Account> accounts = PersistanceManager.getInstance().getAccounts(user, userToken);
 			result = RestUtils.generateJsonResponse(accounts, "accounts");
@@ -63,4 +62,20 @@ public class RestAccounts {
 		return result;
 	}
 
+	@Path("/")
+	@POST
+	@Produces("application/json")
+	public String importAccount(@HeaderParam("userToken") String userToken, @HeaderParam("bankId") int bankId, @HeaderParam("bankingUserId") String bankingUserId, @HeaderParam("bankingPin") String bankingPin) {
+		String result = "";
+		try {
+			
+			BankingAPI bankingAPI = FindowSystem.getBankingAPI();
+			bankingAPI.importAccount(userToken, bankId, bankingUserId, bankingPin);
+
+		} catch (ErrorHandler e) {
+			result = e.getResponse();
+		}
+		// System.out.println("BC: " + connection);
+		return result;
+	}
 }

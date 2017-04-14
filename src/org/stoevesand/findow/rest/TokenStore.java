@@ -1,8 +1,8 @@
 package org.stoevesand.findow.rest;
 
-import org.stoevesand.finapi.ErrorHandler;
 import org.stoevesand.finapi.TokenService;
 import org.stoevesand.finapi.model.Token;
+import org.stoevesand.findow.model.ErrorHandler;
 
 public class TokenStore {
 

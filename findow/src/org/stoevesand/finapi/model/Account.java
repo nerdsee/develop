@@ -12,7 +12,7 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.hibernate.annotations.GenericGenerator;
 import org.stoevesand.finapi.AccountsService;
-import org.stoevesand.finapi.ErrorHandler;
+import org.stoevesand.findow.model.ErrorHandler;
 import org.stoevesand.finapi.TokenService;
 import org.stoevesand.findow.model.User;
 

@@ -14,9 +14,9 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.stoevesand.finapi.ErrorHandler;
+import org.stoevesand.findow.model.ErrorHandler;
 import org.stoevesand.finapi.TokenService;
-import org.stoevesand.finapi.model.Account;
+import org.stoevesand.findow.model.Account;
 import org.stoevesand.finapi.model.Token;
 import org.stoevesand.findow.rest.RestUtils;
 

@@ -6,6 +6,7 @@ import java.util.Vector;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.stoevesand.findow.model.Transaction;
 
 public class TransactionList {
 

@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.stoevesand.finapi.model.Bank;
+import org.stoevesand.findow.model.Bank;
 import org.stoevesand.finapi.model.Token;
 
 public class BanksService {

@@ -10,13 +10,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.stoevesand.finapi.ErrorHandler;
-import org.stoevesand.finapi.TokenService;
-import org.stoevesand.finapi.UsersService;
-import org.stoevesand.finapi.model.FinapiUser;
-import org.stoevesand.finapi.model.Token;
+import org.stoevesand.findow.bankingapi.ApiUser;
+import org.stoevesand.findow.model.ErrorHandler;
 import org.stoevesand.findow.model.User;
 import org.stoevesand.findow.persistence.PersistanceManager;
+import org.stoevesand.findow.server.FindowSystem;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,8 +34,7 @@ public class RestUser {
 		if ((user != null) && (user.getPassword().equals(password))) {
 
 			try {
-				Token userToken = TokenService.requestUserToken(RestUtils.getClientToken(), user.getBackendName(), user.getBackendSecret());
-				user.setToken(userToken);
+				user.refreshToken();
 				result = RestUtils.generateJsonResponse(user, "user");
 			} catch (ErrorHandler e) {
 				result = e.getResponse();
@@ -60,8 +57,8 @@ public class RestUser {
 			User user = PersistanceManager.getInstance().getUserByName(id);
 
 			if (user == null) {
-				FinapiUser finapiUser = UsersService.createUser(RestUtils.getClientToken(), null, null);
-				user = new User(id, password, finapiUser.getId(), finapiUser.getPassword());
+				ApiUser apiUser = FindowSystem.getBankingAPI().createUser(null, null);
+				user = new User(id, password, apiUser.getId(), apiUser.getPassword());
 				PersistanceManager.getInstance().store(user);
 				result = RestUtils.generateJsonResponse(Response.OK);
 			} else {
@@ -83,7 +80,7 @@ public class RestUser {
 		try {
 			User user = PersistanceManager.getInstance().getUserByName(id);
 			if (user != null) {
-				UsersService.deleteUser(userToken);
+				FindowSystem.getBankingAPI().deleteUser(userToken);
 			} else {
 				return RestUtils.generateJsonResponse(Response.USER_UNKNOWN);
 			}

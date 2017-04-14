@@ -2,7 +2,7 @@ package org.stoevesand.finapi.model;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.stoevesand.finapi.ErrorHandler;
+import org.stoevesand.findow.model.ErrorHandler;
 import org.stoevesand.finapi.TokenService;
 
 public class FinapiUser {

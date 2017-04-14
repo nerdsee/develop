@@ -14,10 +14,10 @@ import javax.ws.rs.core.Response;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.stoevesand.finapi.model.Account;
+import org.stoevesand.findow.model.Account;
 import org.stoevesand.finapi.model.BankConnection;
 import org.stoevesand.finapi.model.Token;
-import org.stoevesand.finapi.model.Transaction;
+import org.stoevesand.findow.model.Transaction;
 import org.stoevesand.finapi.model.FinapiUser;
 
 public class BankConnectionsService {

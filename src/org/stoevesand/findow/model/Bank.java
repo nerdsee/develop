@@ -1,4 +1,4 @@
-package org.stoevesand.finapi.model;
+package org.stoevesand.findow.model;
 
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -30,12 +30,10 @@ public class Bank {
 		return bic;
 	}
 
-	JSONObject jo = null;
 	private String blz;
 	private String bic;
 
 	public Bank(JSONObject json_bank) {
-		this.jo = json_bank;
 		try {
 			id = json_bank.getInt("id");
 			name = json_bank.getString("name");

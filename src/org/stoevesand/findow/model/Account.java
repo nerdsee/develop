@@ -1,4 +1,4 @@
-package org.stoevesand.finapi.model;
+package org.stoevesand.findow.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,9 +12,8 @@ import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.hibernate.annotations.GenericGenerator;
 import org.stoevesand.finapi.AccountsService;
-import org.stoevesand.finapi.ErrorHandler;
 import org.stoevesand.finapi.TokenService;
-import org.stoevesand.findow.model.User;
+import org.stoevesand.finapi.model.JSONUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

@@ -17,6 +17,7 @@ import org.codehaus.jettison.json.JSONObject;
 import org.stoevesand.finapi.model.BankConnection;
 import org.stoevesand.finapi.model.Token;
 import org.stoevesand.finapi.model.UserInfo;
+import org.stoevesand.findow.model.ErrorHandler;
 
 public class MandatorAdminService {
 

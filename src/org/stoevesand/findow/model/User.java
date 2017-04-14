@@ -14,9 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.stoevesand.finapi.ErrorHandler;
 import org.stoevesand.finapi.TokenService;
-import org.stoevesand.finapi.model.Account;
 import org.stoevesand.finapi.model.Token;
 import org.stoevesand.findow.rest.RestUtils;
 
@@ -128,13 +126,18 @@ public class User {
 
 	public Account getAccount(long accountId) {
 
-		for(Account acc:accounts) {
-			if (acc.getId().longValue()==accountId) {
+		for (Account acc : accounts) {
+			if (acc.getId().longValue() == accountId) {
 				return acc;
 			}
 		}
-		
+
 		return null;
+	}
+
+	public void refreshToken() throws ErrorHandler {
+		Token userToken = TokenService.requestUserToken(RestUtils.getClientToken(), getBackendName(), getBackendSecret());
+		setToken(userToken);
 	}
 
 }
