@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+	<ui:define name="head">
+		<title>Notonto - Vokabeln lernen und behalten</title>
+	</ui:define>
+	<ui:define name="content">
+		<div class="ui-g">
+			<div id="content" class="ui-g-12">
+				<h1>
+					<h:outputText value="Login" />
+				</h1>
+				<h:form>
+					<p:messages for="login_form" showDetail="true" autoUpdate="true" />
+					<div class="form-group text-center">
+						<p:inputText size="50" id="loginname" value="#{auth.username}" placeholder="Email / Nickname" class="form-control" required="true" />
+					</div>
+					<div class="form-group">
+						<p:password id="loginpass" value="#{auth.password}" placeholder="Password" class="form-control" required="true" requiredMessage="Bitte eingeben." />
+					</div>
+					<p:focus />
+						<p:commandButton id="firelogin" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

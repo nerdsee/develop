@@ -1,0 +1,32 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<div class="content">
+	<!-- ### CONTENT-START ### -->
+	<h1>
+		<h:outputText value="notonto" class="c4" />
+		<h:outputText value="Blog" class="c3" />
+	</h1>
+	<h:dataTable class="news" value="#{brainSession.news}" columnClasses="left atop w100,atop w400" var="news" rows="6">
+		<h:column>
+			<h:outputText value="#{news.date}" class="font1 bold">
+				<f:convertDateTime type="date" dateStyle="short" />
+			</h:outputText>
+			<h:outputText value="&gt;br>" escape="false" />
+			<h:outputLink value="http://blog.notonto.de/?tag=#{news.slug}" target="_BLOG" class="font1 bold">
+				<h:outputText value="#{news.typetext}" class="c3" />
+			</h:outputLink>
+		</h:column>
+		<h:column>
+			<h:outputLink value="http://blog.notonto.de/?p=#{news.id}" target="_BLOG" class="font1 bold">
+				<h:outputText value="#{news.title}" class="c3" />
+			</h:outputLink>
+			<h:outputText value="&gt;br>#{news.text}&gt;p>" escape="false" class="font1" style="margin-bottom: 5px;" />
+		</h:column>
+	</h:dataTable>
+	<!-- ### CONTENT-END ### -->
+</div>
+</ui:composition>

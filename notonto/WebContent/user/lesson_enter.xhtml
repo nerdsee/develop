@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template-exit.xhtml">
+	<ui:define name="head">
+		<title>Notonto - Lektion</title>
+		<ui:fragment rendered="#{brainSession.currentUserLesson.lesson.keyboardLayout=='ES'}">
+			<script src="/js/es.js" />
+		</ui:fragment>
+		<ui:fragment rendered="#{brainSession.currentUserLesson.lesson.keyboardLayout=='DE'}">
+			<script src="/js/de.js" />
+		</ui:fragment>
+		<ui:fragment rendered="#{brainSession.currentUserLesson.lesson.keyboardLayout=='PY'}">
+			<script src="/js/py.js" />
+		</ui:fragment>
+		<ui:fragment rendered="#{brainSession.currentUserLesson.lesson.keyboardLayout=='EN'}">
+			<script src="/js/en.js" />
+		</ui:fragment>
+	</ui:define>
+	<ui:define name="content">
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<h2>
+					<h:outputText value="#{brainSession.currentUserLesson.lesson.description}" />
+				</h2>
+				<!-- ### CONTENT-START ### -->
+				<h:form id="answerform">
+					<p:panel id="panel" rendered="#{not empty brainSession.currentUserLesson.currentUserItem}">
+						<p:focus context="panel" />
+						<h:outputText value="#{brainSession.currentUserItem.item.formattedText}" escape="false" class="font4" rendered="#{brainSession.currentUserLesson.lesson.lessonType==0}" />
+						<h:outputText value="#{brainSession.currentUserItem.item.formattedText}" escape="false" class="fontsym ta_center" rendered="#{brainSession.currentUserLesson.lesson.lessonType==1}" />
+						<h:outputText value="[#{brainSession.currentUserItem.item.comment}]" class="font4 ta_center" rendered="#{brainSession.currentUserLesson.lesson.lessonType==1 and brainSession.currentUserLesson.config.showPinyin }" />
+						<br />
+						<h:inputText class="long-press" id="answerinput" onkeyup="parse(this)" autocomplete="off" />
+						<!-- onkeydown="return checkSpecialChar(event, this);"  -->
+						<br />
+						<h:outputText id="pinyin2" value="-" rendered="#{brainSession.currentUserLesson.lesson.keyboardLayout=='PY'}" />
+						<br />
+						<h:inputText id="pinyin" value="-" rendered="#{brainSession.currentUserLesson.lesson.keyboardLayout=='PY'}" disabled="true" />
+						<br />
+						<p:commandButton id="submitlink" ajax="false" action="#{brainSession.checkAnswerText}" onclick="updateData(); return true;" value="#{bundle.btn_check}" />
+						<h:inputHidden id="keyboardLayout" value="#{brainSession.currentUserLesson.lesson.keyboardLayout}" />
+						<h:inputHidden id="answerin" value="#{brainSession.answerText}"></h:inputHidden>
+					</p:panel>
+				</h:form>
+				<p:messages id="messages" closable="false" showDetail="true" showIcon="false" />
+				<h:form rendered="#{empty brainSession.currentUserLesson.currentUserItem}" id="countdown" >
+					<h:panelGrid columns="1" class="w100p">
+						<h1>
+							<h:outputText value="#{bundle.noitems}" />
+						</h1>
+						<h2>
+							<h:outputText value="#{brainSession.currentUserLesson.nextUserItemTimeDiff}" />
+							<p:commandButton class="btn btn-alert" ajax="false" update="countdown" action="#{brainSession.tryNextUserItem}" value="Refresh" rendered="#{auth.isLoggedIn}" />
+						</h2>
+					</h:panelGrid>
+				</h:form>
+				<!-- ### CONTENT-END ### -->
+			</div>
+		</div>
+	</ui:define>
+	<ui:define name="sidebar">
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<h3 class="mhide">&#160;</h3>
+				<ui:include src="/snippets/userlessonstat.xhtml"></ui:include>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

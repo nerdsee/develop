@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
+<h:head>
+	<link rel="stylesheet" type="text/css" href="/css/style2.css" />
+	<link rel="stylesheet" type="text/css" href="/css/demo.css" />
+	<script src="/js/code3.js" />
+	<ui:insert name="head" />
+</h:head>
+<h:body>
+	<pm:page id="p0" styleClass="jqm-demos">
+		<pm:header styleClass="jqm-header">
+			<h:form>
+				<p:panelGrid columns="2" styleClass="ui-responsive">
+					<h2>
+						<span class="c1 font4">no</span><span class="c2 font4">tonto</span>
+					</h2>
+					<p:outputPanel>
+						<p:commandButton styleClass="ui-btn-inline ui-btn-orange" action="login" ajax="false" value="Login" rendered="#{!auth.isLoggedIn}" />
+						<p:commandButton styleClass="ui-btn-inline ui-btn-green" action="#{auth.login()}" value="Register" rendered="#{!auth.isLoggedIn}" />
+					</p:outputPanel>
+					<p:outputPanel />
+				</p:panelGrid>
+				<a id="jqm-navmenu-link" class="jqm-navmenu-link ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all" href="#menu" data-role="button" role="button">Menu</a>
+			</h:form>
+		</pm:header>
+		<pm:content styleClass="jqm-content">
+			<ui:insert name="content" />
+			<ui:insert name="sidebar" />
+		</pm:content>
+		<h:form>
+			<div id="menu" data-role="panel" class="jqm-navmenu-panel" data-position="left" data-display="overlay" data-theme="a">
+				<ui:insert name="menu" />
+			</div>
+		</h:form>
+		<pm:footer styleClass="jqm-footer" fixed="true" tapToggle="false">
+			<p>Running #{build.primefacesVersion} on #{build.jsfVersion}</p>
+		</pm:footer>
+	</pm:page>
+</h:body>
+</html>

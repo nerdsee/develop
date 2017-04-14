@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+	<ui:define name="head">
+		<title>Notonto - Optionen</title>
+	</ui:define>
+	<ui:define name="content">
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<!-- ### CONTENT-START ### -->
+				<h1>
+					<h:outputText value="Einstellungen" />
+				</h1>
+				<p:messages showDetail="true" autoUpdate="true"></p:messages>
+				<p:accordionPanel>
+					<p:tab title="Ihre Emailadresse">
+						<h:outputText rendered="false" escape="false" value="#{bundle.name_text}" class="font1" />
+						<h:form id="nametab">
+							<div class="ui-g" id="nametab">
+								<div class="ui-g-12 ui-lg-4">
+									<h:outputText value="Emailadresse" style="font-weight: bold;" />
+								</div>
+								<div class="ui-g-12 ui-lg-8">
+									<h:outputText id="email" escape="false" value="#{brainSession.currentUser.name}" />
+								</div>
+								<div class="ui-g-12 ui-lg-4">
+									<h:outputText value="Neue Emailadresse" style="font-weight: bold;" />
+								</div>
+								<div class="ui-g-12 ui-lg-8">
+									<p:inputText id="email1" value="#{auth.namenew}">
+										<f:validator validatorId="custom.emailValidator" />
+									</p:inputText>
+								</div>
+								<div class="ui-g-12 ui-lg-4">
+									<h:outputText />
+								</div>
+								<div class="ui-g-12 ui-lg-8">
+									<p:commandButton id="nameb1" update="nametab" class="btn btn_blue" action="#{auth.alterName}" partialSubmit="true" value="OK" />
+								</div>
+							</div>
+						</h:form>
+					</p:tab>
+					<p:tab title="#{bundle.nickname}">
+						<h:outputText rendered="false" escape="false" value="#{bundle.nickname_text}" class="font1" />
+						<h:form id="nicktab">
+							<div class="ui-g" id="nametab">
+								<div class="ui-g-12 ui-lg-4">
+									<p:outputLabel value="Nickname" />
+								</div>
+								<div class="ui-g-12 ui-lg-8">
+									<h:outputText id="nick" escape="false" value="#{brainSession.currentUser.nick}" />
+								</div>
+								<div class="ui-g-12 ui-lg-4">
+									<p:outputLabel value="Neuer Nickname" />
+								</div>
+								<div class="ui-g-12 ui-lg-8">
+									<p:inputText id="nick1" value="#{auth.nicknew}" maximumLength="15" />
+								</div>
+								<div class="ui-g-12 ui-lg-4"></div>
+								<div class="ui-g-12 ui-lg-8">
+									<p:commandButton id="nickb1" update="nicktab" class="btn btn_blue" action="#{auth.alterNickname}" partialSubmit="true" value="OK" />
+								</div>
+							</div>
+						</h:form>
+					</p:tab>
+					<p:tab title="#{bundle.passchange}">
+						<h:outputText value="#{bundle.passchange_text}" class="font1" />
+						<h:form>
+							<div class="ui-g" id="nametab">
+								<div class="ui-g-12 ui-lg-4">
+									<p:outputLabel value="#{bundle.password}" />
+								</div>
+								<div class="ui-g-12 ui-lg-8">
+									<p:password secret="true" id="pw1" value="#{auth.passnew}">
+										<p:ajax />
+									</p:password>
+								</div>
+								<div class="ui-g-12 ui-lg-4">
+									<p:outputLabel value="#{bundle.passconfirm}" />
+								</div>
+								<div class="ui-g-12 ui-lg-8">
+									<p:password secret="true" id="pw2" value="#{auth.passconfirm}">
+										<p:ajax />
+									</p:password>
+								</div>
+								<div class="ui-g-12 ui-lg-4"></div>
+								<div class="ui-g-12 ui-lg-8">
+									<p:commandButton class="btn btn_blue" id="cb1" action="#{auth.alterPassword}" value="OK" />
+								</div>
+							</div>
+						</h:form>
+					</p:tab>
+					<p:tab title="#{bundle.delete_account}">
+						<h:form id="delf1" partialTriggers="delcb1">
+							<div class="ui-g" id="nametab">
+								<div class="ui-g-12 ui-lg-12">
+									<h:outputText escape="false" value="#{bundle.delete_text}" class="font1" />
+								</div>
+								<div class="ui-g-12 ui-lg-4">
+									<h:outputLabel value="#{bundle.password}" />
+								</div>
+								<div class="ui-g-12 ui-lg-8">
+									<h:inputText secret="false" id="delpw" value="#{auth.passdelete}" />
+								</div>
+								<div class="ui-g-12 ui-lg-4">
+								</div>
+								<div class="ui-g-12 ui-lg-8">
+									<p:commandButton id="delcb1" class="btn btn_blue" action="#{auth.deleteAccount}" partialSubmit="true" value="#{bundle.btn_delete}"></p:commandButton>
+								</div>
+							</div>
+						</h:form>
+					</p:tab>
+				</p:accordionPanel>
+				<!-- ### CONTENT-END ### -->
+			</div>
+		</div>
+	</ui:define>
+	<ui:define name="menu">
+		<h:form>
+			<p:menu styleClass="ui-corner-all ui-group-theme-c">
+				<p:menuitem value="Exit" icon="ui-icon-home" outcome="user" />
+			</p:menu>
+		</h:form>
+	</ui:define>
+</ui:composition>

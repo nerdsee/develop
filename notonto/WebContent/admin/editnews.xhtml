@@ -1,0 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
+<%@ taglib uri="http://myfaces.apache.org/trinidad" prefix="tr"%>
+<%
+	String now = "" + System.currentTimeMillis();
+%>
+<f:view locale="#{brainSession.currentLocale}">
+	<html>
+	<h:head>
+	<title>Notonto - Edit Item</title>
+	<t:stylesheet path="/css/style2.css"></t:stylesheet>
+	<script type="text/javascript" src="<%=request.getContextPath()%>/js/code.js"></script>
+	</h:head>
+	<h:body onLoad="document.getElementById('answerinput<%=now%>').focus()">
+	<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
+	<f:subview id="s_headline">
+		<ui:include src="/snippets/headline.jsp" />
+	</f:subview>
+	<!-- LAYOUT-BLOCK 2-1 START -->
+	<div class="block">
+		<div class="content_col">
+			<div class="content">
+				<!-- ### CONTENT-START ### -->
+				<h1><h:outputText value="#{bundle.edititem}" /></h1>
+				<h:form enctype="UTF-8" acceptcharset="UTF-8">
+					<h:panelGrid columns="2">
+						<h:outputText value="Title" />
+						<h:inputText value="#{brainSession.currentNews.title}" size="40" />
+						<h:outputText value="Locale" />
+						<h:inputText value="#{brainSession.currentNews.locale}" size="4" />
+						<h:outputText value="Text" />
+						<h:inputTextarea value="#{brainSession.currentNews.text}" cols="40" rows="10" />
+						<h:outputText value="Type" />
+						<tr:selectOneChoice value="#{brainSession.currentNews.type}">
+							<tr:selectItem value="0" label="<ohne>" />
+							<tr:selectItem value="1" label="Plugin" />
+							<tr:selectItem value="2" label="Lektion" />
+							<tr:selectItem value="3" label="Allgemein" />
+						</tr:selectOneChoice>
+					</h:panelGrid>
+					<h:commandButton value="Cancel" action="#{brainSession.currentNews.rollbackAction}" />
+					<h:commandButton value="OK" action="#{brainSession.currentNews.saveAction}" />
+				</h:form>
+				<!-- ### CONTENT-END ### -->
+			</div>
+		</div>
+		<div class="sidebar_col">
+			<f:subview id="s_sidem">
+				<ui:include src="/snippets/sidemenu_admin.jsp" />
+			</f:subview>
+		</div>
+	</div>
+	<!-- LAYOUT-BLOCK 2-1 END -->
+	</h:body>
+	</html>
+</f:view>

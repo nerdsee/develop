@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template-exit.xhtml">
+	<ui:define name="head">
+		<title>Edit Item</title>
+	</ui:define>
+	<ui:define name="content">
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<h1>
+					<h:outputText value="#{bundle.editlesson}" />
+				</h1>
+				<h2>
+					<h:outputText value="#{brainSession.currentLesson.description}" />
+				</h2>
+				<h:form>
+					<h:panelGrid columns="2">
+						<p:outputLabel for="f1" value="Titel" />
+						<p:inputText id="f1" value="#{brainSession.currentLesson.description}" size="40" />
+						<p:outputLabel for="f2" value="Type" />
+						<p:selectOneMenu id="f2" size="1" value="#{brainSession.currentLesson.lessonType}">
+							<f:selectItem itemValue="0" itemLabel="Standard" />
+							<f:selectItem itemValue="1" itemLabel="Symbol" />
+						</p:selectOneMenu>
+						<p:outputLabel for="flagsel" value="Icon" />
+						<p:selectOneMenu size="1" id="flagsel" value="#{brainSession.currentLesson.icon}">
+							<f:selectItem itemValue="allg" itemLabel="common knowledge" />
+							<f:selectItem itemValue="capax" itemLabel="capax" />
+							<f:selectItem itemValue="dk" itemLabel="danish" />
+							<f:selectItem itemValue="en" itemLabel="english" />
+							<f:selectItem itemValue="geo" itemLabel="geography" />
+							<f:selectItem itemValue="it" itemLabel="italian" />
+							<f:selectItem itemValue="lang" itemLabel="language" />
+							<f:selectItem itemValue="mpc" itemLabel="mpc-logo" />
+							<f:selectItem itemValue="no" itemLabel="norwegian" />
+							<f:selectItem itemValue="pt" itemLabel="portugese" />
+							<f:selectItem itemValue="ru" itemLabel="russian" />
+							<f:selectItem itemValue="es" itemLabel="spanish" />
+							<f:ajax render="iflag" />
+						</p:selectOneMenu>
+						<p:outputLabel for="iflag" value="" />
+						<p:graphicImage forceId="true" id="iflag" url="/images/lessons/lesson_button_#{brainSession.currentLesson.icon}.gif" class="icon" width="32" height="32" />
+						<p:outputLabel for="f5" value="Language (Q-A)" />
+						<h:panelGrid id="f5" columns="2">
+							<p:selectOneMenu style="margin-righp: 5px;" size="1" value="#{brainSession.currentLesson.qlang}">
+								<f:selectItem itemValue="ch" itemLabel="ch" />
+								<f:selectItem itemValue="de" itemLabel="de" />
+								<f:selectItem itemValue="dk" itemLabel="dk" />
+								<f:selectItem itemValue="en" itemLabel="en" />
+								<f:selectItem itemValue="es" itemLabel="es" />
+								<f:selectItem itemValue="it" itemLabel="it" />
+								<f:selectItem itemValue="no" itemLabel="no" />
+								<f:selectItem itemValue="pt" itemLabel="pt" />
+								<f:selectItem itemValue="ru" itemLabel="ru" />
+							</p:selectOneMenu>
+							<p:selectOneMenu size="1" value="#{brainSession.currentLesson.alang}">
+								<f:selectItem itemValue="ch" itemLabel="ch" />
+								<f:selectItem itemValue="de" itemLabel="de" />
+								<f:selectItem itemValue="dk" itemLabel="dk" />
+								<f:selectItem itemValue="en" itemLabel="en" />
+								<f:selectItem itemValue="es" itemLabel="es" />
+								<f:selectItem itemValue="it" itemLabel="it" />
+								<f:selectItem itemValue="no" itemLabel="no" />
+								<f:selectItem itemValue="pt" itemLabel="pt" />
+								<f:selectItem itemValue="ru" itemLabel="ru" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+						<p:outputLabel for="f7" value="Abstract" />
+						<p:inputTextarea id="f7" value="#{brainSession.currentLesson.abstract}" cols="60" rows="3" />
+						<p:outputLabel />
+						<h:panelGroup>
+							<p:commandButton value="OK" action="#{brainSession.currentLesson.saveAction}" class="ui-btn-inline ui-btn-green" />
+							<p:commandButton value="Abbrechen" action="#{brainSession.currentLesson.rollbackAction}" class="ui-btn-inline ui-btn-red" />
+						</h:panelGroup>
+					</h:panelGrid>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+	<ui:define name="menu">
+		<h:form>
+			<p:menu>
+				<p:menuitem value="OK" action="#{brainSession.currentLesson.saveAction}" icon="ui-icon-gear" />
+				<p:menuitem value="Cancel" action="#{brainSession.currentLesson.rollbackAction}" icon="ui-icon-gear" />
+				<p:submenu label="Lesson" icon="ui-icon-info">
+					<p:menuitem value="Download Lesson" action="#{brainSession.downloadLesson}" icon="ui-icon-gear" />
+				</p:submenu>
+			</p:menu>
+		</h:form>
+	</ui:define>
+</ui:composition>

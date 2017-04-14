@@ -1,0 +1,41 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+	<ui:define name="head">
+		<title>Admin Status</title>
+	</ui:define>
+	<ui:define name="content">
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<!-- ### CONTENT-START ### -->
+				<h1>
+					<h:outputText value="Admin Status" />
+				</h1>
+				<h:form>
+					<p:dataTable var="user" value="#{brainSystem.userList}" rows="#{brainSession.numRows}" paginator="true" paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
+						rendered="#{brainSession.currentUser.isAdmin}">
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Benutzername" />
+							</f:facet>
+							<h:outputText value="#{user.name}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Score" />
+							</f:facet>
+							<h:outputText value="#{user.score}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="login/reg" />
+							</f:facet>
+							<h:outputText value="#{user.lastLoginDate}">
+								<f:convertDateTime dateStyle="short" timeStyle="medium" type="both" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+				<!-- ### CONTENT-END ### -->
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

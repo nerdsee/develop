@@ -1,0 +1,13 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+	<h:form>
+		<p:menu>
+			<p:menuitem value="#{bundle.menu_home}" icon="ui-icon-home" outcome="index" />
+			<p:menuitem value="Blog" icon="ui-icon-note" outcome="blog" />
+			<p:menuitem styleClass="m_lib" value="#{bundle.menu_library}" icon="ui-icon-note" outcome="library" />
+			<p:menuitem value="#{bundle.menu_learn}" outcome="user" icon="ui-icon-lightbulb" rendered="#{auth.isLoggedIn}" />
+			<p:menuitem value="#{bundle.menu_teacher}" outcome="/editlesson.jsf" icon="ui-icon-pencil" rendered="#{auth.isLoggedIn}" />
+			<p:menuitem value="#{bundle.menu_logout}" action="#{auth.logout}" rendered="#{auth.isLoggedIn}" ajax="false" />
+			<p:menuitem value="#{bundle.menu_admin}" url="/admin/user.jsf" icon="ui-icon-gear" rendered="#{auth.isLoggedIn and user.isAdmin}" />
+		</p:menu>
+	</h:form>
+</ui:composition>

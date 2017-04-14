@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template.xhtml">
+	<ui:define name="head">
+		<title>Notonto - Vokabeln lernen und behalten</title>
+	</ui:define>
+	<ui:define name="content">
+		<!-- ### CONTENT-START ### -->
+		<h1>
+			<h:outputText value="Willkommen bei notonto" />
+		</h1>
+		<h:outputText escape="false" value="Wir haben eine email an " styleClass="font4" />
+		<br/>
+		<h:outputText escape="false" value="#{auth.email}" styleClass="font4 bold"/>
+		<br/>
+		<h:outputText escape="false" value="geschickt." styleClass="font4"/>
+		<p/>
+		<h:outputText escape="false" value="Bitte bestätige diesen Account über den Link in der email." />
+		<p/>
+		<p:button outcome="user" styleClass="ui-btn-inline ui-btn-green" value="Los geht's" />
+		<!-- ### CONTENT-END ### -->
+	</ui:define>
+</ui:composition>

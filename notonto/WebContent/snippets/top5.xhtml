@@ -1,0 +1,19 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile">
+<h2>Top Ten</h2>
+	<p:dataTable var="user" value="#{brainSystem.top5}">
+		<p:column headerText="Punkte">
+			<h:outputText value="#{user.score}" />
+		</p:column>
+		<p:column headerText="Nick">
+			<h:outputText value="&#160;" escape="false" />
+			<h:outputText value="#{user.nick}" />
+		</p:column>
+	</p:dataTable>
+		<h:outputText value="Stand" />
+		<h:outputText value="&#160;" escape="false" />
+		<h:outputText value="#{brainSystem.lastTop5}">
+			<f:convertDateTime pattern="HH:mm" />
+		</h:outputText>
+		<h:outputText value="&#160;" escape="false" />
+		<h:outputText value="Uhr" />
+</ui:composition>

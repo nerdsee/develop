@@ -1,0 +1,31 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    <f:verbatim>
+	<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript">
+	</script>
+</f:verbatim>
+<div class="sidebar_top" rendered="#{!Auth.isLoggedIn}">
+</div>
+<div class="sidebar" rendered="#{!Auth.isLoggedIn}" style="border: 2px solid #6D84B4; abackground-color: #7A8FB9;">
+	<!-- ### SIDEBAR-START ### -->
+	<t:htmlTag value="center">
+		<fb:login-button v="2" onlogin="fb_login()">
+			<fb:intl>Connect using Facebook</fb:intl>
+		</fb:login-button>
+	</t:htmlTag>
+	<f:verbatim>
+		<script type="text/javascript">
+   FB_RequireFeatures(["XFBML"], function()
+    {
+       FB.init("15b68e3e9a6455c307d652a38a0fcf05", "/fb/xd_receiver.htm");
+    });
+			</script>
+	</f:verbatim>
+	<!-- ### SIDEBAR-END ### -->
+</div>
+<div class="sidebar_bottom" rendered="#{!Auth.isLoggedIn}"></div>
+</ui:composition>
