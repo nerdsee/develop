@@ -9,6 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.stoevesand.finapi.ErrorHandler;
 import org.stoevesand.finapi.model.Account;
 import org.stoevesand.finapi.model.Category;
 import org.stoevesand.finapi.model.Transaction;
@@ -61,7 +62,7 @@ public class PersistanceManager {
 		entityManager.close();
 	}
 
-	public List<Transaction> getTx(User user, long accountId, int days) {
+	public List<Transaction> getTx(User user, long accountId, int days) throws ErrorHandler {
 
 		// create a couple of events...
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -69,15 +70,16 @@ public class PersistanceManager {
 
 		List<Transaction> result = new Vector<Transaction>();
 
-		// TODO: wieder heil machen
-		// Set<Account> accounts = user.getAccounts();
-
 		if (accountId > 0) {
+			// TODO: wieder heil machen
+			Account account = user.getAccount(accountId);
 			// Standardfall mit echter accountId
-			Account account = entityManager.find(Account.class, accountId);
+			// Account account = entityManager.find(Account.class, accountId);
 			if (account != null) {
 				List<Transaction> subResult = entityManager.createQuery("select t from Transaction t where t.accountId=:aid and t.bookingDate > current_date - :daydelta", Transaction.class).setParameter("daydelta", days).setParameter("aid", account.getSourceId()).getResultList();
 				result.addAll(subResult);
+			} else {
+				throw new ErrorHandler(500, "NO SUCH ACCOUNT");
 			}
 
 		} else {

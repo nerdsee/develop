@@ -126,4 +126,15 @@ public class User {
 		this.token = token;
 	}
 
+	public Account getAccount(long accountId) {
+
+		for(Account acc:accounts) {
+			if (acc.getId().longValue()==accountId) {
+				return acc;
+			}
+		}
+		
+		return null;
+	}
+
 }
