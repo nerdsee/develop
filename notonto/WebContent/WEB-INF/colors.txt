@@ -1,7 +1,0 @@
-red bg #F2DEDE
-red border #EED3D7
-red #B94A48
-
-yellow bg #FCF8E3
-yellow border #FBEED5
-yellow #C09853

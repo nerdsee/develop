@@ -1,4 +1,4 @@
-package org.stoevesand.finapi.client;
+package org.stoevesand.test;
 
 import java.util.List;
 import java.util.Vector;
@@ -6,17 +6,17 @@ import java.util.Vector;
 import org.stoevesand.finapi.AccountsService;
 import org.stoevesand.finapi.BankConnectionsService;
 import org.stoevesand.finapi.BanksService;
-import org.stoevesand.findow.model.ErrorHandler;
 import org.stoevesand.finapi.MandatorAdminService;
 import org.stoevesand.finapi.TokenService;
 import org.stoevesand.finapi.TransactionsService;
-import org.stoevesand.findow.model.Account;
-import org.stoevesand.findow.model.Bank;
 import org.stoevesand.finapi.model.BankConnection;
 import org.stoevesand.finapi.model.Token;
-import org.stoevesand.findow.model.Transaction;
-import org.stoevesand.finapi.model.User;
+import org.stoevesand.finapi.model.FinapiUser;
 import org.stoevesand.finapi.model.UserInfo;
+import org.stoevesand.findow.model.Account;
+import org.stoevesand.findow.model.Bank;
+import org.stoevesand.findow.model.ErrorHandler;
+import org.stoevesand.findow.model.Transaction;
 import org.stoevesand.findow.rest.RestServer10;
 
 public class FinbookClient {
@@ -66,7 +66,7 @@ public class FinbookClient {
 		System.out.println("Bank: " + haspa);
 
 		// User user = UsersService.createUser(clientToken);
-		User user = new User("da7eb4f2-d301-4b87-9260-4ce94041bdd7", "43a78d96-47a0-49a7-b11d-f01030177141");
+		FinapiUser user = new FinapiUser("da7eb4f2-d301-4b87-9260-4ce94041bdd7", "43a78d96-47a0-49a7-b11d-f01030177141");
 		System.out.println("User: " + user);
 
 		// if (user != null)
