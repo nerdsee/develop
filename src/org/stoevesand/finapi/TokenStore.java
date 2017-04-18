@@ -1,6 +1,5 @@
-package org.stoevesand.findow.rest;
+package org.stoevesand.finapi;
 
-import org.stoevesand.finapi.TokenService;
 import org.stoevesand.finapi.model.Token;
 import org.stoevesand.findow.model.ErrorHandler;
 

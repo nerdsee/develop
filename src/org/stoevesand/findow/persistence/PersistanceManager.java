@@ -9,6 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.stoevesand.finapi.AccountsService;
 import org.stoevesand.finapi.model.Category;
 import org.stoevesand.findow.model.Account;
 import org.stoevesand.findow.model.CategorySum;
@@ -120,7 +121,7 @@ public class PersistanceManager {
 		// create a couple of events...
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		entityManager.getTransaction().begin();
-		List<User> result = entityManager.createQuery("select t from User t where t.backendName = :username").setParameter("username", id).getResultList();
+		List<User> result = entityManager.createQuery("select t from User t where t.backendName = :username", User.class).setParameter("username", id).getResultList();
 		if (result.size() > 0) {
 			ret = (User) result.get(0);
 		}
@@ -135,6 +136,14 @@ public class PersistanceManager {
 		entityManager.getTransaction().begin();
 		entityManager.persist(obj);
 		entityManager.getTransaction().commit();
+	}
+
+	public void remove(EntityManager em, Object entity) {
+		em.remove(em.contains(entity) ? entity : em.merge(entity));
+	}
+
+	public void persist(EntityManager em, Object entity) {
+		em.persist(em.contains(entity) ? entity : em.merge(entity));
 	}
 
 	public Transaction getTxByExternalId(Long sourceId) {
@@ -265,6 +274,17 @@ public class PersistanceManager {
 		entityManager.close();
 
 		return retAccount;
+	}
+
+	public void deleteAccount(User user, long accountId, String userToken) throws ErrorHandler {
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		entityManager.getTransaction().begin();
+
+		user.removeAccount(accountId);
+		persist(entityManager, user);
+
+		entityManager.getTransaction().commit();
+		entityManager.close();
 	}
 
 	public void deleteAccounts(int connectionId) {

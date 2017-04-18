@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -87,7 +86,7 @@ public class User {
 		this.id = id;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER) //
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER, orphanRemoval = true) //
 	public Set<Account> getAccounts() {
 		return accounts;
 	}
@@ -133,6 +132,21 @@ public class User {
 		}
 
 		return null;
+	}
+
+	public void removeAccount(Account account) {
+		if (this.accounts != null) {
+			accounts.remove(account);
+			account.setUser(null);
+		}
+	}
+
+	public void removeAccount(long accountId) {
+		for (Account account : getAccounts()) {
+			if (account.getId() == accountId) {
+				removeAccount(account);
+			}
+		}
 	}
 
 	public void refreshToken() throws ErrorHandler {

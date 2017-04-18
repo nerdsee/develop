@@ -1,5 +1,6 @@
 package org.stoevesand.findow.rest;
 
+import org.stoevesand.finapi.TokenStore;
 import org.stoevesand.finapi.model.Token;
 
 import com.fasterxml.jackson.core.JsonProcessingException;

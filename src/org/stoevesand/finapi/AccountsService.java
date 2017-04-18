@@ -87,4 +87,23 @@ public class AccountsService {
 		}
 	}
 
+	public static void deleteAccount(String userToken, Account account) throws ErrorHandler {
+
+		Client client = ClientBuilder.newClient();
+
+		WebTarget webTarget = client.target(URL + "/" + account.getSourceId());
+		webTarget = webTarget.queryParam("access_token", userToken);
+		Invocation.Builder invocationBuilder = webTarget.request();
+		invocationBuilder.accept("application/json");
+		Response response = invocationBuilder.delete();
+		String output = response.readEntity(String.class);
+
+		int status = response.getStatus();
+		if (status != 200) {
+			ErrorHandler eh = new ErrorHandler(status, output);
+			throw eh;
+		}
+
+	}
+
 }

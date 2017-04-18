@@ -54,7 +54,7 @@ public class FinapiBankingAPI implements BankingAPI {
 
 	@Override
 	public ApiUser createUser(String username, String password) throws ErrorHandler {
-		ApiUser apiUser = UsersService.createUser(RestUtils.getClientToken(), null, null);
+		ApiUser apiUser = UsersService.createUser(TokenStore.getInstance().getClientToken(), null, null);
 		return apiUser;
 	}
 
@@ -65,7 +65,7 @@ public class FinapiBankingAPI implements BankingAPI {
 
 	@Override
 	public List<Bank> searchBanks(String search) {
-		List<Bank> banks = BanksService.searchBanks(RestUtils.getClientToken(), search);
+		List<Bank> banks = BanksService.searchBanks(TokenStore.getInstance().getClientToken(), search);
 		return banks;
 	}
 
