@@ -1,0 +1,33 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template-exit.xhtml">
+	<ui:define name="head">
+		<title>Edit Item</title>
+	</ui:define>
+	<ui:define name="content">
+		<div class="ui-g">
+			<div id="content" class="ui-g-12 ui-md-12 ui-lg-12">
+				<h1>
+					<h:outputText value="Lektion hochladen" />
+				</h1>
+				<h2>
+					<h:outputText value="#{brainSession.currentLesson.description}" />
+				</h2>
+				<h:outputText value="#{bundle.fileformat}" />
+				<p />
+				<h:form enctype="multipart/form-data">
+					<p:fileUpload label="Datei auswählen" value="#{lessonLoader.uploadedFile}" mode="simple" skinSimple="true" />
+					<p />
+					<p:commandButton value="Upload" ajax="false" action="#{lessonLoader.fileLessonUploaded}" />
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+	<ui:define name="menu">
+		<p:menu>
+			<p:menuitem value="OK" action="#{brainSession.currentLesson.saveAction}" icon="ui-icon-gear" />
+			<p:menuitem value="Cancel" action="#{brainSession.currentLesson.rollbackAction}" icon="ui-icon-gear" />
+			<p:submenu label="Lesson" icon="ui-icon-info">
+				<p:menuitem value="Download Lesson" action="#{brainSession.downloadLesson}" icon="ui-icon-gear" />
+			</p:submenu>
+		</p:menu>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+
+	<display-name>notonto</display-name>
+	<welcome-file-list>
+		<welcome-file>index.jsf</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>Brain Servlet</servlet-name>
+		<servlet-class>org.stoevesand.brain.servlet.BrainServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Brain Servlet</servlet-name>
+		<url-pattern>/api/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Audio Servlet</servlet-name>
+		<servlet-class>org.stoevesand.brain.servlet.AudioServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Audio Servlet</servlet-name>
+		<url-pattern>/audio/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Captcha Servlet</servlet-name>
+		<servlet-class>org.stoevesand.brain.servlet.CaptchaServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Captcha Servlet</servlet-name>
+		<url-pattern>/captcha/*</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Unlock Servlet</servlet-name>
+		<servlet-class>org.stoevesand.brain.servlet.UnlockServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Unlock Servlet</servlet-name>
+		<url-pattern>/unlock/*</url-pattern>
+	</servlet-mapping>
+
+	<filter>
+		<filter-name>AuthenticationFilter</filter-name>
+		<filter-class>org.stoevesand.brain.servlet.AuthenticationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AuthenticationFilter</filter-name>
+		<url-pattern>/user/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>DisableUrlSessionFilter</filter-name>
+		<filter-class>org.stoevesand.brain.servlet.DisableUrlSessionFilter</filter-class>
+		<init-param>
+			<param-name>SEOBrowser</param-name>
+			<param-value>(google)+</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>DisableUrlSessionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+
+	<context-param>
+		<param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+		<param-value>6LcT-rwSAAAAAJpLKfk-fARj_Yw2OQereU8sOeAi</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+		<param-value>6LcT-rwSAAAAALvLftcCrFm3VBtZ8dbXRpuPzsla</param-value>
+	</context-param>
+
+	<error-page>
+		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<location>/sessioninvalid.html</location>
+	</error-page>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>ui-lightness</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.FONT_AWESOME</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+</web-app>

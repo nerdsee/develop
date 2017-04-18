@@ -1,0 +1,11 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<h:panelGrid columns="2" class="font1 w100p">
+	<h:outputText value="Score" />
+	<h:outputText value="#{brainSession.currentUser.score}" />
+</h:panelGrid>
+</ui:composition>

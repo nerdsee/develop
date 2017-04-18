@@ -1,0 +1,18 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
+<div class="sidebar">
+	<!-- ### SIDEBAR-START ### -->
+	<h1>
+		<h:outputText value="Aktionen" />
+	</h1>
+	<h:form class="naked" id="side_form1">
+		<p:commandButton value="#{bundle.btn_newlesson}" action="#{libraryFilterView.newLesson}" class="btn_blue"/>
+	</h:form>
+	<!-- ### SIDEBAR-END ### -->
+</div>
+</ui:composition>

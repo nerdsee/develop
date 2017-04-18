@@ -1,0 +1,65 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
+<%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
+<%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
+<%@ taglib uri="http://myfaces.apache.org/trinidad" prefix="tr"%>
+<%
+	String now = "" + System.currentTimeMillis();
+%>
+<f:view locale="#{brainSession.currentLocale}">
+	<html>
+	<h:head>
+	<title>Notonto - Edit Item</title>
+	<f:subview id="s_inc_head">
+		<ui:include src="/snippets/inc_head.jsp" />
+	</f:subview>
+	<script type="text/javascript">
+	function calc_code() {
+		var prefix="";
+		if ($("#presel").length>0)
+			prefix=$("#presel option:selected").text();
+		else
+			prefix=$("#preselstat").text();
+		var code=$("#itcode").val();
+		$("#gencode").html("= "+prefix+code);
+	}
+</script>
+	</h:head>
+	<h:body onload="calc_code()">
+	<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
+	<f:subview id="s_headline">
+		<ui:include src="/snippets/headline.jsp" />
+	</f:subview>
+	<!-- LAYOUT-BLOCK 2-1 START -->
+	<div id="shade" forceId="true" class="outer">
+		<div class="block">
+			<div class="content_col">
+				<div class="content">
+					<!-- ### CONTENT-START ### -->
+					<h1><h:outputText value="#{bundle.newlesson}" /></h1>
+					<h:form enctype="UTF-8" acceptcharset="UTF-8" id="newlform">
+						<h:panelGrid columns="2" class="tstd">
+							<h:outputText value="Title" class="font1 bold" />
+							<h:panelGroup>
+								<h:inputText id="ittitle" value="#{brainSession.currentLesson.description}" size="40" required="true" requiredMessage="Please enter a title." />
+								<h:outputText value=" " class="font1" />
+								<h:message for="ittitle" class="errortext" />
+							</h:panelGroup>
+							<h:outputText value="" />
+							<h:panelGroup>
+								<h:commandLink class="btn btn_blue" value=">OK" action="#{brainSession.currentLesson.createAction}" />
+								<h:outputLink class="btn btn_red" value="/teacher/index.jsf" ><h:outputText value=">Cancel"/></h:outputLink>
+							</h:panelGroup>
+						</h:panelGrid>
+					</h:form>
+					<!-- ### CONTENT-END ### -->
+				</div>
+			</div>
+			<div class="sidebar_col">
+			</div>
+		</div>
+	</div>
+	<!-- LAYOUT-BLOCK 2-1 END -->
+	</h:body>
+	</html>
+</f:view>

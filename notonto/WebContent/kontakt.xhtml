@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3c.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+<f:view locale="#{brainSession.currentLocale}">
+	<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
+	<h:head>
+		<title>Notonto - Optionen</title>
+		<ui:include src="/snippets/inc_head.xhtml" />
+	</h:head>
+	<h:body id="body" initialFocusId="ff1:it1">
+		<ui:include src="/snippets/headline.xhtml" />
+		<div id="main">
+			<p:layout>				<p:layoutUnit id="sidebar" position="east" size="260"></div>
+			</p:layoutUnit>				<p:layoutUnit id="content" position="center">
+				<!-- ### CONTENT-START ### -->
+				<h1>
+					<h:outputText value="#{bundle.contact}" />
+				</h1>
+				<h2>
+					<h:outputText value="#{bundle.contact_text}" />
+				</h2>
+				<h:form>
+					<h:panelGrid columns="1">
+						<h:inputTextarea required="true" id="msgtxt" value="#{brainSession.message}" rows="15" cols="60">
+						</h:inputTextarea>
+						<h:message for="msgtxt" class="errortext" />
+						<h:commandLink class="btn btn_blue" action="#{brainSystem.leaveMessage}" value="#{bundle.btn_send}" />
+					</h:panelGrid>
+				</h:form>
+				<!-- ### CONTENT-END ### -->
+			</div>
+		</div>
+	</h:body>
+</f:view>
+</html>

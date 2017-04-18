@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
+<h:head>
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<script src="/js/code3.js" />
+	<ui:insert name="head" />
+</h:head>
+<h:body>
+	<pm:page styleClass="jqm-demos">
+		<pm:header styleClass="jqm-header">
+			<h2>
+				<h:graphicImage url="/images/notonto.png" alt="Notonto" />
+			</h2>
+			<p>
+				<span class="logoDarkText">Lernen.</span><span class="logoBlueText">Behalten.</span>
+			</p>
+		</pm:header>
+		<pm:content styleClass="jqm-content">
+			<ui:insert name="content" />
+		</pm:content>
+	</pm:page>
+</h:body>
+</html>

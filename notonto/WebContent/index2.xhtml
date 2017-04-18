@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui" xmlns:pm="http://primefaces.org/mobile" template="/WEB-INF/template_sp.xhtml">
+	<ui:define name="head">
+		<title>Notonto - Vokabeln lernen und behalten</title>
+	</ui:define>
+	<ui:define name="content">
+		<!-- Services Section -->
+		<section id="welcome">
+			<div class="ui-g">
+				<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
+				<div class="ui-g-12 ui-md-8 ui-lg-8" style="margin: 0px; padding: 0px;">
+					<div class="ui-g">
+						<div id="content" class="ui-g-12 ui-md-12 ui-lg-8">
+							<h1>
+								<h:outputText value="#{bundle.welcome1}" />
+							</h1>
+							<h:outputText value="#{bundle.welcome2}" />
+							<h:panelGroup class="font1">
+								<h:outputText value="#{bundle.intro1}" escape="false" />
+								<p />
+								<h:outputText value="#{bundle.intro2}" escape="false" />
+							</h:panelGroup>
+						</div>
+						<div id="sidebar" class="ui-g-12 ui-md-12 ui-lg-4">
+							<ui:include src="/snippets/top5.xhtml" />
+						</div>
+					</div>
+				</div>
+				<div class="ui-g-12 ui-md-2 ui-lg-2" style="margin: 0px; padding: 0px;"></div>
+			</div>
+		</section>
+		<section id="login"  class="bg-light-gray">
+			<div class="ui-g">
+				<div class="ui-g-2"></div>
+				<div id="content" class="ui-g-8">
+					<h1>
+						<h:outputText value="Login" />
+					</h1>
+					<h:form>
+						<p:messages id="messages" showDetail="true" autoUpdate="true" />
+						<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
+							<h:outputLabel for="loginname" value="Username" />
+							<p:inputText id="loginname" value="#{auth.username}" label="Username" size="50" required="true" />
+							<h:outputLabel for="loginpass" value="Password" />
+							<p:password id="loginpass" value="#{auth.password}" label="Password" size="50" required="true" />
+						</h:panelGrid>
+						<p:commandButton id="firelogin" action="#{auth.login()}" value="#{bundle.login}" rendered="#{!auth.isLoggedIn}" />
+					</h:form>
+				</div>
+				<div class="ui-g-2"></div>
+			</div>
+		</section>
+		<section id="register"></section>
+		<section id="imprint"  class="bg-light-gray"></section>
+		<section id="footer"></section>
+	</ui:define>
+</ui:composition>

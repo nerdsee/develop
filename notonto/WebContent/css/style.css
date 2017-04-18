@@ -1,0 +1,227 @@
+/* notonto CSS*/
+@media screen and (max-width: 767px) {
+	h1 {
+		font-size: 24px !important;
+		margin: 0px 0px 5px 0px;
+	}
+	h2 {
+		font-size: 18px !important;
+		margin: 0px 0px 5px 0px;
+	}
+	h3 {
+		font-size: 12px;
+		margin: 0px 0px 3px 0px;
+	}
+	.mhide {
+		display: none;
+	}
+}
+
+/* großer Screen */
+@media screen and (min-width: 768px) {
+	h1 {
+		font-size: 40px;
+		margin: 0px 0px 15px 0px;
+	}
+	h2 {
+		font-size: 24px;
+		margin: 0px 0px 10px 0px;
+	}
+	h3 {
+		font-size: 20px;
+		margin: 0px 0px 5px 0px;
+	}
+	.statistic {
+		width: 100%;
+		text-align: right;
+		padding: 5px 0px;
+		margin: 1px 0px;
+		background-color: white;
+		border: 1px solid #fed136;
+		border-radius: 4px;
+	}
+}
+
+ol.numlist li {
+	font-size: 18px;
+	margin: 10px 0px;
+}
+
+.statistic {
+	width: 100%;
+	text-align: right;
+	padding: 10px 5px;
+	margin: 2px 0px;
+	background-color: white;
+	border: 1px solid;
+	border-color: #fed136;
+	border-radius: 4px;
+}
+
+.statistic_learn {
+	color: white;
+	border-color: #337AB7;
+	background-color: #337AB7;
+}
+
+.statistic_act {
+	background-color: #fed136;
+}
+
+h1 {
+	color: #4C4C45;
+	font-weight: 700;
+	text-rendering: optimizelegibility;
+}
+
+h2 {
+	color: #4C4C45;
+	font-weight: 400;
+}
+
+h3 {
+	color: #727267;
+	font-weight: 400;
+}
+
+body {
+	color: #393934;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 14px;
+}
+
+/* */
+#menu .ui-table {
+	border: 1px solid #dddddd ! important;
+	margin-top: 30px;
+}
+
+#menu .ui-bar-a {
+	background: #1cb2e7 none repeat scroll 0% 0%;
+	color: white;
+	text-shadow: none;
+}
+
+#menu .ui-table-row {
+	background: #ffffff none repeat scroll 0% 0%;
+}
+
+/* ------------------ FONTS ------------------ */
+.font1 {
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.font1 a {
+	font-weight: bold;
+}
+
+.font2 {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.font2 a {
+	font-weight: bold;
+}
+
+.font3 {
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.font4 {
+	font-size: 24px;
+	font-weight: normal;
+}
+
+.font5 {
+	font-size: 18px;
+	font-weight: normal;
+}
+
+.fontsym {
+	font-size: 80px;
+	font-weight: normal;
+}
+
+.errortext {
+	font-size: 12px;
+	font-weight: bold;
+	color: #8D1400;
+}
+
+.res_f {
+	font-weight: bold;
+}
+
+.res_r {
+	color: #88aa88;
+	font-weight: bold
+}
+
+.infotext {
+	font-size: 12px;
+	font-weight: bold;
+	color: #8F7500;
+	margin: 0px 0px 10px 0px;
+	border: 1px solid #8F7500;
+	padding: 5px;
+	background-color: #FFF6CF;
+}
+
+.headtext {
+	display: inline;
+	margin-left: 0px;
+	margin-right: 17px;
+	line-height: 21px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.ta_right {
+	text-align: right;
+}
+
+.ta_left {
+	text-align: left;
+}
+
+.ta_center {
+	text-align: center;
+}
+
+/*
+	Buttons
+*/
+.btn_green {
+	background: #D5FFC4 !important;
+	border: 1px solid #BCE0AC !important;
+	color: #667A5E !important;
+}
+
+.btn_red {
+	background: #F2DEDE !important;
+	border: 1px solid #EED3D7 !important;
+	color: #B94A48 !important;
+}
+
+.btn_yellow {
+	border-radius: 4px;
+	background: #FCF8E3;
+	border: 1px solid #FBEED5;
+	color: #C09853;
+	font-weight: bold;
+}
+
+/*
+red bg #F2DEDE
+red border #EED3D7
+red #B94A48
+
+yellow bg #FCF8E3
+yellow border #FBEED5
+yellow #C09853
+*/

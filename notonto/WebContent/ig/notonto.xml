@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+<ModulePrefs title="Notonto" height="200" scrolling="false"
+    title_url="http://www.notonto.de" 
+    author="Jan Stoevesand"
+    author_email="info@notonto.de"
+    thumbnail="http://www.notonto.de/images/ig/thumb_notonto.gif"
+    screenshot="http://www.notonto.de/images/ig/igoogle1.png"
+>
+<Require feature="dynamic-height"/>
+</ModulePrefs>
+<UserPref name="pref_username" display_name="Username" datatype="string" default_value="none"/>
+<UserPref name="pref_password" display_name="Password" datatype="string" default_value="none"/>
+
+<Content type="html" view="home">
+  <![CDATA[
+<style>
+.fontq1 {
+font: bold 16px Arial;
+text-decoration: none;
+color: #222222;
+margin: 0px;
+padding: 0px;
+}
+.fontsym {
+font: bold 48px Arial;
+text-decoration: none;
+color: #222222;
+margin: 0px;
+padding: 0px;
+}
+
+.ansq {
+margin: 5px 0px;
+padding: 0px;
+}
+
+.font1,.font1:link {
+font: bold 14px Arial;
+text-decoration: none;
+}
+
+.c1,.c1:link,.c1:visited {
+color: #009900;
+}
+.c1,.c2:link,.c2:visited {
+color: #FB5F00;
+}
+.back {
+color: white;
+background-color: #FB5F00;
+padding: 2px 3px;
+margin: 0px 0px;
+text-decoration: none;
+font: bold 10px Arial;
+}
+a {
+text-decoration: none;
+}
+
+ul.anslis {
+width: 100%;
+padding: 0px 10px;
+margin: 0px;
+}
+
+ul.anslis li {
+font: bold 16px Arial;
+}
+
+ul.leslis {
+width: 100%;
+margin: 0px;
+padding: 0px;
+}
+
+ul.leslis li {
+    position: relative;
+    margin: 0;
+    border-bottom: 1px solid #E0E0E0;
+    font-size: 14px;
+    font-weight: bold;
+    list-style: none;
+    cursor: pointer;
+}
+
+.listline {
+padding: 6px 10px 6px 10px;
+display: block;
+width: 100%;
+}
+.listline:hover {
+text-decoration: none;
+background-color: #FCDEAA;
+color:black;
+}
+.listline:link, .listline:visited, .listline:active {
+text-decoration: none;
+color:black;
+}
+
+.v {
+visibility: visible;
+}
+
+.mh {
+height: 170px;
+}
+
+.h {
+visibility: hidden;
+height: 1px;
+overflow: hidden;
+}
+
+.v .area {
+margin: 10px 15px;
+}
+
+.naked {
+margin:  0px;
+padding: 0px;
+}
+.lb {
+border-top: 1px solid #dddddd;
+}
+
+.header {
+background-color:black;
+color:white;
+height: 20px;
+display: block;
+font: bold 14px Arial;
+padding: 4px;
+text-align: center;
+border-bottom: 2px solid #FC9E00;
+}
+.headline {
+color:white;
+font: bold 14px Arial;
+text-align: center;
+}
+.ts {
+width: 70px;
+}
+.tar {
+text-align: right;
+}
+.tac {
+text-align: center;
+}
+.orange_ruler {
+height: 1px;
+border: 0px;
+border-bottom: 1px solid #FC9E00;
+margin: 3px 0px;
+}
+.grey_ruler {
+height: 1px;
+border: 0px;
+border-bottom: 1px solid #444444;
+margin: 3px 0px;
+}
+.icon {
+border: 0px;
+margin: 0px;
+}
+.navlink,.navlink:visited {
+border: 1px;
+font: bold 16px Arial;
+color:#444444;
+}
+</style>
+    <div id="header_div" class="header">
+<table width="100%" class="naked">
+<tr>
+<td class="ts">
+<a href="#" class="back h" id="backbtn" onclick="loadLessons(); return false;">
+<img class="icon" src="http://www.notonto.de/images/ig/back-ig.gif">
+</a> 
+</td>
+<td class="headline">
+Notonto
+</td>
+<td class="ts tar">
+<img id="loader" class="h" src="http://www.notonto.de/images/ig/loader.gif">
+</td>
+</table>
+    </div>
+    <div id="content_div" class="naked lb"></div>
+    <script type="text/javascript">
+<!--
+var current_lid=0;
+var current_type=0;
+var current_sp=false;
+var req_cx=0;
+    function loadLessons() {    
+
+   var prefs = new _IG_Prefs();
+   var user = prefs.getString("pref_username");
+   var pass = prefs.getString("pref_password");
+   req_cx=(new Date()).getTime();
+
+   var url = "http://www.notonto.de/rest/10/"+user+"/"+pass+"/lessons?"+req_cx;
+   _IG_FetchContent(url, showLessons);
+    };
+
+    function showLessons(objtext) {
+    var obj = eval('(' + objtext + ')'); 
+      if (obj.msg) {
+      askForLogin();
+      return;
+      }
+      var userlessons = obj.userlessons;
+      var html = "<ul class=\"leslis\">";
+      // Process returned JS object as an associative array
+      for (i=0; i<userlessons.length; i++) {
+        var value = userlessons[i];
+	var sp=value.showPinyin;
+        html += "<li><a class=\"listline\" href=\"#\" onclick=\"loadItem("+value.id+","+value.type+","+sp+"); return false;\">" + value.description + "</a></li>"; 
+      }               
+      html += "</ul>";
+      document.getElementById('content_div').innerHTML = html;
+      document.getElementById('backbtn').className='h';
+
+      sh();
+     };
+ 
+ function askForLogin() {
+      var html = "";
+      html += "<div class=\"area tac\">";
+
+      var text="<p>Before you can use this Gadget. Please enter your Notonto username and password in the preferences.<p>";
+
+      html += "<font class=\"font1\">" + text + "</font>";
+      html += "</div>";
+      html += "<hr class=\"grey_ruler\">";
+
+      document.getElementById('content_div').innerHTML = html;
+      document.getElementById('backbtn').className='h';
+
+ }
+
+    function loadItem(lid,type,sp) {
+      current_lid=lid;
+      current_type=type;
+      current_sp=sp;
+      req_cx=(new Date()).getTime();
+
+      var prefs = new _IG_Prefs();
+      var user = prefs.getString("pref_username");
+      var pass = prefs.getString("pref_password");
+
+      var url = "http://www.notonto.de/rest/10/"+user+"/"+pass+"/nextitem/"+lid+"?"+req_cx;
+
+      var loader=document.getElementById('loader');
+      loader.className="v";
+
+   _IG_FetchContent(url, showItem);
+
+    };
+
+    function yes(uiid) {
+    send_answer('t',uiid);
+    }
+    function no(uiid) {
+    send_answer('f',uiid);
+    }
+    function send_answer(answer,uiid) {
+
+      var prefs = new _IG_Prefs();
+      var user = prefs.getString("pref_username");
+      var pass = prefs.getString("pref_password");
+      var req_cx=(new Date()).getTime();
+      var url = "http://www.notonto.de/rest/10/"+user+"/"+pass+"/answeritem/"+answer+"/"+uiid+"?"+req_cx;
+
+   _IG_FetchContent(url, li);
+    }
+
+    function li(){
+      loadItem(current_lid,current_type,current_sp);
+    }
+
+    function answer() {
+    document.getElementById('answer').className='ans v mh';
+    document.getElementById('question').className='que h';
+    sh();
+    }
+    function question() {
+    document.getElementById('answer').className='ans h';
+    document.getElementById('question').className='que v mh';
+    sh();
+    }
+
+    function showItem(objtext) {
+      var loader=document.getElementById('loader');
+      loader.className="h";
+
+    var obj = eval('(' + objtext + ')'); 
+      var useritem = obj.useritem;
+
+      if (!useritem) {
+        showNoItem();
+	return;
+      }
+
+      var text=useritem.item.text.replace(/<!\[CDATA\[/g, "");
+      text=text.replace(/\]\]>/g, "");
+      text=text.replace(/html:/g, "");
+      var uiid=useritem.id;
+      var comment=useritem.item.comment;
+      var qs=current_type==0?"fontq1":"fontsym";
+
+      var html = "";
+      html += "<div id=\"question\" class=\"que v mh\">";
+      html += "<div class=\"area tac\">";
+
+      html += "<font class=\""+qs+"\">" + text + "</font>";
+      if ((current_type==1)&&(current_sp))html += "<font class=\"font1 c1\">[" + comment + "]</font>";
+      html += "</div>";
+      html += "<hr class=\"grey_ruler\">";
+      html += "<div class=\"tar\">";
+      html += "<a class=\"navlink\" href=\"#\" onclick=\"answer(); return false;\">" + "Answer >" + "</a>";
+      html += "</div>";
+      html += "</div>";
+
+      html += "<div id=\"answer\" class=\"ans h\">";
+
+      var answers=useritem.item.answers;
+
+      html += "<div class=\"area\">";
+      if ((current_type==1)&&(!current_sp))html += "<div class=\"tac\"><font class=\"font1 c1\">[" + comment + "]<br>&nbsp;</font></div>";
+      html += "<ul class=\"anslis\">";
+
+      for (i=0; i<answers.length; i++) {
+        var answer = answers[i];
+        html += "<li>";
+        html += answer.text;
+        html += "</li>";
+      }
+
+      html += "</ul>";
+      html += "</div>";
+      html += "<hr class=\"orange_ruler\">";
+      html += "<div class=\"ansq tar\">";
+      html += "<font class=\"font1\">Did you know the answer? </font><a class=\"font1 c1\" href=\"#\" onclick=\"yes("+uiid+"); return false;\">" + "&nbsp;>Yes" + "</a>&nbsp;";
+      html += "<a class=\"font1 c2\" href=\"#\" onclick=\"no("+uiid+"); return false;\">" + ">No" + "</a>";
+      html += "</div>";
+      html += "<hr class=\"grey_ruler\">";
+      html += "<a class=\"navlink\" href=\"#\" onclick=\"question(); return false;\">" + "< Question" + "</a>";
+      html += "</div>";
+
+      document.getElementById('content_div').innerHTML = html;
+      document.getElementById('backbtn').className='v';
+
+      sh();
+     };
+
+    function showNoItem() {
+      var html = "";
+      html += "<div id=\"question\" class=\"que v mh\">";
+      html += "<div class=\"area tac\">";
+
+      var text="Derzeit stehen keine Lernkarten zum Lernen bereit.";
+
+      html += "<font class=\"fontq1\">" + text + "</font>";
+      html += "</div>";
+      html += "<hr class=\"grey_ruler\">";
+      html += "</div>";
+
+      document.getElementById('content_div').innerHTML = html;
+      document.getElementById('backbtn').className='v';
+     };
+
+     function sh() {
+      //this.style.height = this.document.body.scrollHeight + "px";
+      //gadgets.window.adjustHeight();
+      _IG_AdjustIFrameHeight();
+      //ah();
+     }
+     function ah(F){
+     var C=parseInt(F,10);
+     if(isNaN(C)){
+     var H=gadgets.window.getViewportDimensions().height;
+var B=document.body;
+var G=document.documentElement;
+if(document.compatMode=="CSS1Compat"&&G.scrollHeight) {
+C=G.scrollHeight!=H?G.scrollHeight:G.offsetHeight
+}else{
+var D=G.scrollHeight;
+var E=G.offsetHeight;
+if(G.clientHeight!=E) {
+D=B.scrollHeight;
+E=B.offsetHeight
+}
+if(D>H){
+C=D>E?D:E
+}else{
+C=D<E?D:E
+}
+}
+}
+var A;
+if(C!=A){
+A=C;
+if (C<200) C=200;
+gadgets.rpc.call(null,"resize_iframe",null,C)
+}
+}
+
+  _IG_RegisterOnloadHandler(loadLessons);
+-->
+     </script>
+  ]]>
+</Content>
+</Module>
+

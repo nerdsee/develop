@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd" version="2.2">
+
+
+	<navigation-rule>
+		<from-view-id>/user/lesson.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>intervals</from-outcome>
+			<to-view-id>intervals.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/user/user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/user/method.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>intervals</from-outcome>
+			<to-view-id>intervals.jsf</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/user/user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/user/invite.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>done</from-outcome>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/user/lesson_enter.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/user/user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/user/lessonwrong.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/user/user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/user/intervals.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/user/user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/user/options.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/user/user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/user/editlessonmeta.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/user/editlessonupload.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/user/unlock.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>sent</from-outcome>
+			<to-view-id>/user/user.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/user/validateupload.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exit</from-outcome>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>info_bg</from-outcome>
+			<to-view-id>/info_bg.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>info_co</from-outcome>
+			<to-view-id>/info_bg.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>user</from-outcome>
+			<to-view-id>/user/user.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>admin_user</from-outcome>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editlesson</from-outcome>
+			<to-view-id>/user/editlesson.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>library</from-outcome>
+			<to-view-id>/user/library.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>options</from-outcome>
+			<to-view-id>/user/options.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>intervals</from-outcome>
+			<to-view-id>/user/intervals.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>register</from-outcome>
+			<to-view-id>/index.xhtml#register</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>impressum</from-outcome>
+			<to-view-id>/index.xhtml#impressum</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>unlock</from-outcome>
+			<to-view-id>/user/unlock.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>admin-userstat</from-outcome>
+			<to-view-id>/user/admin_userstat.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+</faces-config>
