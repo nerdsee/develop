@@ -10,44 +10,100 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
-import org.stoevesand.finapi.AccountsService;
-import org.stoevesand.finapi.BankConnectionsService;
-import org.stoevesand.finapi.BanksService;
-import org.stoevesand.finapi.MandatorAdminService;
-import org.stoevesand.finapi.TokenService;
-import org.stoevesand.finapi.TransactionsService;
-import org.stoevesand.finapi.UsersService;
-import org.stoevesand.finapi.model.BankConnection;
-import org.stoevesand.finapi.model.Token;
-import org.stoevesand.finapi.model.FinapiUser;
-import org.stoevesand.finapi.model.UserInfo;
-import org.stoevesand.findow.model.Account;
-import org.stoevesand.findow.model.Bank;
+import org.stoevesand.findow.bankingapi.ApiUser;
 import org.stoevesand.findow.model.ErrorHandler;
-import org.stoevesand.findow.model.Transaction;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import org.stoevesand.findow.model.User;
+import org.stoevesand.findow.persistence.PersistanceManager;
+import org.stoevesand.findow.server.FindowSystem;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Path("/users")
-@Api(value = "users")
-@Deprecated
-public class RestUsers {
+@Path("/user")
+@Api(value = "user")
+public class RestUser {
+
+	@Path("/{id}")
+	@GET
+	@Produces("application/json")
+	public String getUser(@PathParam("id") String id, @HeaderParam("password") String password) {
+
+		String result = "";
+
+		User user = PersistanceManager.getInstance().getUserByName(id);
+		if ((user != null) && (user.getPassword().equals(password))) {
+
+			try {
+				user.refreshToken();
+				result = RestUtils.generateJsonResponse(user, "user");
+			} catch (ErrorHandler e) {
+				result = e.getResponse();
+			}
+
+		} else {
+			result = RestUtils.generateJsonResponse(Response.USER_OR_PASSWORD_INVALID);
+		}
+
+		return result;
+	}
+
+	@Path("/{id}")
+	@POST
+	@Produces("application/json")
+	public String createUser(@PathParam("id") String id, @HeaderParam("password") String password) {
+
+		String result = "";
+		try {
+			User user = PersistanceManager.getInstance().getUserByName(id);
+
+			if (user == null) {
+				ApiUser apiUser = FindowSystem.getBankingAPI().createUser(null, null);
+				user = new User(id, password, apiUser.getId(), apiUser.getPassword());
+				PersistanceManager.getInstance().store(user);
+				result = RestUtils.generateJsonResponse(Response.OK);
+			} else {
+				result = RestUtils.generateJsonResponse(Response.USER_ALREADY_USED);
+			}
+
+		} catch (ErrorHandler e) {
+			result = e.getResponse();
+		}
+
+		return result;
+	}
+
+	@Path("/{id}")
+	@DELETE
+	@Produces("application/json")
+	public String deleteUser(@PathParam("id") String id, @HeaderParam("userToken") String userToken) {
+
+		try {
+			User user = PersistanceManager.getInstance().getUserByName(id);
+			if (user != null) {
+				FindowSystem.getBankingAPI().deleteUser(userToken);
+			} else {
+				return RestUtils.generateJsonResponse(Response.USER_UNKNOWN);
+			}
+
+			PersistanceManager.getInstance().deleteUserByName(id);
+		} catch (ErrorHandler e) {
+			System.out.println(e);
+			return e.getResponse();
+		}
+		return RestUtils.generateJsonResponse(Response.OK);
+	}
 
 	@Path("/")
 	@GET
 	@Produces("application/json")
-	@ApiOperation(value = "DEPRECATED: Get UserInfos of all available users.")
-	@Deprecated
+	@ApiOperation(value = "Get UserInfos of all available users.")
 	public String getUserInfos() {
-		List<UserInfo> userInfos = MandatorAdminService.getUsers(RestUtils.getAdminToken());
+		List<User> userInfos = PersistanceManager.getInstance().getUsers();
+		// MandatorAdminService.getUsers(RestUtils.getAdminToken());
 
-		String result = RestUtils.generateJsonResponse(userInfos, "userinfos");
+		String result = RestUtils.generateJsonResponse(userInfos, "users");
 
 		return result;
 	}
+
 }
