@@ -19,9 +19,9 @@ import org.stoevesand.findow.server.FindowSystem;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Path("/user")
-@Api(value = "user")
-public class RestUser {
+@Path("/users")
+@Api(value = "users")
+public class RestUsers {
 
 	@Path("/{id}")
 	@GET
