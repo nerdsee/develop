@@ -21,12 +21,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import org.stoevesand.brain.exceptions.DBException;
@@ -69,10 +69,10 @@ public class LessonLoader {
 	BrainSession session = null;
 
 	public void downloadLesson(Lesson lesson) {
-		HSSFWorkbook wb = new HSSFWorkbook();
-		// Workbook wb = new XSSFWorkbook();
+		//Workbook wb = new Workbook();
+		Workbook wb = new XSSFWorkbook();
 		// CreationHelper createHelper = wb.get getCreationHelper();
-		HSSFSheet sheet = wb.createSheet("Lesson");
+		Sheet sheet = wb.createSheet("Lesson");
 
 		// Create a row and put some cells in it. Rows are 0 based.
 		Row firstrow = sheet.createRow((short) 0);
@@ -107,8 +107,8 @@ public class LessonLoader {
 		FacesContext ctx = FacesContext.getCurrentInstance();
 
 		if (!ctx.getResponseComplete()) {
-			String fileName = "lesson.xls";
-			String contentType = "application/vnd.ms-excel";
+			String fileName = "lesson.xlsx";
+			String contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
 			HttpServletResponse response = (HttpServletResponse) ctx.getExternalContext().getResponse();
 			response.setContentType(contentType);
