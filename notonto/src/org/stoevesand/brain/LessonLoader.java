@@ -1,5 +1,7 @@
 package org.stoevesand.brain;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
@@ -7,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.faces.application.FacesMessage;
@@ -18,9 +21,10 @@ import javax.faces.model.ListDataModel;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.Charsets;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -28,6 +32,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.stoevesand.brain.exceptions.DBException;
 import org.stoevesand.brain.model.Answer;
@@ -68,8 +74,8 @@ public class LessonLoader {
 
 	BrainSession session = null;
 
-	public void downloadLesson(Lesson lesson) {
-		//Workbook wb = new Workbook();
+	public StreamedContent downloadLesson(Lesson lesson) {
+		// Workbook wb = new Workbook();
 		Workbook wb = new XSSFWorkbook();
 		// CreationHelper createHelper = wb.get getCreationHelper();
 		Sheet sheet = wb.createSheet("Lesson");
@@ -86,7 +92,12 @@ public class LessonLoader {
 		lesson.reset();
 
 		int rownum = 1;
-		for (Item item : lesson.getItems()) {
+		
+		List<Item> items = lesson.getItems();
+		
+		Collections.sort(items);
+		
+		for (Item item : items) {
 			Row row = sheet.createRow(rownum++);
 			row.createCell(0).setCellValue(item.getExtId());
 			row.createCell(1).setCellValue(item.getChapter());
@@ -104,26 +115,37 @@ public class LessonLoader {
 			}
 		}
 
-		FacesContext ctx = FacesContext.getCurrentInstance();
+		String fileName = "lesson.xlsx";
 
-		if (!ctx.getResponseComplete()) {
-			String fileName = "lesson.xlsx";
-			String contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+		ByteArrayOutputStream out = null;
+		try {
+			out = new ByteArrayOutputStream();
+			wb.write(out);
+			InputStream in = new ByteArrayInputStream(out.toByteArray());
 
-			HttpServletResponse response = (HttpServletResponse) ctx.getExternalContext().getResponse();
-			response.setContentType(contentType);
-			response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
-
-			ServletOutputStream out;
-			try {
-				out = response.getOutputStream();
-				wb.write(out);
-				out.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
+			StreamedContent file = new DefaultStreamedContent(in, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName, Charsets.UTF_8.name());
+			return file;
+		} catch (IOException e) {
+			log.error(e.getMessage(), e);
+		} finally {
+			if (out != null) {
+				try {
+					out.close();
+				} catch (IOException e) {
+					// DO NOTHING
+				}
 			}
-			ctx.responseComplete();
 		}
+
+		if (wb != null) {
+			try {
+				wb.close();
+			} catch (IOException e) {
+				log.error("Failed to close workbook", e);
+			}
+		}
+
+		return null;
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
@@ -328,7 +350,7 @@ public class LessonLoader {
 			e.printStackTrace();
 			session.getBrainMessage().setErrorText("Format error. Couldn't read the input file.");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Format error. Couldn't read the input file."));
-	    
+
 			newItems = new Vector<Item>();
 			numberUploadedItems = 0;
 			// e.printStackTrace();

@@ -18,7 +18,7 @@ import org.stoevesand.util.StringUtils;
 import net.sourceforge.pinyin4j.PinyinFormatter;
 
 @XmlRootElement(name = "item")
-public class Item {
+public class Item implements Comparable<Item> {
 
 	private static Logger log = LogManager.getLogger(Item.class);
 
@@ -189,9 +189,9 @@ public class Item {
 	}
 
 	public boolean equals(Item item2) {
-		return (extId==item2.extId);
+		return (extId == item2.extId);
 	}
-	
+
 	public String toXML() {
 		return toXML(true);
 	}
@@ -254,7 +254,7 @@ public class Item {
 	public String toString() {
 		return "Item " + text;
 	}
-	
+
 	public void addAnswer(Answer answer) {
 		answers.add(answer);
 	}
@@ -405,6 +405,17 @@ public class Item {
 		// }
 
 		return true;
+	}
+
+	@Override
+	public int compareTo(Item o) {
+
+		if (id < o.id) {
+			return -1;
+		} else if (id > o.id) {
+			return 1;
+		} else
+			return 0;
 	}
 
 }

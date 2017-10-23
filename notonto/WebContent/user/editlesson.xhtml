@@ -57,6 +57,18 @@
 								<div class="ui-g-12 ui-lg-8" style="text-align: left;">
 									<p:commandLink style="margin-right: 10px;" styleClass="btn btn-lg btn-primary" value="#{bundle.btn_edit}" action="#{libraryFilterView.editOwnerLesson}" />
 									<p:commandLink style="margin-right: 10px;" styleClass="btn btn-lg btn-info" value="Upload" action="#{libraryFilterView.editLessonUpload}" />
+									<p:commandLink style="margin-right: 10px;" styleClass="btn btn-lg btn-success" value="Download" ajax="false" >
+										<p:fileDownload value="#{lessonLoader.downloadLesson(lw.lesson)}" />
+									</p:commandLink>
+									<script type="text/javascript">
+										function start() {
+											PF('statusDialog').show();
+										}
+
+										function stop() {
+											PF('statusDialog').hide();
+										}
+									</script>
 									<p:commandLink style="margin-right: 10px;" styleClass="btn btn-lg btn-success" value="Jetzt lernen" escape="false" action="#{brainSession.subscribeLesson(lw)}" rendered="#{not lw.isSubscribed}" />
 								</div>
 								<div class="ui-g-12 ui-lg-3" style="text-align: right;">
