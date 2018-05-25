@@ -49,6 +49,9 @@
 						<li><p:link href="#login">
 								<span class="glyphicon glyphicon-log-in"></span> Login
 						</p:link></li>
+						<li><p:link href="#register">
+								<span class="glyphicon glyphicon-user"></span> Register
+						</p:link></li>
 					</ui:fragment>
 					<li><p:link href="#impressum">
 							<span class="glyphicon glyphicon-info-sign"></span>
@@ -76,6 +79,10 @@
 			<div class="intro-lead-in">Lernen. Nie wieder vergessen.</div>
 			<p:link rendered="#{!auth.isLoggedIn}" href="#login" class="btn btn-xl" style="margin-right: 20px; background-color: #fec503">
 				<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> LOGIN
+			</p:link>
+			<p:link rendered="#{!auth.isLoggedIn}" href="#register" class="btn btn-xl mhide">
+				<span class="glyphicon glyphicon-user"></span>
+				<h:outputText value=" REGISTER" />
 			</p:link>
 		</div>
 	</div>
@@ -150,7 +157,21 @@
 					<h:outputText value="#{bundle.register}" />
 				</h1>
 				<div class="ui-g-12 text-center">
-				Diese Seite steht nur noch Freunden und Familie zur Verfügung.
+					<p:messages for="register_form" autoUpdate="true" showDetail="true" />
+					<div class="form-group">
+						<p:inputText style="display:block;" placeholder="Email" id="emailinput" class="form-control" value="#{auth.email}">
+							<f:validator validatorId="custom.emailValidator" for="register_form" />
+						</p:inputText>
+					</div>
+					<div class="form-group">
+						<p:password id="passinput" placeholder="Passwort" value="#{auth.password}" class="form-control" />
+					</div>
+					<div class="form-group">
+						<p:password style="display:block;" placeholder="Passwort bestätigen" id="passconfinput" class="form-control" value="#{auth.passconfirm}" label="#{bundle.passconfirm}" />
+					</div>
+				</div>
+				<div class="ui-g-12 text-center">
+					<p:commandButton styleClass="btn btn-xl" id="reg1" action="#{auth.register}" value="#{bundle.register}" />
 				</div>
 			</div>
 			<div class="ui-g-2"></div>
