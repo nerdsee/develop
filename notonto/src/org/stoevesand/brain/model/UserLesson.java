@@ -307,6 +307,18 @@ public class UserLesson {
 		return i;
 	}
 
+	public int getPending() {
+		BrainDB db = BrainSystem.getBrainSystem().getBrainDB();
+		int i = 0;
+		try {
+			i = db.getUserLessonPending(this);
+		} catch (DBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return i;
+	}
+
 	public String toJSON() {
 		StringBuilder buf = new StringBuilder();
 		try {

@@ -2,6 +2,13 @@
 	<f:loadBundle basename="org.stoevesand.brain.i18n.MessagesBundle" var="bundle" />
 	<div class="ui-g">
 		<div class="ui-g-12 ui-md-12 ui-lg-12 ">
+			<p class="statistic statistic_pending">
+				<h:outputText value="#{bundle.learnable}" />
+				<span class="label label-default"> <h:outputText value="#{brainSession.currentUserLesson.pending}" />
+				</span>
+			</p>
+		</div>
+		<div class="ui-g-12 ui-md-12 ui-lg-12 ">
 			<p class="statistic statistic_learn">
 				<h:outputText value="#{bundle.learnable}" />
 				<span class="label label-default"> <h:outputText value="#{brainSession.currentUserLesson.available}" />

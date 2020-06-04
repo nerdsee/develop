@@ -1549,6 +1549,47 @@ public class MySQLBrainDB implements BrainDB {
 		return ret;
 	}
 
+	public int getUserLessonPending(UserLesson userLesson) throws DBException {
+		int ret = 0;
+		Connection conn = getConnection("getUserLessonPending");
+		try {
+			ret = getUserLessonPending(userLesson, conn);
+		} finally {
+			close(conn);
+		}
+		return ret;
+	}
+
+	public int getUserLessonPending(UserLesson userLesson, Connection conn) {
+		int ret = 0;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			String sql = "";
+
+			sql = "select count(*) as cx from useritems ui, userlessons ul ";
+			sql += "where ui.userlessonID=ul.id and ul.id=? and next<? and ui.active=0";
+
+			ps = conn.prepareStatement(sql);
+			ps.setLong(1, userLesson.getId());
+			ps.setTimestamp(2, new java.sql.Timestamp(System.currentTimeMillis()));
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				ret = rs.getInt("cx");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(ps);
+		}
+		return ret;
+	}
+
 	public int getUserLessonAvailable(UserLesson userLesson) throws DBException {
 		int ret = 0;
 		Connection conn = getConnection("getUserLessonAvail1");

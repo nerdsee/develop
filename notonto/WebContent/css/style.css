@@ -58,6 +58,13 @@ ol.numlist li {
 	border-radius: 4px;
 }
 
+
+.statistic_pending {
+	color: white;
+	border-color: #32cd32;
+	background-color: #32cd32;
+}
+
 .statistic_learn {
 	color: white;
 	border-color: #337AB7;

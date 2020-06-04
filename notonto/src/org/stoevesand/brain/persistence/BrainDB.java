@@ -88,6 +88,8 @@ public interface BrainDB {
 
 	int getUserAvailable(long userId);
 
+	int getUserLessonPending(UserLesson userLesson) throws DBException;
+
 	int getUserLessonAvailable(UserLesson lesson) throws DBException;
 
 	int getUserLessonAvailable(long userLessonId);
